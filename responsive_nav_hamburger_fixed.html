@@ -4997,6 +4997,153 @@ input[type="search"]::-webkit-search-cancel-button {
                         </div>
                     </div>
                 </section>
+
+                <section data-replit-metadata="client/src/components/BenefitsGrid.tsx:24:4" data-component-name="section" class="py-16 md:py-24 bg-background">
+                    <div data-replit-metadata="client/src/components/BenefitsGrid.tsx:25:6" data-component-name="div" class="max-w-7xl mx-auto px-6 md:px-8">
+                        <div data-replit-metadata="client/src/components/BenefitsGrid.tsx:26:8" data-component-name="div" class="text-center mb-12">
+                            <h3 data-replit-metadata="client/src/components/BenefitsGrid.tsx:27:10" data-component-name="h3" class="text-3xl md:text-4xl font-bold text-foreground mb-4">
+                                Our Therapy Team
+                            </h3>
+                            <p data-replit-metadata="client/src/components/BenefitsGrid.tsx:30:10" data-component-name="p" class="text-muted-foreground text-lg max-w-2xl mx-auto">
+                                Guzman & Baker Behavioral Health Services is a collective group of diverse mental health practitioners who share a common goal of expanding access and education for mental health care.
+
+Our collaborative model ensures that families receive evidence-based, culturally sensitive treatment tailored to each individuals unique needs.
+
+We bridge the gap between primary care and specialized mental health services, creating seamless pathways to healing for patients and their families.
+
+Our therapists are highly vetted, not only for their clinical acumen, but for who they are, and their unrelenting dedication to their own personal and professional growth.
+                            </p>
+                        </div>
+                        <style>
+.marquee-right .marquee {
+--marquee-width: 100%;
+--marquee-height: 200px;
+--marquee-elements-displayed: 6;
+--marquee-element-width: calc(var(--marquee-width) / var(--marquee-elements-displayed));
+--marquee-animation-duration: calc(var(--marquee-elements) * 2s);
+position: relative;
+overflow: hidden;
+width: var(--marquee-width);
+height: var(--marquee-height);
+}
+
+@media (max-width: 768px) {
+.marquee-right .marquee {
+--marquee-elements-displayed: 3;
+--marquee-height: 100px;
+}
+}
+
+.marquee-right .marquee-content {
+list-style: none;
+display: flex;
+height: 100%;
+padding: 0;
+margin: 0;
+animation: scrollRight var(--marquee-animation-duration) linear infinite;
+}
+
+@keyframes scrollRight {
+0% { transform: translateX(0); }
+100% { transform: translateX(calc(-1 * var(--marquee-element-width) * var(--marquee-elements))); }
+}
+
+.marquee-right .marquee-content li {
+display: flex;
+justify-content: center;
+align-items: center;
+flex-shrink: 0;
+width: var(--marquee-element-width);
+height: var(--marquee-height);
+margin: 0;
+padding: 0;
+}
+
+.marquee-right .marquee-content li a {
+display: block;
+width: 100%;
+height: 100%;
+}
+
+.marquee-right .marquee-content li img {
+width: 100%;
+height: 100%;
+object-fit: cover;
+display: block;
+loading: lazy;
+}
+
+/* Fade gradient edges */
+.marquee-right .marquee::before,
+.marquee-right .marquee::after {
+content: "";
+position: absolute;
+top: 0;
+width: 40%;
+height: 100%;
+z-index: 2;
+pointer-events: none;
+}
+
+.marquee-right .marquee::before {
+left: 0;
+background: linear-gradient(to right, rgba(255,255,255,1), rgba(255,255,255,0));
+}
+
+.marquee-right .marquee::after {
+right: 0;
+background: linear-gradient(to left, rgba(255,255,255,1), rgba(255,255,255,0));
+}
+</style>
+
+<script>
+window.addEventListener("load", () => {
+const root = document.querySelector(".marquee-right .marquee");
+const marqueeContent = root.querySelector("ul.marquee-content");
+const displayed = parseInt(getComputedStyle(root).getPropertyValue("--marquee-elements-displayed"), 10);
+const total = marqueeContent.children.length;
+
+root.style.setProperty("--marquee-elements", total);
+
+for (let i = 0; i < total; i++) {
+marqueeContent.appendChild(marqueeContent.children[i].cloneNode(true));
+}
+});
+</script>
+
+<div class="marquee-right">
+<div class="marquee">
+<ul class="marquee-content">
+<li><img src="https://guzmanbaker.com/assets/images/gallery01/fd3fa8d4.jpg?v=0dfaecaf" >
+</li>
+<li><img src="https://guzmanbaker.com/assets/images/gallery01/6399ac9b.jpg?v=0dfaecaf" >
+</li>
+<li><img src="https://guzmanbaker.com/assets/images/gallery01/3e6f04e1.jpg?v=fabb3db0" >
+</li>
+<li><img src="https://guzmanbaker.com/assets/images/gallery01/b3557239.jpg?v=ef0c8481" >
+</li>
+<li><img src="https://guzmanbaker.com/assets/images/gallery01/39256dca.jpg?v=ef0c8481" >
+</li>
+<li><img src="https://guzmanbaker.com/assets/images/gallery01/5aa9b75d.jpg?v=9c3e6ecf" >
+</li>
+<li><img src="https://guzmanbaker.com/assets/images/gallery01/14b6c318.jpg?v=a86ea963" >
+</li>
+<li><img src="https://guzmanbaker.com/assets/images/gallery01/9b47de5f.jpg?v=a86ea963" >
+</li>
+<li><img src="https://guzmanbaker.com/assets/images/gallery01/26461513.jpg?v=b76bd556" >
+</li>
+<li><img src="https://guzmanbaker.com/assets/images/gallery01/878f9751.jpg?v=915654eb" >
+</li>
+<li><img src="https://guzmanbaker.com/assets/images/gallery01/6c4ecea4.jpg?v=26a69e0a" >
+</li>
+</ul>
+</div>
+</div>
+                    </div>
+                </section>
+
+
+                
                 <section id="contact" class="py-16 md:py-24 bg-muted/30">
                     <div class="max-w-2xl mx-auto px-6 md:px-8">
                         <div data-replit-metadata="client/src/components/ui/card.tsx:9:2" data-component-name="div" class="shadcn-card rounded-xl bg-card text-card-foreground shadow-sm border border-border">
@@ -5328,6 +5475,7 @@ document.addEventListener('DOMContentLoaded', () => {
   </div>
   </body>
 </html>
+
 
 
 
