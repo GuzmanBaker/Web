@@ -3841,3 +3841,19 @@ input[type="search"]::-webkit-search-cancel-button {
 [data-side=right][data-state=collapsed] .\[\[data-side\=right\]\[data-state\=collapsed\]_\&\]\:cursor-w-resize {
   cursor: w-resize;
 }
+body {
+    /* Existing styles... */
+    font-family: Arial, sans-serif; 
+    opacity: 0; 
+    animation: pageFadeIn 1s forwards; 
+    
+    /* ADD THIS LINE BELOW: */
+    padding-top: 80px; 
+}
+
+/* Optional: Adjust for mobile if the header is smaller on phones */
+@media (max-width: 768px) {
+    body {
+        padding-top: 64px; 
+    }
+}
