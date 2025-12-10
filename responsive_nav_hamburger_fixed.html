@@ -44,6 +44,83 @@ window.$RefreshSig$ = () => (type) => type;</script>
     <meta property="og:type" content="website">
     
 
+    <style>
+/* --- CSS FOR THE ANNOUNCEMENT BAR --- */
+        #announcement-bar {
+            background-color: #284b63; /* Requested Background */
+            color: #FFFFFF;            /* Requested Text Color */
+            
+            position: fixed;           /* Keeps it stuck to the viewport */
+            top: 0;                    /* Starts at the very top */
+            width: 100%;
+            height: 50px;              /* Fixed height */
+            
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            
+            transition: top 0.3s ease-in-out; /* Smooth slide animation */
+            z-index: 1000;             /* Ensures it sits on top of other content */
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        /* Styling for the CTA Button/Link inside the bar */
+        .cta-btn {
+            background-color: #FFFFFF;
+            color: #284b63;
+            padding: 5px 15px;
+            margin-left: 15px;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            transition: opacity 0.2s;
+        }
+
+        .cta-btn:hover {
+            opacity: 0.9;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="announcement-bar">
+        <span>NOW ACCEPTING NEW PATIENTS</span>
+        <a href="#" class="cta-btn">Get Started</a>
+    </div>
+
+    <script>
+        // 1. Select the bar
+        const announcementBar = document.getElementById("announcement-bar");
+        
+        // 2. Track the previous scroll position
+        let lastScrollTop = 0;
+        
+        // 3. Define the height of the bar (so we know how far to hide it)
+        const barHeight = announcementBar.offsetHeight;
+
+        window.addEventListener("scroll", function() {
+            // Get current scroll position
+            let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+            // Logic: Is current scroll greater than last scroll?
+            if (scrollTop > lastScrollTop) {
+                // SCROLLING DOWN -> Hide the bar (move it up by its height)
+                announcementBar.style.top = `-${barHeight}px`;
+            } else {
+                // SCROLLING UP -> Show the bar
+                announcementBar.style.top = "0";
+            }
+            
+            // Update last scroll position for the next comparison
+            lastScrollTop = scrollTop <= 0 ? 0 : scrollTop; // For Mobile or negative scrolling
+        }, false);
+    </script>
+
+
+
+
+    
 <script id="cookieinfo"
 data-bg="#3c6e71"
 data-fg="#FFFFFF"
@@ -1839,6 +1916,7 @@ document.addEventListener('DOMContentLoaded', () => {
   </div>
   </body>
 </html>
+
 
 
 
