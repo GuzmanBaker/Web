@@ -113,6 +113,9 @@ button:hover { background: #3C6E71; transform: scale(1.05); }
 </style>
 
 <script>
+// Form handling
+function handleSubmit(event){ event.preventDefault(); alert("Form submitted successfully!"); }
+
 // WAIT for the window to load to ensure elements exist
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -1845,6 +1848,7 @@ document.addEventListener('DOMContentLoaded', () => {
   </div>
   </body>
 </html>
+
 
 
 
