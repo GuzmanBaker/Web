@@ -3,35 +3,9 @@
 
   // Configuration for the accessibility widget
   const WIDGET_CONFIG = {
-    storageKey: "a11y-widget-settings",
+    storageKey: "aw-widget-settings",
     defaultLang: "en",
     translations: {
-      de: {
-        title: "Barrierefreiheit-Einstellungen",
-        readingMask: "Lesemaske",
-        highContrast: "Hoher Kontrast",
-        fontSize: "Schriftgröße",
-        lineHeight: "Zeilenhöhe",
-        letterSpacing: "Buchstabenabstand",
-        contentScale: "Inhaltsskalierung",
-        dyslexiaFont: "Lesbare Schriftart",
-        textAlign: "Rechts Ausrichten",
-        textAlignCenter: "Im Zentrum",
-        textAlignLeft: "Linksbündig",
-        highlightLinks: "Links unterstreichen",
-        hideImages: "Bilder ausblenden",
-        highlightHeadings: "Titel hervorheben",
-        textMagnifier: "Cursor Lesehilfe",
-        reset: "Zurücksetzen",
-        poweredBy: "Powered by",
-        darkMode: "Dunkler Modus",
-        focusOutline: "Fokus-Rahmen anzeigen",
-        reduceMotion: "Animationen reduzieren",
-        cursorSize: "Cursor vergrößern",
-        stopAutoplay: "Autoplay stoppen",
-        invertColors: "Farben invertieren",
-        columnWidth: "Spaltenbreite",
-      },
       en: {
         title: "Accessibility Settings",
         readingMask: "Reading Mask",
@@ -833,7 +807,6 @@
                     <h3>${this.translations.title}</h3>
                     <div class="a11y-header-actions">
                         <div class="a11y-lang-toggle">
-                            <!-- <button class="a11y-lang-btn ${this.currentLang === "de" ? "active" : ""}" data-lang="de">DE</button> -->
                             <button class="a11y-lang-btn ${this.currentLang === "en" ? "active" : ""}" data-lang="en">EN</button>
                         </div>
                         <button class="a11y-close-btn" aria-label="Close">
@@ -850,7 +823,7 @@
                 <div class="a11y-footer">
                     <button class="a11y-btn a11y-btn-reset">
                         <i class="fas fa-undo"></i>
-                    <!--    <span>${this.translations.reset}</span> -->
+                <span>${this.translations.reset}</span>
                     </button>
                 </div>
                 <div class="a11y-powered-by">
