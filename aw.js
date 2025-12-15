@@ -164,7 +164,7 @@
         const link = document.createElement("link");
         link.id = "fontawesome-local";
         link.rel = "stylesheet";
-        link.href = basePath + "css/all.min.css";
+        link.href = "https://guzmanbaker.github.io/Web/css/all.min.css";
         document.head.appendChild(link);
       }
 
@@ -176,14 +176,14 @@
           font-style:normal;
           font-weight:400;
           font-display:swap;
-          src:url('${basePath}webfonts/lexend-400.woff2') format('woff2');
+          src:url('https://guzmanbaker.github.io/Web/webfonts/lexend-400.woff2') format('woff2');
         }
         @font-face{
           font-family:'Lexend';
           font-style:normal;
           font-weight:700;
           font-display:swap;
-          src:url('${basePath}webfonts/lexend-700.woff2') format('woff2');
+          src:url('https://guzmanbaker.github.io/Web/webfonts/lexend-700.woff2') format('woff2');
         }`;
         const style = document.createElement("style");
         style.id = "lexend-embed";
