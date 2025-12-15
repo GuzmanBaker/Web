@@ -228,7 +228,7 @@
                 #a11y-widget-container {
                     position: fixed;
                     bottom: 20px;
-                    right: 20px;
+                    left: 20px;
                     z-index: 999999;
                     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
                 }
@@ -833,7 +833,7 @@
                     <h3>${this.translations.title}</h3>
                     <div class="a11y-header-actions">
                         <div class="a11y-lang-toggle">
-                            <button class="a11y-lang-btn ${this.currentLang === "de" ? "active" : ""}" data-lang="de">DE</button>
+                            <!-- <button class="a11y-lang-btn ${this.currentLang === "de" ? "active" : ""}" data-lang="de">DE</button> -->
                             <button class="a11y-lang-btn ${this.currentLang === "en" ? "active" : ""}" data-lang="en">EN</button>
                         </div>
                         <button class="a11y-close-btn" aria-label="Close">
@@ -850,11 +850,11 @@
                 <div class="a11y-footer">
                     <button class="a11y-btn a11y-btn-reset">
                         <i class="fas fa-undo"></i>
-                        <span>${this.translations.reset}</span>
+                    <!--    <span>${this.translations.reset}</span> -->
                     </button>
                 </div>
                 <div class="a11y-powered-by">
-                    ${this.translations.poweredBy} <a href="https://www.accessibility-widget.net" target="_blank" rel="noopener">Accessibility Widget</a>
+                  <!--  ${this.translations.poweredBy} <a href="https://www.accessibility-widget.net" target="_blank" rel="noopener">Accessibility Widget</a> -->
                 </div>
             `;
     }
