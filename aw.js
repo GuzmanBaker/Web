@@ -259,7 +259,7 @@
                 #a11y-panel {
                     position: absolute;
                     bottom: 76px;
-                    right: 0;
+                    left: 0;
                     width: 380px;
                     max-width: calc(100vw - 40px);
                     max-height: calc(100vh - 120px);
@@ -280,7 +280,7 @@
                 @media (max-width: 420px) {
                     #a11y-panel {
                         width: calc(100vw - 40px);
-                        right: 50%;
+                        left: 50%;
                         transform: translateX(50%);
                     }
                 }
