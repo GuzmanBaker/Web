@@ -255,6 +255,162 @@ document.addEventListener('DOMContentLoaded', () => {
 <link href="https://guzmanbaker.github.io/Web/style.css" rel="stylesheet" type="text/css" />
 </head>
   <body style="padding-top: 0;">
+
+    <!-- Mr Modal Start -->
+    <style>
+/* * SCOPED CSS
+* Applies ONLY to the modal (.mr- prefix)
+* Will not affect your body, fonts, or other page elements.
+*/
+
+/* CSS Reset specifically for the modal to prevent external style bleeding */
+.mr-modal-overlay, .mr-modal-overlay * {
+box-sizing: border-box;
+}
+
+/* The Backdrop */
+.mr-modal-overlay {
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+z-index: 2147483647; /* Maximum z-index to sit on top of everything */
+background: rgba(0, 0, 0, 0.6);
+backdrop-filter: blur(4px); /* Modern blur effect */
+display: flex;
+justify-content: center;
+align-items: center;
+opacity: 0;
+visibility: hidden;
+transition: opacity 0.2s ease, visibility 0.2s ease;
+}
+
+/* Open State */
+.mr-modal-overlay.mr-is-open {
+opacity: 1;
+visibility: visible;
+}
+
+/* The Modal Window */
+.mr-modal-content {
+background: #ffffff;
+width: 90%; /* Responsive width */
+max-width: 900px;
+height: 80vh; /* Fixed height relative to viewport */
+border-radius: 12px;
+box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+display: flex;
+flex-direction: column;
+transform: scale(0.96) translateY(15px);
+transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+
+/* Font Reset: Ensures modal text looks clean regardless of site fonts */
+font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+text-align: left;
+color: #333;
+}
+
+/* Open Animation */
+.mr-modal-overlay.mr-is-open .mr-modal-content {
+transform: scale(1) translateY(0);
+}
+
+/* Header */
+.mr-modal-header {
+padding: 16px 20px;
+border-bottom: 1px solid #e5e7eb;
+display: flex;
+justify-content: space-between;
+align-items: center;
+background: #fff;
+border-radius: 12px 12px 0 0;
+}
+
+.mr-modal-title {
+margin: 0;
+font-size: 1.1rem;
+font-weight: 600;
+color: #111827;
+}
+
+/* Close Button */
+.mr-close-btn {
+background: transparent;
+border: none;
+font-size: 28px;
+line-height: 1;
+color: #9ca3af;
+cursor: pointer;
+padding: 0 4px;
+transition: color 0.2s;
+}
+
+.mr-close-btn:hover {
+color: #111827;
+}
+
+/* Iframe Wrapper */
+.mr-iframe-wrapper {
+flex: 1;
+position: relative;
+background-color: #f3f4f6;
+border-radius: 0 0 12px 12px;
+overflow: hidden;
+}
+
+.mr-iframe-wrapper iframe {
+width: 100%;
+height: 100%;
+border: none;
+display: block;
+}
+</style>
+
+<div id="mr-modal-overlay" class="mr-modal-overlay" onclick="closeMrModal()">
+<div class="mr-modal-content" onclick="event.stopPropagation()">
+
+<div class="mr-modal-header">
+<h3 class="mr-modal-title"></h3>
+<button class="mr-close-btn" onclick="closeMrModal()">&times;</button>
+</div>
+
+<div class="mr-iframe-wrapper">
+<iframe id="mr-modal-iframe" src=""></iframe>
+</div>
+
+</div>
+</div>
+
+<script>
+// Scoped variables to prevent conflicts
+const mrOverlay = document.getElementById('mr-modal-overlay');
+const mrIframe = document.getElementById('mr-modal-iframe');
+
+function openMrModal(url) {
+if (!mrOverlay || !mrIframe) return;
+mrIframe.src = url;
+mrOverlay.classList.add('mr-is-open');
+}
+
+function closeMrModal() {
+if (!mrOverlay) return;
+mrOverlay.classList.remove('mr-is-open');
+// Clear src after transition to stop audio/video
+setTimeout(() => {
+if(mrIframe) mrIframe.src = '';
+}, 300);
+}
+
+// Close on Escape key
+document.addEventListener('keydown', (e) => {
+if (e.key === 'Escape' && mrOverlay.classList.contains('mr-is-open')) {
+closeMrModal();
+}
+});
+</script>
+    <!-- Mr Modal End -->
+    
     <div id="root">
         <div role="region" aria-label="Notifications (F8)" tabindex="-1" style="pointer-events: none;">
             <ol tabindex="-1" data-replit-metadata="client/src/components/ui/toaster.tsx:30:6" data-component-name="ToastViewport" class="fixed top-0 z-[100] flex max-h-screen w-full flex-col-reverse p-4 sm:bottom-0 sm:right-0 sm:top-auto sm:flex-col md:max-w-[420px]">
@@ -343,7 +499,7 @@ Our goal is to improve accessibility of quality mental health care for Kansas Ci
                                 </div>
                             </div>
                             <div data-replit-metadata="client/src/components/Hero.tsx:44:10" data-component-name="div" class="flex flex-col sm:flex-row gap-4">
-                                <button data-replit-metadata="client/src/components/Hero.tsx:45:12" data-component-name="Button" class="inline-flex items-center justify-center gap-2 whitespace-nowrap font-medium focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 hover-elevate active-elevate-2 bg-primary text-primary-foreground border border-primary-border min-h-10 rounded-md text-lg px-8" data-testid="button-hero-request">
+                                <button data-replit-metadata="client/src/components/Hero.tsx:45:12" data-component-name="Button" class="inline-flex items-center justify-center gap-2 whitespace-nowrap font-medium focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 hover-elevate active-elevate-2 bg-primary text-primary-foreground border border-primary-border min-h-10 rounded-md text-lg px-8" data-testid="button-hero-request" onclick="openMrModal('https://forms.office.com/r/Usp93xD0fB')" alt=“Request an Appointment" style=“cursor: pointer;”>
                                     Request an Appointment
                                 </button>
                                 <button data-replit-metadata="client/src/components/Hero.tsx:53:12" data-component-name="Button" class="inline-flex items-center justify-center gap-2 whitespace-nowrap font-medium focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 hover-elevate active-elevate-2 border [border-color:var(--button-outline)] shadow-xs active:shadow-none min-h-10 rounded-md text-lg px-8 bg-white/10 text-white border-white/40 hover:bg-white/20 backdrop-blur-sm" data-testid="link-why">
@@ -1839,6 +1995,7 @@ document.addEventListener('DOMContentLoaded', () => {
   </div>
   </body>
 </html>
+
 
 
 
