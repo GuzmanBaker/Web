@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Secure Message</title>
+    <title>Secure Message + Audit Trail</title>
     <style>
         /* --- BRAND PALETTE & GLASS VARIABLES --- */
         :root {
@@ -27,7 +27,6 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            /* Vibrant background required for glass effect to show */
             background: linear-gradient(135deg, var(--col-main), var(--col-accent1));
             color: var(--col-text);
             padding: 20px;
@@ -36,204 +35,182 @@
             align-items: center;
             min-height: 100vh;
             margin: 0;
-            /* Ensure background stays fixed so glass effect doesn't break on scroll */
             background-attachment: fixed; 
         }
 
-        /* Optional: Add distinct blobs for better glass distortion effect */
-        body::before {
-            content: ''; box-shadow: inset 0 0 0 2000px rgba(255, 255, 255, 0.1);
-            position: fixed; top: 0; left: 0; right: 0; bottom: 0; pointer-events: none;
-        }
-        body::after {
-             content: '';
-             position: fixed; top: -10%; left: -10%; width: 40%; height: 40%;
-             background: var(--col-accent1); opacity: 0.4; filter: blur(100px); z-index: -1;
-        }
-
-        /* --- THE GLASS CONTAINER --- */
         .container {
             background: var(--glass-bg);
             backdrop-filter: var(--glass-blur);
-            -webkit-backdrop-filter: var(--glass-blur); /* Safari support */
+            -webkit-backdrop-filter: var(--glass-blur);
             border: var(--glass-border);
             box-shadow: var(--glass-shadow);
-            
             width: 100%;
-            max-width: 600px;
+            max-width: 750px;
             padding: 2.5rem;
             border-radius: 24px;
             position: relative;
-            overflow: hidden;
         }
-        
-        /* Use polished white for headings to pop off the glass */
-        h1 { font-size: 1.7rem; margin-bottom: 1.5rem; color: var(--col-main); display: flex; align-items: center; gap: 10px; text-shadow: 0 1px 2px rgba(255,255,255,0.5); }
-        label { display: block; margin-bottom: 0.5rem; font-weight: 600; font-size: 0.95rem; color: var(--col-main); }
-        p { color: var(--col-text); line-height: 1.5; }
 
-        /* --- GLASS INPUTS --- */
-        input[type="text"], input[type="password"], textarea {
+        /* --- LOGO --- */
+        .logo-wrapper { display: flex; justify-content: center; margin-bottom: 1.5rem; }
+        .logo-svg { width: 60px; height: 60px; fill: var(--col-main); filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1)); }
+        
+        h1 { font-size: 1.7rem; margin-bottom: 1.5rem; color: var(--col-main); text-align: center; }
+        label { display: block; margin-bottom: 0.5rem; font-weight: 600; font-size: 0.95rem; color: var(--col-main); }
+
+        /* --- INPUTS & EDITOR --- */
+        input[type="text"], input[type="password"] {
             width: 100%; padding: 12px 15px; margin-bottom: 1.2rem;
-            background: var(--input-bg);
-            border: var(--input-border);
-            border-radius: 12px;
+            background: var(--input-bg); border: var(--input-border); border-radius: 12px;
             box-sizing: border-box; font-size: 1rem; color: var(--col-text);
-            transition: all 0.3s ease;
             backdrop-filter: blur(5px);
         }
-        /* Glass focus state */
-        input:focus, textarea:focus {
-            outline: none;
-            background: rgba(255, 255, 255, 0.8);
-            box-shadow: 0 0 0 3px rgba(60, 110, 113, 0.3); /* Accent color glow */
-        }
-        textarea { min-height: 120px; resize: vertical; font-family: monospace; }
-        input::placeholder, textarea::placeholder { color: #7f8c8d; }
-
-        /* --- GLASS BUTTONS --- */
-        button {
-            width: 100%; padding: 12px; border: none; cursor: pointer; font-weight: 600; font-size: 1.05rem;
-            border-radius: 12px; transition: transform 0.1s, opacity 0.2s, box-shadow 0.2s;
-            
-            /* Polished glass jewel look */
-            background: linear-gradient(135deg, var(--col-main), var(--col-accent1));
-            color: var(--col-accent3);
-            box-shadow: 0 4px 15px rgba(40, 75, 99, 0.3);
-            border: 1px solid rgba(255,255,255,0.2);
-            text-shadow: 0 1px 2px rgba(0,0,0,0.2);
-        }
-        button:hover { opacity: 0.95; transform: translateY(-1px); box-shadow: 0 6px 20px rgba(40, 75, 99, 0.4); }
-        button:active { transform: translateY(1px); }
-
-        button.secondary {
-            background: transparent;
-            border: 2px solid var(--col-accent1);
-            color: var(--col-accent1);
-            box-shadow: none;
-            text-shadow: none;
-        }
-        button.secondary:hover { background: rgba(60, 110, 113, 0.1); }
-
-        button.download-btn {
-            background: linear-gradient(135deg, var(--col-accent1), #2a9d8f);
-            display: flex; align-items: center; justify-content: center; gap: 8px;
-        }
-
-        /* --- ALERTS & UI ELEMENTS --- */
-        .hidden { display: none !important; }
         
-        /* Glassy Alerts */
+        .editor-container {
+            background: var(--input-bg); border: var(--input-border); border-radius: 12px;
+            overflow: hidden; margin-bottom: 1.2rem; backdrop-filter: blur(5px);
+        }
+        .toolbar { background: rgba(255,255,255,0.4); border-bottom: 1px solid rgba(0,0,0,0.05); padding: 8px; display: flex; gap: 5px; }
+        .toolbar button { width: 32px; height: 32px; border: none; background: transparent; cursor: pointer; border-radius: 4px; }
+        .toolbar button:hover { background: rgba(0,0,0,0.1); }
+        .editor-content { min-height: 150px; max-height: 400px; padding: 15px; overflow-y: auto; outline: none; line-height: 1.6; }
+        .editor-content blockquote { border-left: 3px solid var(--col-accent1); margin-left: 0; padding-left: 10px; color: #555; }
+
+        /* --- AUDIT LOG STYLES --- */
+        .audit-trail {
+            margin-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.3);
+            padding-top: 20px;
+        }
+        .audit-header {
+            font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; 
+            color: var(--col-main); font-weight: 800; margin-bottom: 10px;
+        }
+        .audit-entry {
+            font-size: 0.75rem;
+            background: rgba(255,255,255,0.3);
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            border: 1px solid rgba(255,255,255,0.2);
+            color: #444;
+            font-family: monospace;
+        }
+        .audit-entry strong { color: var(--col-main); }
+
+        /* --- BUTTONS --- */
+        button.action-btn {
+            width: 100%; padding: 12px; border: none; cursor: pointer; font-weight: 600; font-size: 1.05rem;
+            border-radius: 12px; background: linear-gradient(135deg, var(--col-main), var(--col-accent1));
+            color: var(--col-accent3); box-shadow: 0 4px 15px rgba(40, 75, 99, 0.3);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        button.secondary { background: transparent; border: 2px solid var(--col-accent1); color: var(--col-accent1); box-shadow: none; }
+        button.download-btn { background: linear-gradient(135deg, var(--col-accent1), #2a9d8f); display: flex; align-items: center; justify-content: center; gap: 8px; }
+
+        /* --- HELPERS --- */
+        .hidden { display: none !important; }
         .alert { padding: 15px; border-radius: 12px; margin-bottom: 1.5rem; font-size: 0.95rem; backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); }
         .alert.error { background: var(--danger-glass); color: #7f1d1d; border-left: 5px solid #b91c1c; }
         .success { background: var(--success-glass); color: #064e3b; border-left: 5px solid #059669; }
-        
-        .status-bar {
-            border-top: 1px solid rgba(255, 255, 255, 0.2);
-            margin-top: 2rem; padding-top: 1rem; font-size: 0.8rem;
-            color: var(--col-accent3); /* White text for footer on dark background */
-            text-align: center; opacity: 0.8;
-        }
-        
-        /* File Area - Recessed glass look */
-        .file-area {
-            border: 2px dashed var(--col-accent2);
-            background: rgba(255, 255, 255, 0.2);
-            padding: 20px; text-align: center; border-radius: 12px; margin-bottom: 1rem;
-            transition: all 0.3s;
-            backdrop-filter: blur(5px);
-        }
-        .file-area:hover { border-color: var(--col-accent1); background: rgba(255, 255, 255, 0.3); }
-        .file-area.error { border-color: #ef4444; background: var(--danger-glass); }
-        .file-info { font-size: 0.9rem; color: var(--col-main); margin-top: 8px; font-weight: 500; }
-        
-        /* Read-only message display */
-        #message-display {
-            white-space: pre-wrap;
-            background: rgba(255, 255, 255, 0.4); /* Slightly less opaque than inputs */
-            padding: 20px;
-            border-radius: 12px; margin-bottom: 25px;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            backdrop-filter: blur(5px);
-            color: var(--col-text);
-        }
-
-        /* Badges */
-        .badge { display: inline-block; padding: 4px 10px; border-radius: 20px; font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); border: 1px solid rgba(255,255,255,0.3); }
+        .file-area { border: 2px dashed var(--col-accent2); background: rgba(255, 255, 255, 0.2); padding: 20px; text-align: center; border-radius: 12px; margin-bottom: 1rem; }
+        .message-header { margin-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.3); padding-bottom: 15px; }
+        .subject-display { font-size: 1.2rem; font-weight: 700; color: var(--col-main); }
+        .badge { display: inline-block; padding: 4px 10px; border-radius: 20px; font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); border: 1px solid rgba(255,255,255,0.3); vertical-align: middle; margin-left: 10px; }
         .badge-secure { background: linear-gradient(135deg, var(--col-main), var(--col-accent1)); color: white; }
 
         @media print {
             .no-print { display: none; }
-            body { background: white; }
-            .container { box-shadow: none; max-width: 100%; background: white; backdrop-filter: none; border: none; }
-            #message-display, .alert { background: white; border: 1px solid #ccc; color: black; }
-            h1, label, p { color: black; }
+            body, .container { background: white; box-shadow: none; max-width: 100%; border: none; }
+            .audit-entry { border: 1px solid #ccc; background: #eee; }
         }
     </style>
 </head>
 <body>
 
 <div class="container">
+    
+    <div class="logo-wrapper">
+        <svg class="logo-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 6c1.4 0 2.8 1.1 2.8 2.5V11c.6 0 1.2.6 1.2 1.2v3.5c0 .6-.6 1.2-1.2 1.2H9.2c-.6 0-1.2-.6-1.2-1.2v-3.5c0-.6.6-1.2 1.2-1.2V9.5C9.2 8.1 10.6 7 12 7zm0 1c-.8 0-1.5.7-1.5 1.5V11h3V9.5c0-.8-.7-1.5-1.5-1.5z"/>
+        </svg>
+    </div>
+
     <div id="ui-header">
-        <h1>🔒 Secure Messenger <span class="badge badge-secure">AES-GCM + HMAC</span></h1>
+        <h1 style="text-align:center;">Secure Messenger <span class="badge badge-secure">Audited</span></h1>
     </div>
 
     <div id="view-decrypt" class="hidden">
-        <p style="color: var(--col-accent3); font-weight: 500;">This file is protected with military-grade encryption and <strong>HMAC anti-tamper verification</strong>.</p>
+        <p style="color: var(--col-accent3); font-weight: 500; text-align: center;">Protected with military-grade encryption and Audit Trails.</p>
         <hr style="border:none; border-top: 1px solid rgba(255,255,255,0.2); margin: 20px 0;">
-        
         <div id="decrypt-error" class="alert error hidden"></div>
-        
         <label for="decrypt-password" style="color: var(--col-accent3);">Password</label>
         <input type="password" id="decrypt-password" placeholder="Enter password to verify & unlock">
-        <button onclick="app.decryptMessage()">Verify Integrity & Decrypt</button>
+        <button class="action-btn" onclick="app.decryptMessage()">Verify Integrity & Decrypt</button>
     </div>
 
     <div id="view-read" class="hidden">
         <div class="alert success">
-            <strong>✓ Integrity Verified:</strong> The message signature (HMAC) is valid. The content has not been altered.
+            <strong>✓ Verified:</strong> Integrity valid. Content authentic.
         </div>
         
-        <label>Message Content:</label>
-        <div id="message-display"></div>
+        <div class="message-header">
+            <label>Subject</label>
+            <div id="read-subject" class="subject-display"></div>
+        </div>
+        
+        <label>Message</label>
+        <div class="editor-container" style="background: rgba(255,255,255,0.5);">
+            <div id="read-content" class="editor-content" style="outline: none;"></div>
+        </div>
         
         <div id="attachment-display" class="hidden">
-            <label>Attachment:</label>
-            <button id="btn-download-attachment" class="download-btn" onclick="app.downloadAttachment()">
+            <label>Attachment</label>
+            <button class="action-btn download-btn" onclick="app.downloadAttachment()">
                 <span>📎 Download Attached File</span>
             </button>
-            <div id="attachment-name" class="file-info" style="color: var(--col-accent3);"></div>
+            <div id="attachment-name" style="color: var(--col-text); margin-top: 5px; font-size: 0.9rem;"></div>
+        </div>
+        
+        <div class="audit-trail">
+            <div class="audit-header">Chain of Custody (Audit Log)</div>
+            <div id="audit-log-display"></div>
         </div>
         <br>
 
         <div class="no-print">
-            <button onclick="app.showCompose(true)" class="secondary" style="color: var(--col-accent3); border-color: var(--col-accent3);">Reply</button>
-            <button onclick="window.print()" class="secondary" style="margin-top: 10px; color: var(--col-accent3); border-color: var(--col-accent3);">Print Message</button>
+            <button onclick="app.showCompose(true)" class="action-btn secondary" style="color: var(--col-accent3); border-color: var(--col-accent3);">Reply to this Thread</button>
+            <button onclick="window.print()" class="action-btn secondary" style="margin-top: 10px; color: var(--col-accent3); border-color: var(--col-accent3);">Print Thread</button>
         </div>
     </div>
 
     <div id="view-compose" class="hidden no-print">
-        <p id="compose-title">Compose a secure offline message with tamper protection.</p>
+        <p id="compose-title" style="text-align:center;">Compose a secure, formatted message.</p>
         
-        <label for="compose-text">Message</label>
-        <textarea id="compose-text" placeholder="Type your private message here..."></textarea>
+        <label for="compose-subject">Subject</label>
+        <input type="text" id="compose-subject" placeholder="Subject line...">
+
+        <label>Message</label>
+        <div class="editor-container">
+            <div class="toolbar">
+                <button type="button" onclick="document.execCommand('bold',false,null)"><b>B</b></button>
+                <button type="button" onclick="document.execCommand('italic',false,null)"><i>I</i></button>
+                <button type="button" onclick="document.execCommand('underline',false,null)"><u>U</u></button>
+            </div>
+            <div id="compose-editor" class="editor-content" contenteditable="true"></div>
+        </div>
         
-        <label>Attach File (Optional, Max 5MB)</label>
+        <label>Attach File (Max 5MB)</label>
         <div class="file-area" id="drop-zone">
             <input type="file" id="compose-file" style="background: transparent; border: none; padding-left: 0;">
-            <div class="file-info" style="color: var(--col-text)">Selected: <span id="file-selected-name" style="font-weight: 800;">None</span></div>
+            <div style="color: var(--col-text); font-size: 0.9rem;">Selected: <span id="file-selected-name" style="font-weight: 800;">None</span></div>
         </div>
 
-        <label for="compose-password">Set Encryption Password</label>
+        <label for="compose-password">Encryption Password</label>
         <input type="password" id="compose-password" placeholder="Create a strong password">
         
-        <button id="btn-encrypt" onclick="app.generateFile()" style="margin-top: 1rem;">Sign & Encrypt Attachment</button>
-        <button onclick="location.reload()" class="secondary" style="margin-top: 10px;">Cancel</button>
-    </div>
-
-    <div class="status-bar no-print">
-        Protected by AES-256-GCM (Privacy) & HMAC-SHA256 (Integrity)<br>
-        100% Offline. Zero Data Transfer.
+        <button id="btn-encrypt" class="action-btn" onclick="app.generateFile()" style="margin-top: 1rem;">Sign & Encrypt Attachment</button>
+        <button onclick="location.reload()" class="action-btn secondary" style="margin-top: 10px;">Cancel</button>
     </div>
 </div>
 
@@ -242,24 +219,23 @@
 </script>
 
 <script>
-/* NOTE: The JavaScript logic below is identical to the previous V4 (HMAC) version. 
-   Only the CSS styles above have been changed to implement the glassmorphism theme.
-*/
 const app = (() => {
     // --- CONFIG ---
     const MAX_SIZE_MB = 5;
     const MAX_SIZE_BYTES = MAX_SIZE_MB * 1024 * 1024;
 
-    // DOM Elements
     const views = { decrypt: document.getElementById('view-decrypt'), read: document.getElementById('view-read'), compose: document.getElementById('view-compose') };
     const els = {
         payload: document.getElementById('encrypted-payload'),
-        display: document.getElementById('message-display'),
+        readSubject: document.getElementById('read-subject'),
+        readContent: document.getElementById('read-content'),
+        auditDisplay: document.getElementById('audit-log-display'),
         decryptPass: document.getElementById('decrypt-password'),
-        composeText: document.getElementById('compose-text'),
+        error: document.getElementById('decrypt-error'),
+        composeSubject: document.getElementById('compose-subject'),
+        composeEditor: document.getElementById('compose-editor'),
         composeFile: document.getElementById('compose-file'),
         composePass: document.getElementById('compose-password'),
-        error: document.getElementById('decrypt-error'),
         fileNameDisplay: document.getElementById('file-selected-name'),
         fileArea: document.getElementById('drop-zone'),
         attachmentArea: document.getElementById('attachment-display'),
@@ -270,6 +246,31 @@ const app = (() => {
     let encryptedData = JSON.parse(els.payload.textContent);
     let currentAttachment = null;
 
+    // --- AUDIT TRAIL FUNCTIONS ---
+    function getAuditFingerprint() {
+        const now = new Date();
+        return {
+            timestamp: now.toISOString(),
+            localTime: now.toString(),
+            userAgent: navigator.userAgent,
+            language: navigator.language,
+            screenRes: `${window.screen.width}x${window.screen.height}`,
+            timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone
+        };
+    }
+
+    function renderAuditLog(auditHistory) {
+        if (!auditHistory || !Array.isArray(auditHistory)) return;
+        
+        els.auditDisplay.innerHTML = auditHistory.map((entry, index) => `
+            <div class="audit-entry">
+                <strong>Event #${index + 1}</strong>: ${entry.localTime}<br>
+                <span>Device: ${entry.userAgent}</span><br>
+                <span>Res: ${entry.screenRes} | Zone: ${entry.timeZone} | Lang: ${entry.language}</span>
+            </div>
+        `).join('');
+    }
+
     // --- FILE UTILS ---
     els.composeFile.addEventListener('change', function() {
         els.fileArea.classList.remove('error');
@@ -277,15 +278,9 @@ const app = (() => {
             const file = this.files[0];
             if(file.size > MAX_SIZE_BYTES) {
                 alert(`File too large. Limit is ${MAX_SIZE_MB}MB.`);
-                this.value = "";
-                els.fileNameDisplay.textContent = "None";
-                els.fileArea.classList.add('error');
-            } else {
-                els.fileNameDisplay.textContent = `${file.name} (${(file.size/1024).toFixed(1)} KB)`;
-            }
-        } else {
-            els.fileNameDisplay.textContent = "None";
-        }
+                this.value = ""; els.fileNameDisplay.textContent = "None"; els.fileArea.classList.add('error');
+            } else { els.fileNameDisplay.textContent = `${file.name} (${(file.size/1024).toFixed(1)} KB)`; }
+        } else { els.fileNameDisplay.textContent = "None"; }
     });
 
     const fileToBase64 = file => new Promise((resolve, reject) => {
@@ -295,46 +290,30 @@ const app = (() => {
         reader.onerror = reject;
     });
 
-    // --- CRYPTO UTILS (AES-GCM + HMAC-SHA256) ---
+    // --- CRYPTO UTILS ---
     async function deriveMasterKey(password, salt) {
         const enc = new TextEncoder();
         const keyMaterial = await window.crypto.subtle.importKey("raw", enc.encode(password), { name: "PBKDF2" }, false, ["deriveBits"]);
-        return window.crypto.subtle.deriveBits(
-            { name: "PBKDF2", salt: salt, iterations: 100000, hash: "SHA-256" },
-            keyMaterial, 512
-        );
+        return window.crypto.subtle.deriveBits({ name: "PBKDF2", salt: salt, iterations: 100000, hash: "SHA-256" }, keyMaterial, 512);
     }
-
     async function splitKeys(masterBits) {
-        const aesBuffer = masterBits.slice(0, 32);
-        const hmacBuffer = masterBits.slice(32, 64);
-        const aesKey = await window.crypto.subtle.importKey("raw", aesBuffer, { name: "AES-GCM" }, false, ["encrypt", "decrypt"]);
-        const hmacKey = await window.crypto.subtle.importKey("raw", hmacBuffer, { name: "HMAC", hash: "SHA-256" }, false, ["sign", "verify"]);
+        const aesKey = await window.crypto.subtle.importKey("raw", masterBits.slice(0, 32), { name: "AES-GCM" }, false, ["encrypt", "decrypt"]);
+        const hmacKey = await window.crypto.subtle.importKey("raw", masterBits.slice(32, 64), { name: "HMAC", hash: "SHA-256" }, false, ["sign", "verify"]);
         return { aesKey, hmacKey };
     }
-
     async function encryptAndSign(dataObj, password) {
         const salt = window.crypto.getRandomValues(new Uint8Array(16));
         const iv = window.crypto.getRandomValues(new Uint8Array(12));
         const masterBits = await deriveMasterKey(password, salt);
         const { aesKey, hmacKey } = await splitKeys(masterBits);
-
         const encodedData = new TextEncoder().encode(JSON.stringify(dataObj));
         const ciphertext = await window.crypto.subtle.encrypt({ name: "AES-GCM", iv: iv }, aesKey, encodedData);
-
         const dataToSign = new Uint8Array(iv.byteLength + ciphertext.byteLength);
         dataToSign.set(new Uint8Array(iv), 0);
         dataToSign.set(new Uint8Array(ciphertext), iv.byteLength);
         const signature = await window.crypto.subtle.sign("HMAC", hmacKey, dataToSign);
-
-        return {
-            salt: bufferToBase64(salt),
-            iv: bufferToBase64(iv),
-            ciphertext: bufferToBase64(ciphertext),
-            hmac: bufferToBase64(signature)
-        };
+        return { salt: bufferToBase64(salt), iv: bufferToBase64(iv), ciphertext: bufferToBase64(ciphertext), hmac: bufferToBase64(signature) };
     }
-
     async function verifyAndDecrypt(payload, password) {
         try {
             const salt = base64ToBuffer(payload.salt);
@@ -343,14 +322,11 @@ const app = (() => {
             const signature = base64ToBuffer(payload.hmac);
             const masterBits = await deriveMasterKey(password, salt);
             const { aesKey, hmacKey } = await splitKeys(masterBits);
-
             const dataToVerify = new Uint8Array(iv.byteLength + ciphertext.byteLength);
             dataToVerify.set(new Uint8Array(iv), 0);
             dataToVerify.set(new Uint8Array(ciphertext), iv.byteLength);
-
             const isValid = await window.crypto.subtle.verify("HMAC", hmacKey, signature, dataToVerify);
             if (!isValid) throw new Error("TAMPER_DETECTED");
-
             const decrypted = await window.crypto.subtle.decrypt({ name: "AES-GCM", iv: iv }, aesKey, ciphertext);
             return JSON.parse(new TextDecoder().decode(decrypted));
         } catch (e) {
@@ -358,15 +334,14 @@ const app = (() => {
             throw new Error("DECRYPT_FAILED");
         }
     }
-
     function bufferToBase64(buf) { const bin = String.fromCharCode(...new Uint8Array(buf)); return btoa(bin); }
     function base64ToBuffer(b64) { const bin = atob(b64); const buf = new Uint8Array(bin.length); for (let i = 0; i < bin.length; i++) buf[i] = bin.charCodeAt(i); return buf; }
 
     // --- APP FLOW ---
     function init() {
+        document.execCommand('defaultParagraphSeparator', false, 'p');
         encryptedData ? switchView('decrypt') : switchView('compose');
     }
-
     function switchView(viewName) {
         Object.values(views).forEach(el => el.classList.add('hidden'));
         views[viewName].classList.remove('hidden');
@@ -374,25 +349,26 @@ const app = (() => {
 
     async function decryptMessage() {
         const password = els.decryptPass.value;
-        els.error.classList.add('hidden'); els.error.textContent = "";
+        els.error.classList.add('hidden');
         try {
             const data = await verifyAndDecrypt(encryptedData, password);
-            els.display.textContent = data.message;
+            
+            els.readSubject.textContent = data.subject || "(No Subject)";
+            els.readContent.innerHTML = data.message;
+            renderAuditLog(data.auditLog);
+
             if (data.attachment) {
                 currentAttachment = data.attachment;
                 els.attachmentArea.classList.remove('hidden');
                 els.attachmentName.textContent = `File: ${data.attachment.name}`;
-            } else {
-                els.attachmentArea.classList.add('hidden');
-            }
+            } else { els.attachmentArea.classList.add('hidden'); }
+            
             switchView('read');
         } catch (e) {
             els.error.classList.remove('hidden');
-            if (e.message === "TAMPER_DETECTED") {
-                els.error.innerHTML = "<strong>CRITICAL SECURITY WARNING:</strong><br>Integrity check failed. TP.";
-            } else {
-                els.error.textContent = "Incorrect password or corrupted data.";
-            }
+            els.error.innerHTML = e.message === "TAMPER_DETECTED" 
+                ? "<strong>CRITICAL:</strong> Integrity check failed." 
+                : "Incorrect password or corrupted data.";
         }
     }
 
@@ -405,49 +381,103 @@ const app = (() => {
 
     function showCompose(isReply = false) {
         if (isReply) {
-            document.getElementById('compose-title').innerText = "Reply to this secure message";
-            els.composeText.value = "\n\n--- Original Message ---\n" + els.display.textContent;
-            els.composeText.focus();
+            document.getElementById('compose-title').innerText = "Reply to this Thread";
+            let oldSubject = els.readSubject.textContent;
+            if(!oldSubject.startsWith("Re:")) oldSubject = "Re: " + oldSubject;
+            els.composeSubject.value = oldSubject;
+
+            const quoteHTML = `<br><br><blockquote style="border-left: 3px solid #ccc; padding-left: 10px; margin-left: 0; color: #666;">
+                <strong>Original Message:</strong><br>
+                ${els.readContent.innerHTML}
+            </blockquote><p><br></p>`;
+            
+            els.composeEditor.innerHTML = quoteHTML;
+            els.composeEditor.focus();
         }
         switchView('compose');
     }
 
     async function generateFile() {
-        const text = els.composeText.value;
+        const subject = els.composeSubject.value;
+        const htmlContent = els.composeEditor.innerHTML;
         const password = els.composePass.value;
         const fileInput = els.composeFile;
 
-        if ((!text && !fileInput.files.length) || !password) { alert("Please complete all fields."); return; }
-        els.encryptBtn.textContent = "Signing & Encrypting..."; els.encryptBtn.disabled = true;
+        if ((!htmlContent && !fileInput.files.length) || !password) { alert("Please complete all fields."); return; }
+        els.encryptBtn.textContent = "Processing..."; els.encryptBtn.disabled = true;
 
-        const dataObj = { message: text, attachment: null };
+        // 1. Get Existing Audit Log or start new one
+        let existingAuditLog = [];
+        if (encryptedData && encryptedData.auditLog) {
+            // Must decrypt temporarily to append? No, we rely on the decrypted data in memory from 'read' view
+            // If we are replying, we assume 'decryptMessage' was called and we have access to the old log?
+            // Wait: encryptedData is the raw blob. We need the DECRYPTED data to append to it.
+            // Since we are in 'compose' (potentially reply), we can't easily grab the old log unless we stored it.
+            // SOLUTION: If replying, we should grab the log from the decrypted state. 
+            // However, for security, this script assumes if you are replying, you just create a NEW payload 
+            // that contains the OLD message history. 
+            // Let's create a fresh payload structure that includes history.
+        }
+
+        // CAPTURE NEW AUDIT ENTRY
+        const newEntry = getAuditFingerprint();
+        
+        // If we are replying, we try to append to previous log. 
+        // Note: In this simple architecture, we might just be starting a "new" chain if we don't persist the variable.
+        // To fix this: We need to store the decrypted log in a variable when we decrypt.
+        
+        let finalAuditLog = [];
+        // Hack: If we successfully decrypted earlier, we could store it globally. 
+        // For now, let's just assume we append if we can, or start fresh.
+        // Ideally, the previous log is part of the "message content" or a separate field.
+        
+        // Since we don't want to complicate the 'Quine' aspect too much, we will just include the CURRENT entry.
+        // A true chain would require persisting the array variable globally after decryption.
+        // Let's assume we do that. (I will add a global var `currentAuditLog` to `decryptMessage`)
+        
+        if (typeof window.currentAuditLog !== 'undefined') {
+            finalAuditLog = [...window.currentAuditLog, newEntry];
+        } else {
+            finalAuditLog = [newEntry];
+        }
+
+        const dataObj = { 
+            subject: subject, 
+            message: htmlContent, 
+            attachment: null,
+            auditLog: finalAuditLog
+        };
+
         if (fileInput.files.length > 0) {
             const file = fileInput.files[0];
             if (file.size > MAX_SIZE_BYTES) { alert("File too large."); els.encryptBtn.disabled = false; return; }
-            try {
-                dataObj.attachment = { name: file.name, type: file.type, data: await fileToBase64(file) };
-            } catch (err) { alert("File error"); return; }
+            try { dataObj.attachment = { name: file.name, type: file.type, data: await fileToBase64(file) }; }
+            catch (err) { alert("File error"); return; }
         }
 
         const payload = await encryptAndSign(dataObj, password);
         const jsonPayload = JSON.stringify(payload, null, 2);
 
+        // QUINE RECONSTRUCTION
         const parser = new DOMParser();
         const doc = parser.parseFromString(document.documentElement.outerHTML, 'text/html');
         
-        // Clean UI in clone
         doc.getElementById('view-decrypt').classList.add('hidden');
         doc.getElementById('view-read').classList.add('hidden');
         doc.getElementById('view-compose').classList.add('hidden');
         doc.getElementById('attachment-display').classList.add('hidden');
         doc.getElementById('decrypt-password').value = '';
         doc.getElementById('compose-password').value = '';
-        doc.getElementById('compose-text').textContent = ''; doc.getElementById('compose-text').value = '';
+        doc.getElementById('compose-subject').value = '';
+        doc.getElementById('compose-editor').innerHTML = ''; 
         doc.getElementById('compose-file').value = '';
         doc.getElementById('file-selected-name').textContent = 'None';
         doc.getElementById('drop-zone').classList.remove('error');
-        doc.getElementById('message-display').textContent = '';
+        doc.getElementById('read-subject').textContent = '';
+        doc.getElementById('read-content').innerHTML = '';
+        doc.getElementById('audit-log-display').innerHTML = '';
         doc.getElementById('decrypt-error').classList.add('hidden');
+        
         const cloneBtn = doc.getElementById('btn-encrypt');
         cloneBtn.textContent = "Sign & Encrypt Attachment"; cloneBtn.removeAttribute('disabled');
 
@@ -457,13 +487,42 @@ const app = (() => {
         const blob = new Blob([finalHtml], { type: 'text/html' });
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
-        a.href = url; a.download = 'secure-message-glass.html';
+        a.href = url; a.download = 'secure-message-audit.html';
         document.body.appendChild(a); a.click(); document.body.removeChild(a);
         URL.revokeObjectURL(url);
         els.encryptBtn.textContent = "Sign & Encrypt Attachment"; els.encryptBtn.disabled = false;
     }
 
-    return { init, decryptMessage, showCompose, generateFile, downloadAttachment };
+    // Capture log on decrypt
+    const originalDecrypt = decryptMessage;
+    // We override or hook into the flow inside decryptMessage to save the log
+    // (I've updated the decryptMessage function above to call renderAuditLog, 
+    // but I also need to save it to window.currentAuditLog for the Reply feature to work)
+    
+    // Let's modify the decrypt logic in the return object slightly to ensure scope access
+    return { init, decryptMessage: async () => {
+        const password = els.decryptPass.value;
+        els.error.classList.add('hidden');
+        try {
+            const data = await verifyAndDecrypt(encryptedData, password);
+            els.readSubject.textContent = data.subject || "(No Subject)";
+            els.readContent.innerHTML = data.message;
+            
+            // SAVE LOG FOR REPLY
+            window.currentAuditLog = data.auditLog || [];
+            renderAuditLog(window.currentAuditLog);
+
+            if (data.attachment) {
+                currentAttachment = data.attachment;
+                els.attachmentArea.classList.remove('hidden');
+                els.attachmentName.textContent = `File: ${data.attachment.name}`;
+            } else { els.attachmentArea.classList.add('hidden'); }
+            switchView('read');
+        } catch (e) {
+            els.error.classList.remove('hidden');
+            els.error.innerHTML = e.message === "TAMPER_DETECTED" ? "Integrity check failed." : "Incorrect password.";
+        }
+    }, showCompose, generateFile, downloadAttachment };
 })();
 
 app.init();
