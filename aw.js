@@ -31,26 +31,29 @@
         stopAutoplay: "Stop Autoplay",
         invertColors: "Invert Colors",
         columnWidth: "Column Width",
+        textToSpeech: "Read Page Aloud",
+        monochrome: "Desaturate (Grey)",
+        blueLight: "Blue Light Filter",
+        // NEW: Color Blindness Translations
+        highSaturation: "High Saturation",
+        protanopia: "Red Weakness",
+        deuteranopia: "Green Weakness",
+        tritanopia: "Blue Weakness",
       },
     },
   };
 
   // Check if FontAwesome is already available
   function hasFontAwesome() {
-    // First check if FontAwesome CSS is already loaded
     if (document.querySelector('link[rel="stylesheet"][href*="fontawesome"]')) {
       return true;
     }
-
-    // Fallback check by testing the font family
     const probe = document.createElement("i");
     probe.className = "fas";
     probe.style.display = "none";
     document.body.appendChild(probe);
-
     const fontFamily = getComputedStyle(probe).fontFamily || "";
     probe.remove();
-
     return /Font Awesome/i.test(fontFamily);
   }
 
@@ -61,30 +64,68 @@
       this.translations = WIDGET_CONFIG.translations[this.currentLang];
       this.isOpen = false;
       this.observers = [];
+      this.speechSynthesis = window.speechSynthesis;
+      this.currentUtterance = null;
       this.init();
     }
 
     init() {
       this.loadExternalResources();
       this.injectStyles();
+      this.injectColorFilters(); // NEW: Inject SVG Filters
       this.createWidget();
       this.attachEventListeners();
       this.setupSPAListeners();
       this.applySettings();
     }
 
-    // Set up listeners for Single Page Application behavior
+    // NEW: Inject SVG Filters for Color Blindness Correction
+    injectColorFilters() {
+      if (document.getElementById("a11y-svg-filters")) return;
+
+      const svgContainer = document.createElement("div");
+      svgContainer.id = "a11y-svg-filters";
+      svgContainer.style.height = "0";
+      svgContainer.style.width = "0";
+      svgContainer.style.position = "absolute";
+      svgContainer.style.visibility = "hidden";
+      svgContainer.style.overflow = "hidden";
+
+      // These matrices attempt to shift confusion lines for color correction
+      svgContainer.innerHTML = `
+        <svg xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <filter id="a11y-filter-protanopia">
+              <feColorMatrix type="matrix" values="0.567, 0.433, 0, 0, 0
+                                                   0.558, 0.442, 0, 0, 0
+                                                   0, 0.242, 0.758, 0, 0
+                                                   0, 0, 0, 1, 0" />
+            </filter>
+            <filter id="a11y-filter-deuteranopia">
+              <feColorMatrix type="matrix" values="0.625, 0.375, 0, 0, 0
+                                                   0.7, 0.3, 0, 0, 0
+                                                   0, 0.3, 0.7, 0, 0
+                                                   0, 0, 0, 1, 0" />
+            </filter>
+            <filter id="a11y-filter-tritanopia">
+              <feColorMatrix type="matrix" values="0.95, 0.05, 0, 0, 0
+                                                   0, 0.433, 0.567, 0, 0
+                                                   0, 0.475, 0.525, 0, 0
+                                                   0, 0, 0, 1, 0" />
+            </filter>
+          </defs>
+        </svg>
+      `;
+      document.body.appendChild(svgContainer);
+    }
+
     setupSPAListeners() {
-      // Watch for DOM changes using MutationObserver
       const observer = new MutationObserver((mutations) => {
         let shouldReapply = false;
-
         mutations.forEach((mutation) => {
-          // Check for new nodes being added
           if (mutation.type === "childList" && mutation.addedNodes.length > 0) {
             for (let node of mutation.addedNodes) {
               if (node.nodeType === Node.ELEMENT_NODE) {
-                // Look for Flarum-specific elements
                 if (
                   node.matches &&
                   (node.matches(".Post-body, .DiscussionListItem, .UserCard, .CommentPost") ||
@@ -99,67 +140,38 @@
         });
 
         if (shouldReapply) {
-          // Give Flarum time to finish rendering before applying styles
           setTimeout(() => {
             this.applySettings();
           }, 100);
         }
       });
 
-      // Monitor the entire document for changes
-      observer.observe(document.body, {
-        childList: true,
-        subtree: true,
-      });
-
+      observer.observe(document.body, { childList: true, subtree: true });
       this.observers.push(observer);
 
-      // Intercept browser navigation for SPA
       const originalPushState = history.pushState;
       const originalReplaceState = history.replaceState;
 
       history.pushState = function (...args) {
         originalPushState.apply(history, args);
         setTimeout(() => {
-          if (window.accessibilityWidget) {
-            window.accessibilityWidget.applySettings();
-          }
+          if (window.accessibilityWidget) window.accessibilityWidget.applySettings();
         }, 200);
       };
 
       history.replaceState = function (...args) {
         originalReplaceState.apply(history, args);
         setTimeout(() => {
-          if (window.accessibilityWidget) {
-            window.accessibilityWidget.applySettings();
-          }
+          if (window.accessibilityWidget) window.accessibilityWidget.applySettings();
         }, 200);
       };
 
-      // Handle back/forward navigation
-      window.addEventListener("popstate", () => {
-        setTimeout(() => {
-          this.applySettings();
-        }, 200);
-      });
-
-      // Handle hash changes
-      window.addEventListener("hashchange", () => {
-        setTimeout(() => {
-          this.applySettings();
-        }, 200);
-      });
-
-      // Fallback timer for very dynamic content
-      this.reapplyInterval = setInterval(() => {
-        this.applySettings();
-      }, 2000); // Every 2 seconds
+      window.addEventListener("popstate", () => setTimeout(() => this.applySettings(), 200));
+      window.addEventListener("hashchange", () => setTimeout(() => this.applySettings(), 200));
+      this.reapplyInterval = setInterval(() => this.applySettings(), 2000);
     }
 
     loadExternalResources() {
-      const basePath = (document.currentScript?.src || "").split("/").slice(0, -1).join("/") + "/";
-
-      // Load FontAwesome only if it's not already available
       if (!hasFontAwesome()) {
         const link = document.createElement("link");
         link.id = "fontawesome-local";
@@ -168,23 +180,10 @@
         document.head.appendChild(link);
       }
 
-      // Load Lexend font for dyslexia support
       if (!document.getElementById("lexend-embed")) {
         const css = `
-        @font-face{
-          font-family:'Lexend';
-          font-style:normal;
-          font-weight:400;
-          font-display:swap;
-          src:url('https://guzmanbaker.github.io/Web/webfonts/lexend-400.woff2') format('woff2');
-        }
-        @font-face{
-          font-family:'Lexend';
-          font-style:normal;
-          font-weight:700;
-          font-display:swap;
-          src:url('https://guzmanbaker.github.io/Web/webfonts/lexend-700.woff2') format('woff2');
-        }`;
+        @font-face{ font-family:'Lexend'; font-style:normal; font-weight:400; font-display:swap; src:url('https://guzmanbaker.github.io/Web/webfonts/lexend-400.woff2') format('woff2'); }
+        @font-face{ font-family:'Lexend'; font-style:normal; font-weight:700; font-display:swap; src:url('https://guzmanbaker.github.io/Web/webfonts/lexend-700.woff2') format('woff2'); }`;
         const style = document.createElement("style");
         style.id = "lexend-embed";
         style.textContent = css;
@@ -207,7 +206,6 @@
                     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
                 }
                 
-                /* Toggle Button */
                 #a11y-toggle-btn {
                     width: 56px;
                     height: 56px;
@@ -229,7 +227,6 @@
                     box-shadow: 0 6px 20px rgba(0,0,0,0.2);
                 }
                 
-                /* Panel */
                 #a11y-panel {
                     position: absolute;
                     bottom: 76px;
@@ -251,12 +248,23 @@
                     }
                 }
                 
-                @media (max-width: 420px) {
+                @media (max-width: 768px) {
                     #a11y-panel {
-                        width: calc(100vw - 40px);
-                        left: 50%;
-                        transform: translateX(50%);
+                        position: fixed;
+                        top: 0;
+                        left: 0;
+                        right: 0;
+                        bottom: 0;
+                        width: 100%;
+                        height: 100%;
+                        max-width: none;
+                        max-height: none;
+                        border-radius: 0;
+                        transform: none;
+                        display: none;
+                        flex-direction: column;
                     }
+                    #a11y-panel.active { display: flex; }
                 }
                 
                 #a11y-panel.active {
@@ -270,7 +278,6 @@
                     to { opacity: 1; transform: translateY(0); }
                 }
                 
-                /* Header */
                 .a11y-header {
                     background: #f8fafc;
                     padding: 20px;
@@ -336,21 +343,16 @@
                     color: #1f2937;
                 }
                 
-                /* Content */
                 .a11y-content {
                     padding: 20px;
                     overflow-y: auto;
                     max-height: calc(100vh - 380px);
                 }
-                
-                @media (max-height: 700px) {
-                    .a11y-content {
-                        padding: 15px;
-                        max-height: calc(100vh - 340px);
-                    }
+
+                @media (max-width: 768px) {
+                    .a11y-content { max-height: none; flex: 1; }
                 }
                 
-                /* Grid */
                 .a11y-grid {
                     display: grid;
                     grid-template-columns: repeat(2, 1fr);
@@ -358,7 +360,6 @@
                     margin-bottom: 20px;
                 }
                 
-                /* Cards */
                 .a11y-card {
                     background: #f8fafc;
                     border: 1px solid #e5e7eb;
@@ -367,6 +368,11 @@
                     text-align: center;
                     cursor: pointer;
                     transition: all 0.2s;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                    min-height: 80px;
                 }
                 
                 .a11y-card:hover {
@@ -393,9 +399,9 @@
                     font-size: 13px;
                     color: #1f2937;
                     font-weight: 500;
+                    line-height: 1.2;
                 }
                 
-                /* Sliders */
                 .a11y-slider-group {
                     background: #f8fafc;
                     border-radius: 12px;
@@ -474,17 +480,6 @@
                     transform: scale(1.2);
                 }
                 
-                .a11y-slider::-moz-range-thumb {
-                    width: 20px;
-                    height: 20px;
-                    background: #2563eb;
-                    border-radius: 50%;
-                    cursor: pointer;
-                    border: none;
-                    box-shadow: 0 1px 4px rgba(0,0,0,0.2);
-                }
-                
-                /* Footer */
                 .a11y-footer {
                     padding: 16px 20px;
                     border-top: 1px solid #e5e7eb;
@@ -516,33 +511,6 @@
                     background: #dc2626;
                 }
                 
-                .a11y-reset-all {
-                    padding: 0 20px 20px 20px;
-                    background: #f8fafc;
-                }
-                
-                .a11y-reset-all button {
-                    width: 100%;
-                    padding: 10px;
-                    background: #f3f4f6;
-                    border: 1px solid #e5e7eb;
-                    border-radius: 8px;
-                    color: #6b7280;
-                    font-size: 13px;
-                    cursor: pointer;
-                    transition: all 0.2s;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    gap: 6px;
-                }
-                
-                .a11y-reset-all button:hover {
-                    background: #fee2e2;
-                    border-color: #fca5a5;
-                    color: #dc2626;
-                }
-                
                 .a11y-powered-by {
                     padding: 15px 20px;
                     background: #f1f5f9;
@@ -552,242 +520,90 @@
                     color: #64748b;
                     border-radius: 0 0 16px 16px;
                 }
-                
-                .a11y-powered-by a {
-                    color: #2563eb;
-                    text-decoration: none;
-                    font-weight: 500;
-                }
-                
-                .a11y-powered-by a:hover {
-                    text-decoration: underline;
-                }
+                @media (max-width: 768px) { .a11y-powered-by { border-radius: 0; } }
 
-                /* Enhanced Flarum selectors for better coverage */
-                .a11y-flarum-text {
-                    font-size: inherit !important;
+                /* --- ACCESSIBILITY FEATURES --- */
+                .a11y-flarum-text { font-size: inherit !important; }
+                body.a11y-dyslexia *:not([class*="fa"]) { font-family: 'Lexend', Arial, sans-serif !important; }
+                body.a11y-highlight-links a { text-decoration: underline !important; text-decoration-thickness: 2px !important; text-underline-offset: 2px !important; }
+                body.a11y-hide-images img { opacity: 0 !important; visibility: hidden !important; }
+                
+                body.a11y-highlight-headings h1::before, body.a11y-highlight-headings h2::before, body.a11y-highlight-headings h3::before,
+                body.a11y-highlight-headings h4::before, body.a11y-highlight-headings h5::before, body.a11y-highlight-headings h6::before {
+                    content: '' !important; position: absolute !important; left: 0 !important; top: 0 !important; bottom: 0 !important; width: 4px !important; background: #2563eb !important;
+                }
+                body.a11y-highlight-headings h1, body.a11y-highlight-headings h2, body.a11y-highlight-headings h3,
+                body.a11y-highlight-headings h4, body.a11y-highlight-headings h5, body.a11y-highlight-headings h6 {
+                    position: relative !important; padding-left: 20px !important;
                 }
                 
-                /* Accessibility Features */
-                body.a11y-dyslexia *:not([class*="fa"]) {
-                    font-family: 'Lexend', Arial, sans-serif !important;
-                }
+                /* Color Modes */
+                body.a11y-high-contrast { background: #000 !important; color: #fff !important; }
+                body.a11y-high-contrast * { background-color: #000 !important; color: #fff !important; border-color: #fff !important; }
+                body.a11y-high-contrast a { color: #ffff00 !important; }
+                body.a11y-high-contrast button { background: #fff !important; color: #000 !important; }
                 
-                body.a11y-highlight-links a {
-                    text-decoration: underline !important;
-                    text-decoration-thickness: 2px !important;
-                    text-underline-offset: 2px !important;
-                }
+                body.a11y-dark-mode { background: #1a1a1a !important; color: #e0e0e0 !important; }
+                body.a11y-dark-mode * { background-color: #1a1a1a !important; color: #e0e0e0 !important; border-color: #444 !important; }
+                body.a11y-dark-mode a { color: #66b3ff !important; }
                 
-                body.a11y-hide-images img {
-                    opacity: 0 !important;
-                    visibility: hidden !important;
-                }
+                body.a11y-monochrome { filter: grayscale(100%) !important; }
+                body.a11y-high-saturation { filter: saturate(200%) !important; } /* NEW: High Saturation */
                 
-                body.a11y-highlight-headings h1::before,
-                body.a11y-highlight-headings h2::before,
-                body.a11y-highlight-headings h3::before,
-                body.a11y-highlight-headings h4::before,
-                body.a11y-highlight-headings h5::before,
-                body.a11y-highlight-headings h6::before {
-                    content: '' !important;
-                    position: absolute !important;
-                    left: 0 !important;
-                    top: 0 !important;
-                    bottom: 0 !important;
-                    width: 4px !important;
-                    background: #2563eb !important;
-                }
+                /* NEW: Color Blindness SVG Filter Classes */
+                body.a11y-protanopia { filter: url('#a11y-filter-protanopia') !important; }
+                body.a11y-deuteranopia { filter: url('#a11y-filter-deuteranopia') !important; }
+                body.a11y-tritanopia { filter: url('#a11y-filter-tritanopia') !important; }
                 
-                body.a11y-highlight-headings h1,
-                body.a11y-highlight-headings h2,
-                body.a11y-highlight-headings h3,
-                body.a11y-highlight-headings h4,
-                body.a11y-highlight-headings h5,
-                body.a11y-highlight-headings h6 {
-                    position: relative !important;
-                    padding-left: 20px !important;
-                }
+                body.a11y-focus-outline *:focus { outline: 6px solid #ff0000 !important; outline-offset: 6px !important; }
+                body.a11y-reduce-motion * { animation: none !important; transition: none !important; }
+                body.a11y-cursor-size * { cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48"><path fill="black" stroke="white" stroke-width="2" d="M8 8 L28 20 L20 24 L24 36 L20 38 L16 26 L8 30 Z"/></svg>') 0 0, auto !important; }
                 
-                /* High Contrast */
-                body.a11y-high-contrast {
-                    background: #000 !important;
-                    color: #fff !important;
-                }
+                body.a11y-stop-autoplay video, body.a11y-stop-autoplay audio { autoplay: false !important; pause: true !important; }
                 
-                body.a11y-high-contrast * {
-                    background-color: #000 !important;
-                    color: #fff !important;
-                    border-color: #fff !important;
-                }
+                html.a11y-invert::before { content:""; position:fixed; inset:0; background:#fff; mix-blend-mode:difference; pointer-events:none; z-index:2147483647; }
+                html.a11y-invert img, html.a11y-invert video { mix-blend-mode:normal; }
                 
-                body.a11y-high-contrast a {
-                    color: #ffff00 !important;
-                }
+                #a11y-reading-mask { position: fixed; left: 0; right: 0; height: 120px; pointer-events: none; z-index: 999998; display: none; }
+                #a11y-reading-mask::before, #a11y-reading-mask::after { content: ''; position: absolute; left: 0; right: 0; background: rgba(0,0,0,0.3); }
+                #a11y-reading-mask::before { top: -100vh; height: 100vh; }
+                #a11y-reading-mask::after { bottom: -100vh; height: 100vh; }
+                body.a11y-reading-mask #a11y-reading-mask { display: block; }
                 
-                body.a11y-high-contrast button {
-                    background: #fff !important;
-                    color: #000 !important;
-                }
+                .a11y-magnifier { position: fixed; width: 400px; max-width: 90vw; padding: 20px; background: rgba(255, 255, 255, 0.98); border: 2px solid #2563eb; border-radius: 8px; box-shadow: 0 8px 32px rgba(0,0,0,0.2); pointer-events: none; z-index: 999997; display: none; font-size: 150%; line-height: 1.6; word-wrap: break-word; color: #000; }
+                body.a11y-text-magnifier .a11y-magnifier { display: block; }
+                .a11y-magnifier::before { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 2px; height: 20px; background: rgba(37, 99, 235, 0.3); pointer-events: none; }
                 
-                /* Dark Mode */
-                body.a11y-dark-mode {
-                    background: #1a1a1a !important;
-                    color: #e0e0e0 !important;
-                }
-                
-                body.a11y-dark-mode * {
-                    background-color: #1a1a1a !important;
-                    color: #e0e0e0 !important;
-                    border-color: #444 !important;
-                }
-                
-                body.a11y-dark-mode a {
-                    color: #66b3ff !important;
-                }
-                
-                /* Focus Outline */
-                body.a11y-focus-outline *:focus {
-                    outline: 6px solid #ff0000 !important;
-                    outline-offset: 6px !important;
-                }
-                
-                /* Reduce Motion */
-                body.a11y-reduce-motion * {
-                    animation: none !important;
-                    transition: none !important;
-                }
-                
-                /* Large Cursor */
-                body.a11y-cursor-size * {
-                    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48"><path fill="black" stroke="white" stroke-width="2" d="M8 8 L28 20 L20 24 L24 36 L20 38 L16 26 L8 30 Z"/></svg>') 0 0, auto !important;
-                }
-                
-                /* Stop Autoplay */
-                body.a11y-stop-autoplay video,
-                body.a11y-stop-autoplay audio {
-                    autoplay: false !important;
-                    pause: true !important;
-                }
-                
-                /* Invert Colors */
-                html.a11y-invert::before{
-                    content:"";
-                    position:fixed;
-                    inset:0;
-                    background:#fff;
-                    mix-blend-mode:difference;
-                    pointer-events:none;
-                    z-index:2147483647;
-                }
-                
-                html.a11y-invert img,
-                html.a11y-invert video{
-                    mix-blend-mode:normal;
-                }
-                
-                /* Reading Mask */
-                #a11y-reading-mask {
-                    position: fixed;
-                    left: 0;
-                    right: 0;
-                    height: 120px;
+                #a11y-bluelight-overlay {
+                    position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+                    background: rgba(255, 165, 0, 0.2);
+                    mix-blend-mode: multiply;
                     pointer-events: none;
-                    z-index: 999998;
+                    z-index: 2147483646;
                     display: none;
                 }
-                
-                #a11y-reading-mask::before,
-                #a11y-reading-mask::after {
-                    content: '';
-                    position: absolute;
-                    left: 0;
-                    right: 0;
-                    background: rgba(0,0,0,0.3);
-                }
-                
-                #a11y-reading-mask::before {
-                    top: -100vh;
-                    height: 100vh;
-                }
-                
-                #a11y-reading-mask::after {
-                    bottom: -100vh;
-                    height: 100vh;
-                }
-                
-                body.a11y-reading-mask #a11y-reading-mask {
-                    display: block;
-                }
-                
-                /* Text Magnifier */
-                .a11y-magnifier {
-                    position: fixed;
-                    width: 400px;
-                    max-width: 90vw;
-                    padding: 20px;
-                    background: rgba(255, 255, 255, 0.98);
-                    border: 2px solid #2563eb;
-                    border-radius: 8px;
-                    box-shadow: 0 8px 32px rgba(0,0,0,0.2);
-                    pointer-events: none;
-                    z-index: 999997;
-                    display: none;
-                    font-size: 150%;
-                    line-height: 1.6;
-                    word-wrap: break-word;
-                    color: #000;
-                }
-                
-                body.a11y-text-magnifier .a11y-magnifier {
-                    display: block;
-                }
-                
-                .a11y-magnifier::before {
-                    content: '';
-                    position: absolute;
-                    top: 50%;
-                    left: 50%;
-                    transform: translate(-50%, -50%);
-                    width: 2px;
-                    height: 20px;
-                    background: rgba(37, 99, 235, 0.3);
-                    pointer-events: none;
-                }
-                
-                /* Responsive styles */
+                body.a11y-blue-light #a11y-bluelight-overlay { display: block; }
+
                 @media (max-width: 420px) {
-                    .a11y-grid {
-                        grid-template-columns: 1fr;
-                        gap: 8px;
-                    }
-                    
-                    .a11y-slider-group {
-                        padding: 12px;
-                    }
-                    
-                    .a11y-content {
-                        padding: 15px;
-                    }
+                    .a11y-grid { grid-template-columns: 1fr; gap: 8px; }
+                    .a11y-slider-group { padding: 12px; }
+                    .a11y-content { padding: 15px; }
                 }
             `;
       document.head.appendChild(style);
     }
 
     createWidget() {
-      // Prevent creating duplicate widgets
       if (document.getElementById("a11y-widget-container")) return;
 
       const container = document.createElement("div");
       container.id = "a11y-widget-container";
 
-      // Create the main toggle button
       const toggleBtn = document.createElement("button");
       toggleBtn.id = "a11y-toggle-btn";
       toggleBtn.setAttribute("aria-label", this.translations.title);
       toggleBtn.innerHTML = '<i class="fas fa-universal-access"></i>';
 
-      // Create the settings panel
       const panel = document.createElement("div");
       panel.id = "a11y-panel";
       panel.innerHTML = this.getPanelHTML();
@@ -796,9 +612,17 @@
       container.appendChild(panel);
       document.body.appendChild(container);
 
-      // Create additional accessibility elements
       this.createReadingMask();
       this.createMagnifier();
+      this.createBlueLightOverlay();
+    }
+
+    createBlueLightOverlay() {
+      if (!document.getElementById("a11y-bluelight-overlay")) {
+        const overlay = document.createElement("div");
+        overlay.id = "a11y-bluelight-overlay";
+        document.body.appendChild(overlay);
+      }
     }
 
     getPanelHTML() {
@@ -823,18 +647,25 @@
                 <div class="a11y-footer">
                     <button class="a11y-btn a11y-btn-reset">
                         <i class="fas fa-undo"></i>
-                <span>${this.translations.reset}</span>
+                        <span>${this.translations.reset}</span>
                     </button>
                 </div>
-                <div class="a11y-powered-by">
-                  <!--  ${this.translations.poweredBy} <a href="https://www.accessibility-widget.net" target="_blank" rel="noopener">Accessibility Widget</a> -->
-                </div>
+                <div class="a11y-powered-by"></div>
             `;
     }
 
     createFeatureCards() {
       const features = [
+        { id: "textToSpeech", icon: "fa-volume-up", label: this.translations.textToSpeech },
+        // NEW: Color Blindness Features
+        { id: "highSaturation", icon: "fa-palette", label: this.translations.highSaturation },
+        { id: "protanopia", icon: "fa-eye-slash", label: this.translations.protanopia },
+        { id: "deuteranopia", icon: "fa-eye-slash", label: this.translations.deuteranopia },
+        { id: "tritanopia", icon: "fa-eye-slash", label: this.translations.tritanopia },
+        { id: "monochrome", icon: "fa-tint-slash", label: this.translations.monochrome },
+        // Existing features
         { id: "readingMask", icon: "fa-eye", label: this.translations.readingMask },
+        { id: "blueLight", icon: "fa-sun", label: this.translations.blueLight },
         { id: "highContrast", icon: "fa-adjust", label: this.translations.highContrast },
         { id: "darkMode", icon: "fa-moon", label: this.translations.darkMode },
         { id: "dyslexiaFont", icon: "fa-font", label: this.translations.dyslexiaFont },
@@ -857,9 +688,7 @@
           const isActive = this.isFeatureActive(f.id);
           return `
                     <div class="a11y-card ${isActive ? "active" : ""}" data-feature="${f.id}">
-                        <div class="a11y-card-icon">
-                            <i class="fas ${f.icon}"></i>
-                        </div>
+                        <div class="a11y-card-icon"><i class="fas ${f.icon}"></i></div>
                         <div class="a11y-card-label">${f.label}</div>
                     </div>
                 `;
@@ -882,22 +711,14 @@
                 <div class="a11y-slider-group">
                     <div class="a11y-slider-header">
                         <span class="a11y-slider-label">${s.label}</span>
-                        <span class="a11y-slider-value" id="${s.id}Value">${this.settings[s.id] || (s.id === "columnWidth" ? 600 : 100)}${
-            s.id === "columnWidth" ? "px" : "%"
-          }</span>
+                        <span class="a11y-slider-value" id="${s.id}Value">${this.settings[s.id] || (s.id === "columnWidth" ? 600 : 100)}${s.id === "columnWidth" ? "px" : "%"}</span>
                     </div>
                     <div class="a11y-slider-controls">
-                        <button class="a11y-slider-btn" data-action="decrease" data-target="${s.id}">
-                            <i class="fas fa-minus"></i>
-                        </button>
-                        <input type="range" class="a11y-slider" id="${s.id}" 
-                            min="${s.min}" max="${s.max}" value="${this.settings[s.id] || (s.id === "columnWidth" ? 600 : 100)}">
-                        <button class="a11y-slider-btn" data-action="increase" data-target="${s.id}">
-                            <i class="fas fa-plus"></i>
-                        </button>
+                        <button class="a11y-slider-btn" data-action="decrease" data-target="${s.id}"><i class="fas fa-minus"></i></button>
+                        <input type="range" class="a11y-slider" id="${s.id}" min="${s.min}" max="${s.max}" value="${this.settings[s.id] || (s.id === "columnWidth" ? 600 : 100)}">
+                        <button class="a11y-slider-btn" data-action="increase" data-target="${s.id}"><i class="fas fa-plus"></i></button>
                     </div>
-                </div>
-            `
+                </div>`
         )
         .join("");
     }
@@ -928,31 +749,17 @@
     }
 
     attachEventListeners() {
-      // Main toggle button
-      document.getElementById("a11y-toggle-btn").addEventListener("click", () => {
-        this.togglePanel();
-      });
+      document.getElementById("a11y-toggle-btn").addEventListener("click", () => this.togglePanel());
+      document.querySelector(".a11y-close-btn").addEventListener("click", () => this.togglePanel());
 
-      // Close button
-      document.querySelector(".a11y-close-btn").addEventListener("click", () => {
-        this.togglePanel();
-      });
-
-      // Language toggle buttons
       document.querySelectorAll(".a11y-lang-btn").forEach((btn) => {
-        btn.addEventListener("click", (e) => {
-          this.changeLanguage(e.target.dataset.lang);
-        });
+        btn.addEventListener("click", (e) => this.changeLanguage(e.target.dataset.lang));
       });
 
-      // Feature toggle cards
       document.querySelectorAll(".a11y-card").forEach((card) => {
-        card.addEventListener("click", () => {
-          this.toggleFeature(card.dataset.feature, card);
-        });
+        card.addEventListener("click", () => this.toggleFeature(card.dataset.feature, card));
       });
 
-      // Range sliders
       document.querySelectorAll(".a11y-slider").forEach((slider) => {
         slider.addEventListener("input", (e) => {
           const id = e.target.id;
@@ -965,7 +772,6 @@
         });
       });
 
-      // Slider increment/decrement buttons
       document.querySelectorAll(".a11y-slider-btn").forEach((btn) => {
         btn.addEventListener("click", () => {
           const action = btn.dataset.action;
@@ -973,44 +779,25 @@
           const slider = document.getElementById(target);
           const current = parseInt(slider.value);
           const step = target === "columnWidth" ? 50 : 1;
-
-          if (action === "increase") {
-            slider.value = Math.min(current + step, parseInt(slider.max));
-          } else {
-            slider.value = Math.max(current - step, parseInt(slider.min));
-          }
-
+          slider.value = action === "increase" ? Math.min(current + step, parseInt(slider.max)) : Math.max(current - step, parseInt(slider.min));
           slider.dispatchEvent(new Event("input", { bubbles: true }));
         });
       });
 
-      // Reset button
-      document.querySelector(".a11y-btn-reset").addEventListener("click", () => {
-        this.resetSettings();
-      });
-
-      // Set up mouse tracking for reading aids
+      document.querySelector(".a11y-btn-reset").addEventListener("click", () => this.resetSettings());
       this.initMouseTracking();
     }
 
     initMouseTracking() {
       let magnifierTimeout;
-
       document.addEventListener("mousemove", (e) => {
-        // Update reading mask position
         if (this.settings.readingMask) {
           const mask = document.getElementById("a11y-reading-mask");
-          if (mask) {
-            mask.style.top = e.clientY - 60 + "px";
-          }
+          if (mask) mask.style.top = e.clientY - 60 + "px";
         }
-
-        // Update text magnifier
         if (this.settings.textMagnifier) {
           clearTimeout(magnifierTimeout);
-          magnifierTimeout = setTimeout(() => {
-            this.updateMagnifier(e);
-          }, 10);
+          magnifierTimeout = setTimeout(() => this.updateMagnifier(e), 10);
         }
       });
     }
@@ -1019,32 +806,20 @@
       const magnifier = document.querySelector(".a11y-magnifier");
       if (!magnifier) return;
 
-      // Temporarily hide magnifier to get the element underneath
       magnifier.style.display = "none";
       const targetElement = document.elementFromPoint(e.clientX, e.clientY);
       magnifier.style.display = "block";
 
-      if (!targetElement || targetElement === document.body || targetElement === document.documentElement) {
+      if (!targetElement || targetElement === document.body || targetElement === document.documentElement || targetElement.closest("#a11y-widget-container")) {
         magnifier.style.display = "none";
         return;
       }
 
-      // Don't show magnifier over the widget itself
-      if (targetElement.closest("#a11y-widget-container")) {
-        magnifier.style.display = "none";
-        return;
-      }
-
-      // Find the text container
       let textContainer = targetElement;
       const blockTags = ["P", "DIV", "ARTICLE", "SECTION", "LI", "TD", "TH", "H1", "H2", "H3", "H4", "H5", "H6", "SPAN", "A"];
-
-      // Look for the nearest element with text content
       while (textContainer && textContainer.textContent.trim().length === 0) {
         textContainer = textContainer.parentElement;
       }
-
-      // For inline elements, try to get the parent block
       if (textContainer && !blockTags.includes(textContainer.tagName)) {
         const parent = textContainer.closest(blockTags.join(","));
         if (parent) textContainer = parent;
@@ -1055,75 +830,68 @@
         return;
       }
 
-      // Extract and clean text content
       const fullText = textContainer.textContent.trim().replace(/\s+/g, " ");
       const words = fullText.split(" ");
-
       if (words.length === 0) {
         magnifier.style.display = "none";
         return;
       }
 
-      // Calculate relative position for word estimation
       const rect = textContainer.getBoundingClientRect();
       const relativeX = (e.clientX - rect.left) / rect.width;
       const relativeY = (e.clientY - rect.top) / rect.height;
-
-      // Estimate which word the cursor is near
       const estimatedPosition = Math.floor(words.length * (relativeY * 0.7 + relativeX * 0.3));
       const wordIndex = Math.max(0, Math.min(estimatedPosition, words.length - 1));
 
-      // Show a window of words around the cursor
       const wordsToShow = 20;
       const wordsBeforeCursor = 8;
-
       let startIndex = Math.max(0, wordIndex - wordsBeforeCursor);
       let endIndex = Math.min(words.length, startIndex + wordsToShow);
 
-      // Adjust if we're near the end
-      if (endIndex - startIndex < wordsToShow && startIndex > 0) {
-        startIndex = Math.max(0, endIndex - wordsToShow);
-      }
+      if (endIndex - startIndex < wordsToShow && startIndex > 0) startIndex = Math.max(0, endIndex - wordsToShow);
 
-      // Build the display text
       let displayText = words.slice(startIndex, endIndex).join(" ");
-
-      // Add ellipsis for truncated text
       if (startIndex > 0) displayText = "... " + displayText;
       if (endIndex < words.length) displayText = displayText + " ...";
 
-      // Update magnifier content
       magnifier.textContent = displayText;
 
-      // Position the magnifier near the cursor
       let left = e.clientX + 20;
       let top = e.clientY - magnifier.offsetHeight - 10;
-
-      // Keep magnifier within viewport
       const magnifierWidth = magnifier.offsetWidth;
       const magnifierHeight = magnifier.offsetHeight;
 
-      if (left + magnifierWidth > window.innerWidth - 20) {
-        left = e.clientX - magnifierWidth - 20;
-      }
-      if (top < 20) {
-        top = e.clientY + 20;
-      }
-      if (top + magnifierHeight > window.innerHeight - 20) {
-        top = window.innerHeight - magnifierHeight - 20;
-      }
+      if (left + magnifierWidth > window.innerWidth - 20) left = e.clientX - magnifierWidth - 20;
+      if (top < 20) top = e.clientY + 20;
+      if (top + magnifierHeight > window.innerHeight - 20) top = window.innerHeight - magnifierHeight - 20;
 
       magnifier.style.left = left + "px";
       magnifier.style.top = top + "px";
     }
 
     toggleFeature(feature, card) {
-      if (feature.startsWith("textAlign")) {
-        // Handle text alignment features
-        document.querySelectorAll('[data-feature^="textAlign"]').forEach((c) => {
-          c.classList.remove("active");
-        });
+      if (feature === "textToSpeech") {
+        this.toggleTTS(card);
+        return;
+      }
 
+      // Handle mutual exclusivity for Color Modes
+      const colorModes = ["monochrome", "highSaturation", "protanopia", "deuteranopia", "tritanopia"];
+      if (colorModes.includes(feature)) {
+        // Disable other color modes if enabling one
+        if (!this.settings[feature]) {
+          colorModes.forEach((mode) => {
+            if (mode !== feature && this.settings[mode]) {
+              this.settings[mode] = false;
+              const modeCard = document.querySelector(`[data-feature="${mode}"]`);
+              if (modeCard) modeCard.classList.remove("active");
+            }
+          });
+        }
+      }
+
+      if (feature.startsWith("textAlign")) {
+        document.querySelectorAll('[data-feature^="textAlign"]').forEach((c) => c.classList.remove("active"));
         const align = feature.replace("textAlign", "").toLowerCase();
         if (this.settings.textAlign === align) {
           this.settings.textAlign = "default";
@@ -1132,7 +900,6 @@
           card.classList.add("active");
         }
       } else {
-        // Handle boolean toggle features
         this.settings[feature] = !this.settings[feature];
         card.classList.toggle("active");
       }
@@ -1141,26 +908,35 @@
       this.saveSettings();
     }
 
+    toggleTTS(card) {
+      if (this.speechSynthesis.speaking) {
+        this.speechSynthesis.cancel();
+        this.settings.textToSpeech = false;
+        card.classList.remove("active");
+      } else {
+        const text = document.body.innerText;
+        this.currentUtterance = new SpeechSynthesisUtterance(text);
+        this.currentUtterance.onend = () => {
+          this.settings.textToSpeech = false;
+          card.classList.remove("active");
+        };
+        this.speechSynthesis.speak(this.currentUtterance);
+        this.settings.textToSpeech = true;
+        card.classList.add("active");
+      }
+    }
+
     changeLanguage(lang) {
       this.currentLang = lang;
       this.translations = WIDGET_CONFIG.translations[lang];
       this.settings.language = lang;
-
-      // Update language toggle buttons
-      document.querySelectorAll(".a11y-lang-btn").forEach((btn) => {
-        btn.classList.toggle("active", btn.dataset.lang === lang);
-      });
-
-      // Update all UI text
+      document.querySelectorAll(".a11y-lang-btn").forEach((btn) => btn.classList.toggle("active", btn.dataset.lang === lang));
       this.updateUITexts();
       this.saveSettings();
     }
 
     updateUITexts() {
-      // Update header title
       document.querySelector(".a11y-header h3").textContent = this.translations.title;
-
-      // Update feature card labels
       const cardMappings = {
         readingMask: this.translations.readingMask,
         highContrast: this.translations.highContrast,
@@ -1178,6 +954,14 @@
         cursorSize: this.translations.cursorSize,
         stopAutoplay: this.translations.stopAutoplay,
         invertColors: this.translations.invertColors,
+        textToSpeech: this.translations.textToSpeech,
+        monochrome: this.translations.monochrome,
+        blueLight: this.translations.blueLight,
+        // NEW mappings
+        highSaturation: this.translations.highSaturation,
+        protanopia: this.translations.protanopia,
+        deuteranopia: this.translations.deuteranopia,
+        tritanopia: this.translations.tritanopia,
       };
 
       Object.entries(cardMappings).forEach(([feature, text]) => {
@@ -1185,7 +969,6 @@
         if (label) label.textContent = text;
       });
 
-      // Update slider labels
       const sliderMappings = {
         fontSize: this.translations.fontSize,
         lineHeight: this.translations.lineHeight,
@@ -1202,7 +985,6 @@
         }
       });
 
-      // Update reset button text
       const resetBtn = document.querySelector(".a11y-btn-reset span");
       if (resetBtn) resetBtn.textContent = this.translations.reset;
     }
@@ -1213,9 +995,7 @@
       panel.classList.toggle("active", this.isOpen);
     }
 
-    // Enhanced applySettings method with better Flarum support
     applySettings() {
-      // Remove all feature classes for clean state
       document.body.classList.remove(
         "a11y-dyslexia",
         "a11y-highlight-links",
@@ -1228,18 +1008,22 @@
         "a11y-focus-outline",
         "a11y-reduce-motion",
         "a11y-cursor-size",
-        "a11y-stop-autoplay"
+        "a11y-stop-autoplay",
+        "a11y-monochrome",
+        "a11y-blue-light",
+        // NEW Classes
+        "a11y-high-saturation",
+        "a11y-protanopia",
+        "a11y-deuteranopia",
+        "a11y-tritanopia"
       );
 
-      // Clear existing inline styles
       document.documentElement.style.fontSize = "";
       document.body.style.lineHeight = "";
       document.body.style.letterSpacing = "";
       document.body.style.zoom = "";
 
-      // Enhanced Flarum selectors for comprehensive coverage
       const flarumSelectors = [
-        // Basic text elements
         "p",
         'div:not([class*="a11y"])',
         "li",
@@ -1249,8 +1033,6 @@
         "section",
         "span",
         "a",
-
-        // Core Flarum classes
         ".Post-body",
         ".PostUser-name",
         ".PostUser",
@@ -1285,8 +1067,6 @@
         ".Post",
         ".DiscussionListItem",
         ".DiscussionList",
-
-        // Additional Flarum UI elements
         ".Button-label",
         ".Dropdown-toggle",
         ".FormControl",
@@ -1303,8 +1083,6 @@
         ".SettingsPage-content",
         ".ExtensionPage-content",
         ".TagsPage-content",
-
-        // Dynamic content selectors
         '[class*="Post"]',
         '[class*="Discussion"]',
         '[class*="User"]',
@@ -1315,8 +1093,6 @@
       ];
 
       const textElements = document.querySelectorAll(flarumSelectors.join(", "));
-
-      // Clear existing styles from all elements
       textElements.forEach((el) => {
         el.style.fontSize = "";
         el.style.textAlign = "";
@@ -1324,27 +1100,19 @@
         el.classList.remove("a11y-flarum-text");
       });
 
-      // Apply font size with enhanced Flarum support
       if (this.settings.fontSize && this.settings.fontSize !== 100) {
         const fontSizePercent = this.settings.fontSize + "%";
-
-        // Set global font size
         document.documentElement.style.setProperty("font-size", fontSizePercent, "important");
         document.body.style.setProperty("font-size", fontSizePercent, "important");
-
-        // Apply to all Flarum elements specifically
         textElements.forEach((el) => {
           el.style.setProperty("font-size", fontSizePercent, "important");
           el.classList.add("a11y-flarum-text");
         });
-
-        // Inject CSS for dynamically loaded content
         this.injectDynamicFontSizeCSS(this.settings.fontSize);
       } else {
         this.removeDynamicFontSizeCSS();
       }
 
-      // Apply line height
       if (this.settings.lineHeight && this.settings.lineHeight !== 100) {
         const value = this.settings.lineHeight / 100;
         document.body.style.setProperty("line-height", value, "important");
@@ -1353,7 +1121,6 @@
         });
       }
 
-      // Apply letter spacing
       if (this.settings.letterSpacing && this.settings.letterSpacing !== 100) {
         const value = (this.settings.letterSpacing - 100) * 0.05;
         document.body.style.setProperty("letter-spacing", value + "em", "important");
@@ -1362,26 +1129,22 @@
         });
       }
 
-      // Apply content scaling
       if (this.settings.contentScale && this.settings.contentScale !== 100) {
         document.body.style.zoom = this.settings.contentScale + "%";
       }
 
-      // Apply column width
       if (this.settings.columnWidth && this.settings.columnWidth !== 600) {
         textElements.forEach((el) => {
           el.style.maxWidth = this.settings.columnWidth + "px";
         });
       }
 
-      // Apply text alignment
       if (this.settings.textAlign && this.settings.textAlign !== "default") {
         textElements.forEach((el) => {
           el.style.setProperty("text-align", this.settings.textAlign, "important");
         });
       }
 
-      // Apply feature classes
       if (this.settings.dyslexiaFont) document.body.classList.add("a11y-dyslexia");
       if (this.settings.highlightLinks) document.body.classList.add("a11y-highlight-links");
       if (this.settings.hideImages) document.body.classList.add("a11y-hide-images");
@@ -1393,6 +1156,15 @@
       if (this.settings.focusOutline) document.body.classList.add("a11y-focus-outline");
       if (this.settings.reduceMotion) document.body.classList.add("a11y-reduce-motion");
       if (this.settings.cursorSize) document.body.classList.add("a11y-cursor-size");
+      if (this.settings.blueLight) document.body.classList.add("a11y-blue-light");
+
+      // NEW Color Modes
+      if (this.settings.monochrome) document.body.classList.add("a11y-monochrome");
+      if (this.settings.highSaturation) document.body.classList.add("a11y-high-saturation");
+      if (this.settings.protanopia) document.body.classList.add("a11y-protanopia");
+      if (this.settings.deuteranopia) document.body.classList.add("a11y-deuteranopia");
+      if (this.settings.tritanopia) document.body.classList.add("a11y-tritanopia");
+
       if (this.settings.stopAutoplay) {
         document.body.classList.add("a11y-stop-autoplay");
         document.querySelectorAll("video[autoplay], audio[autoplay]").forEach((media) => {
@@ -1401,7 +1173,6 @@
         });
       }
 
-      // Handle color inversion
       if (this.settings.invertColors) {
         document.documentElement.classList.add("a11y-invert");
       } else {
@@ -1409,51 +1180,29 @@
       }
     }
 
-    // Helper methods for dynamic CSS rules
     injectDynamicFontSizeCSS(fontSize) {
-      // Remove any existing dynamic CSS
       this.removeDynamicFontSizeCSS();
-
       const style = document.createElement("style");
       style.id = "a11y-dynamic-fontsize";
       style.textContent = `
-        /* Dynamic font size for all Flarum elements */
-        .Post-body *, .DiscussionListItem *, .UserCard *, .CommentPost *,
-        .Header-title *, .App-content *, .Post-stream *, .DiscussionList *,
-        [class*="Post"] *, [class*="Discussion"] *, [class*="User"] *,
-        [class*="Comment"] *, [class*="Stream"] *, [class*="List"] * {
-          font-size: ${fontSize}% !important;
-        }
-        
-        /* Specific Flarum classes */
-        .Post-body, .PostUser-name, .PostUser, .UserCard, .DiscussionHero-title,
-        .TagLabel-name, .TagItem, .Post-header, .CommentPost, .PostMeta,
-        .UserCard-name, .item-count, .Notification-content, .DiscussionListItem-title,
-        .DiscussionListItem-info, .DiscussionListItem-excerpt, .Header-title,
-        .Button-label, .Dropdown-toggle, .FormControl, .TextEditor-editor {
-          font-size: ${fontSize}% !important;
-        }
+        .Post-body *, .DiscussionListItem *, .UserCard *, .CommentPost *, .Header-title *, .App-content *, .Post-stream *, .DiscussionList *, [class*="Post"] *, [class*="Discussion"] *, [class*="User"] *, [class*="Comment"] *, [class*="Stream"] *, [class*="List"] * { font-size: ${fontSize}% !important; }
+        .Post-body, .PostUser-name, .PostUser, .UserCard, .DiscussionHero-title, .TagLabel-name, .TagItem, .Post-header, .CommentPost, .PostMeta, .UserCard-name, .item-count, .Notification-content, .DiscussionListItem-title, .DiscussionListItem-info, .DiscussionListItem-excerpt, .Header-title, .Button-label, .Dropdown-toggle, .FormControl, .TextEditor-editor { font-size: ${fontSize}% !important; }
       `;
       document.head.appendChild(style);
     }
 
     removeDynamicFontSizeCSS() {
       const existingStyle = document.getElementById("a11y-dynamic-fontsize");
-      if (existingStyle) {
-        existingStyle.remove();
-      }
+      if (existingStyle) existingStyle.remove();
     }
 
     resetSettings() {
-      // Reset all numeric settings to defaults
       this.settings.fontSize = 100;
       this.settings.lineHeight = 100;
       this.settings.letterSpacing = 100;
       this.settings.contentScale = 100;
       this.settings.columnWidth = 600;
       this.settings.textAlign = "default";
-
-      // Reset all boolean features
       this.settings.readingMask = false;
       this.settings.highContrast = false;
       this.settings.darkMode = false;
@@ -1467,8 +1216,17 @@
       this.settings.cursorSize = false;
       this.settings.stopAutoplay = false;
       this.settings.invertColors = false;
+      this.settings.textToSpeech = false;
+      this.settings.monochrome = false;
+      this.settings.blueLight = false;
+      // Reset new settings
+      this.settings.highSaturation = false;
+      this.settings.protanopia = false;
+      this.settings.deuteranopia = false;
+      this.settings.tritanopia = false;
 
-      // Update slider values in UI
+      if (this.speechSynthesis.speaking) this.speechSynthesis.cancel();
+
       ["fontSize", "lineHeight", "letterSpacing", "contentScale"].forEach((id) => {
         const slider = document.getElementById(id);
         if (slider) {
@@ -1477,21 +1235,14 @@
         }
       });
 
-      // Update column width slider
       const columnSlider = document.getElementById("columnWidth");
       if (columnSlider) {
         columnSlider.value = 600;
         document.getElementById("columnWidthValue").textContent = "600px";
       }
 
-      // Remove active state from all feature cards
-      document.querySelectorAll(".a11y-card").forEach((card) => {
-        card.classList.remove("active");
-      });
-
-      // Clean up dynamic CSS
+      document.querySelectorAll(".a11y-card").forEach((card) => card.classList.remove("active"));
       this.removeDynamicFontSizeCSS();
-
       this.applySettings();
       this.saveSettings();
     }
@@ -1518,6 +1269,13 @@
         cursorSize: false,
         stopAutoplay: false,
         invertColors: false,
+        textToSpeech: false,
+        monochrome: false,
+        blueLight: false,
+        highSaturation: false,
+        protanopia: false,
+        deuteranopia: false,
+        tritanopia: false,
       };
     }
 
@@ -1532,38 +1290,27 @@
     loadSettings() {
       try {
         const saved = localStorage.getItem(WIDGET_CONFIG.storageKey);
-        if (saved) {
-          return { ...this.getDefaultSettings(), ...JSON.parse(saved) };
-        }
+        if (saved) return { ...this.getDefaultSettings(), ...JSON.parse(saved) };
       } catch (e) {
         console.warn("Could not load accessibility settings:", e);
       }
       return this.getDefaultSettings();
     }
 
-    // Cleanup method for observers and intervals
     destroy() {
-      // Stop all observers
       this.observers.forEach((observer) => observer.disconnect());
       this.observers = [];
-
-      // Stop the reapply interval
-      if (this.reapplyInterval) {
-        clearInterval(this.reapplyInterval);
-      }
-
-      // Remove dynamic CSS rules
+      if (this.reapplyInterval) clearInterval(this.reapplyInterval);
       this.removeDynamicFontSizeCSS();
+      if (this.speechSynthesis.speaking) this.speechSynthesis.cancel();
     }
   }
 
-  // Initialize the accessibility widget
   function initAccessibilityWidget() {
     if (window.accessibilityWidget) return;
     window.accessibilityWidget = new AccessibilityWidget();
   }
 
-  // Wait for DOM to be ready
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", initAccessibilityWidget);
   } else {
