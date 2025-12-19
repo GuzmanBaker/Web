@@ -1,7 +1,6 @@
 (function () {
   "use strict";
 
-  // Configuration for the accessibility widget
   const WIDGET_CONFIG = {
     storageKey: "aw-widget-settings",
     defaultLang: "en",
@@ -34,7 +33,6 @@
         textToSpeech: "Read Page Aloud",
         monochrome: "Desaturate (Grey)",
         blueLight: "Blue Light Filter",
-        // NEW: Color Blindness Translations
         highSaturation: "High Saturation",
         protanopia: "Red Weakness",
         deuteranopia: "Green Weakness",
@@ -43,7 +41,6 @@
     },
   };
 
-  // Check if FontAwesome is already available
   function hasFontAwesome() {
     if (document.querySelector('link[rel="stylesheet"][href*="fontawesome"]')) {
       return true;
@@ -72,14 +69,13 @@
     init() {
       this.loadExternalResources();
       this.injectStyles();
-      this.injectColorFilters(); // NEW: Inject SVG Filters
+      this.injectColorFilters();
       this.createWidget();
       this.attachEventListeners();
       this.setupSPAListeners();
       this.applySettings();
     }
 
-    // NEW: Inject SVG Filters for Color Blindness Correction
     injectColorFilters() {
       if (document.getElementById("a11y-svg-filters")) return;
 
@@ -91,7 +87,6 @@
       svgContainer.style.visibility = "hidden";
       svgContainer.style.overflow = "hidden";
 
-      // These matrices attempt to shift confusion lines for color correction
       svgContainer.innerHTML = `
         <svg xmlns="http://www.w3.org/2000/svg">
           <defs>
@@ -196,6 +191,12 @@
 
       const style = document.createElement("style");
       style.id = "a11y-widget-styles";
+      
+      /* NOTE: For color filters, we target body > * :not(...) 
+         This prevents the 'filter' property from creating a containing block on the body,
+         which would otherwise break position:fixed for the widget.
+      */
+      
       style.textContent = `
                 /* Widget Container */
                 #a11y-widget-container {
@@ -547,13 +548,27 @@
                 body.a11y-dark-mode * { background-color: #1a1a1a !important; color: #e0e0e0 !important; border-color: #444 !important; }
                 body.a11y-dark-mode a { color: #66b3ff !important; }
                 
-                body.a11y-monochrome { filter: grayscale(100%) !important; }
-                body.a11y-high-saturation { filter: saturate(200%) !important; } /* NEW: High Saturation */
+                /* FIX: Apply filters to body CHILDREN to avoid breaking position:fixed of the widget */
                 
-                /* NEW: Color Blindness SVG Filter Classes */
-                body.a11y-protanopia { filter: url('#a11y-filter-protanopia') !important; }
-                body.a11y-deuteranopia { filter: url('#a11y-filter-deuteranopia') !important; }
-                body.a11y-tritanopia { filter: url('#a11y-filter-tritanopia') !important; }
+                body.a11y-monochrome > *:not(#a11y-widget-container):not(.a11y-magnifier):not(#a11y-reading-mask):not(#a11y-bluelight-overlay):not(#a11y-svg-filters) { 
+                    filter: grayscale(100%) !important; 
+                }
+                
+                body.a11y-high-saturation > *:not(#a11y-widget-container):not(.a11y-magnifier):not(#a11y-reading-mask):not(#a11y-bluelight-overlay):not(#a11y-svg-filters) { 
+                    filter: saturate(200%) !important; 
+                }
+                
+                body.a11y-protanopia > *:not(#a11y-widget-container):not(.a11y-magnifier):not(#a11y-reading-mask):not(#a11y-bluelight-overlay):not(#a11y-svg-filters) { 
+                    filter: url('#a11y-filter-protanopia') !important; 
+                }
+                
+                body.a11y-deuteranopia > *:not(#a11y-widget-container):not(.a11y-magnifier):not(#a11y-reading-mask):not(#a11y-bluelight-overlay):not(#a11y-svg-filters) { 
+                    filter: url('#a11y-filter-deuteranopia') !important; 
+                }
+                
+                body.a11y-tritanopia > *:not(#a11y-widget-container):not(.a11y-magnifier):not(#a11y-reading-mask):not(#a11y-bluelight-overlay):not(#a11y-svg-filters) { 
+                    filter: url('#a11y-filter-tritanopia') !important; 
+                }
                 
                 body.a11y-focus-outline *:focus { outline: 6px solid #ff0000 !important; outline-offset: 6px !important; }
                 body.a11y-reduce-motion * { animation: none !important; transition: none !important; }
@@ -657,13 +672,11 @@
     createFeatureCards() {
       const features = [
         { id: "textToSpeech", icon: "fa-volume-up", label: this.translations.textToSpeech },
-        // NEW: Color Blindness Features
         { id: "highSaturation", icon: "fa-palette", label: this.translations.highSaturation },
         { id: "protanopia", icon: "fa-eye-slash", label: this.translations.protanopia },
         { id: "deuteranopia", icon: "fa-eye-slash", label: this.translations.deuteranopia },
         { id: "tritanopia", icon: "fa-eye-slash", label: this.translations.tritanopia },
         { id: "monochrome", icon: "fa-tint-slash", label: this.translations.monochrome },
-        // Existing features
         { id: "readingMask", icon: "fa-eye", label: this.translations.readingMask },
         { id: "blueLight", icon: "fa-sun", label: this.translations.blueLight },
         { id: "highContrast", icon: "fa-adjust", label: this.translations.highContrast },
@@ -875,10 +888,8 @@
         return;
       }
 
-      // Handle mutual exclusivity for Color Modes
       const colorModes = ["monochrome", "highSaturation", "protanopia", "deuteranopia", "tritanopia"];
       if (colorModes.includes(feature)) {
-        // Disable other color modes if enabling one
         if (!this.settings[feature]) {
           colorModes.forEach((mode) => {
             if (mode !== feature && this.settings[mode]) {
@@ -957,7 +968,6 @@
         textToSpeech: this.translations.textToSpeech,
         monochrome: this.translations.monochrome,
         blueLight: this.translations.blueLight,
-        // NEW mappings
         highSaturation: this.translations.highSaturation,
         protanopia: this.translations.protanopia,
         deuteranopia: this.translations.deuteranopia,
@@ -1011,7 +1021,6 @@
         "a11y-stop-autoplay",
         "a11y-monochrome",
         "a11y-blue-light",
-        // NEW Classes
         "a11y-high-saturation",
         "a11y-protanopia",
         "a11y-deuteranopia",
@@ -1158,7 +1167,6 @@
       if (this.settings.cursorSize) document.body.classList.add("a11y-cursor-size");
       if (this.settings.blueLight) document.body.classList.add("a11y-blue-light");
 
-      // NEW Color Modes
       if (this.settings.monochrome) document.body.classList.add("a11y-monochrome");
       if (this.settings.highSaturation) document.body.classList.add("a11y-high-saturation");
       if (this.settings.protanopia) document.body.classList.add("a11y-protanopia");
@@ -1219,7 +1227,6 @@
       this.settings.textToSpeech = false;
       this.settings.monochrome = false;
       this.settings.blueLight = false;
-      // Reset new settings
       this.settings.highSaturation = false;
       this.settings.protanopia = false;
       this.settings.deuteranopia = false;
