@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Secure Message (Signed + Compressed)</title>
+    <script src="https://openfpcdn.io/fingerprintjs/v3"></script>
+    <style>
+        /* --- STYLES --- */
+        :root { --col-main: #1e293b; --col-accent: #2563eb; --bg: #f8fafc; --success: #10b981; --warn: #f59e0b; }
+        body { font-family: -apple-system, system-ui, sans-serif; background: var(--bg); color: #334155; padding: 20px; display: flex; justify-content: center; min-height: 100vh; margin: 0; }
+        .container { background: white; width: 100%; max-width: 800px; padding: 2.5rem; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); }
+        
+        h1 { margin-top: 0; font-size: 1.5rem; color: var(--col-main); display: flex; align-items: center; gap: 10px; }
+        .badge { font-size: 0.75rem; padding: 4px 8px; border-radius: 4px; text-transform: uppercase; font-weight: bold; background: #eee; }
+        .badge-ver { background: #dcfce7; color: #166534; display: none; } /* Verified Badge */
+        
+        label { display: block; margin: 15px 0 5px; font-weight: 600; font-size: 0.9rem; }
+        input, select, textarea { width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 6px; box-sizing: border-box; }
+        .editor { border: 1px solid #cbd5e1; border-radius: 6px; min-height: 150px; padding: 15px; margin-bottom: 15px; }
+        
+        button { width: 100%; padding: 12px; margin-top: 15px; border: none; border-radius: 6px; font-weight: 600; cursor: pointer; background: var(--col-main); color: white; }
+        button.secondary { background: white; border: 1px solid #cbd5e1; color: var(--col-main); }
+        
+        .hidden { display: none !important; }
+        .stat-box { font-size: 0.8rem; color: #64748b; margin-top: 5px; font-family: monospace; }
+        
+        /* Print */
+        @media print {
+            body { background: white; } .container { box-shadow: none; border: none; }
+            button, input, textarea, .hidden-print { display: none !important; }
+            #view-read { display: block !important; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>
+        Secure Portal
+        <span class="badge badge-ver" id="sig-badge">✓ Signature Verified</span>
+    </h1>
+
+    <div id="view-decrypt" class="hidden">
+        <p>This digital envelope is encrypted and compressed. Authenticate to open.</p>
+        
+        <div style="display:flex; gap:10px; margin-bottom:15px;">
+            <button onclick="app.setMode('pass')" class="secondary" id="btn-pass">Password</button>
+            <button onclick="app.setMode('key')" class="secondary" id="btn-key">Doctor Key</button>
+        </div>
+
+        <div id="in-pass">
+            <label>Password</label>
+            <input type="password" id="inp-pass" placeholder="Enter password...">
+        </div>
+        <div id="in-key" class="hidden">
+            <label>Private Key (JSON)</label>
+            <textarea id="inp-key" placeholder="Paste Private Key JSON..."></textarea>
+        </div>
+
+        <button onclick="app.decrypt()">Unlock & Decompress</button>
+        <div id="error-msg" style="color:red; margin-top:10px; display:none;">Decryption Failed</div>
+    </div>
+
+    <div id="view-read" class="hidden">
+        <div style="border-bottom:1px solid #eee; padding-bottom:15px; margin-bottom:15px;">
+            <div style="font-size:0.8rem; color:#64748b;">SUBJECT</div>
+            <div id="read-subject" style="font-size:1.2rem; font-weight:bold;"></div>
+            <div id="read-meta" class="stat-box"></div>
+        </div>
+        
+        <label>Message</label>
+        <div id="read-content" class="editor"></div>
+        
+        <div id="att-area" class="hidden" style="background:#f1f5f9; padding:10px; border-radius:6px;">
+            <strong>Attachment:</strong> <span id="att-name"></span>
+            <button onclick="app.dlAtt()" style="width:auto; padding:5px 15px; margin-left:10px;">Download</button>
+        </div>
+
+        <button onclick="app.showCompose(true)" class="hidden-print">Reply</button>
+    </div>
+
+    <div id="view-compose" class="hidden">
+        <label>Subject</label>
+        <input type="text" id="comp-subject">
+        
+        <label>Message</label>
+        <div id="comp-editor" class="editor" contenteditable="true"></div>
+        
+        <label>Attach File</label>
+        <input type="file" id="comp-file">
+
+        <div id="new-pass-area">
+            <label>Patient Password</label>
+            <input type="password" id="comp-pass" placeholder="Set password...">
+        </div>
+
+        <div id="sign-area" class="hidden" style="margin-top:20px; border-top:1px solid #eee; padding-top:10px;">
+            <label>Sign Message (Optional)</label>
+            <textarea id="comp-sign-key" placeholder="Paste Signing Private Key JSON to sign..."></textarea>
+        </div>
+
+        <button id="btn-enc" onclick="app.generate()">Compress, Sign & Encrypt</button>
+    </div>
+
+    <div id="view-setup" class="hidden">
+        <h2>Doctor Setup</h2>
+        <p>Generate Encryption and Signing keys.</p>
+        <button onclick="app.genKeys()">Generate Key Pairs</button>
+        
+        <div id="setup-out" class="hidden">
+            <label>Encryption Private Key (Save this)</label>
+            <textarea id="out-enc" readonly style="height:80px; font-family:monospace; font-size:0.8rem;"></textarea>
+            
+            <label>Signing Private Key (Save this)</label>
+            <textarea id="out-sign" readonly style="height:80px; font-family:monospace; font-size:0.8rem;"></textarea>
+            
+            <button onclick="app.start()">Start Composing</button>
+        </div>
+    </div>
+</div>
+
+<script id="payload" type="application/json">null</script>
+<script id="pubkeys" type="application/json">null</script>
+
+<script>
+/** LZ-STRING COMPRESSION (Minified for Single File) */
+var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",n="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+-$";var e={compressToUint8Array:function(r){for(var o=e.compress(r),n=new Uint8Array(2*o.length),t=0,a=o.length;t<a;t++){var i=o.charCodeAt(t);n[2*t]=i>>>8,n[2*t+1]=i%256}return n},decompressFromUint8Array:function(r){if(null===r||void 0===r)return e.decompress(r);for(var o=new Array(r.length/2),n=0,t=o.length;n<t;n++)o[n]=256*r[2*n]+r[2*n+1];var a=[];return o.forEach(function(o){a.push(String.fromCharCode(o))}),e.decompress(a.join(""))},compress:function(o){return e._compress(o,16,function(o){return r(o)})},_compress:function(r,o,n){if(null==r)return"";var e,t,a,i={},u={},c="",f="",l="",s=2,p=3,v=2,d=[],h=0,w=0;for(a=0;a<r.length;a+=1)if(c=r.charAt(a),Object.prototype.hasOwnProperty.call(i,c)||(i[c]=p++,u[c]=!0),f=l+c,Object.prototype.hasOwnProperty.call(i,f))l=f;else{if(Object.prototype.hasOwnProperty.call(u,l)){if(l.charCodeAt(0)<256){for(e=0;v>e;e++)h<<=1,w==o-1?(w=0,d.push(n(h)),h=0):w++;for(t=l.charCodeAt(0),e=0;8>e;e++)h=h<<1|1&t,w==o-1?(w=0,d.push(n(h)),h=0):w++,t>>=1}else{for(t=1,e=0;v>e;e++)h=h<<1|t,w==o-1?(w=0,d.push(n(h)),h=0):w++,t=0,t=l.charCodeAt(0);for(e=0;16>e;e++)h=h<<1|1&t,w==o-1?(w=0,d.push(n(h)),h=0):w++,t>>=1}s--,0==s&&(s=Math.pow(2,v),v++),delete u[l]}else for(t=i[l],e=0;v>e;e++)h=h<<1|1&t,w==o-1?(w=0,d.push(n(h)),h=0):w++,t>>=1;s--,0==s&&(s=Math.pow(2,v),v++),i[f]=p++,l=String(c)}if(""!==l){if(Object.prototype.hasOwnProperty.call(u,l)){if(l.charCodeAt(0)<256){for(e=0;v>e;e++)h<<=1,w==o-1?(w=0,d.push(n(h)),h=0):w++;for(t=l.charCodeAt(0),e=0;8>e;e++)h=h<<1|1&t,w==o-1?(w=0,d.push(n(h)),h=0):w++,t>>=1}else{for(t=1,e=0;v>e;e++)h=h<<1|t,w==o-1?(w=0,d.push(n(h)),h=0):w++,t=0,t=l.charCodeAt(0);for(e=0;16>e;e++)h=h<<1|1&t,w==o-1?(w=0,d.push(n(h)),h=0):w++,t>>=1}s--,0==s&&(s=Math.pow(2,v),v++),delete u[l]}else for(t=i[l],e=0;v>e;e++)h=h<<1|1&t,w==o-1?(w=0,d.push(n(h)),h=0):w++,t>>=1;s--,0==s&&(s=Math.pow(2,v),v++)}for(t=2,e=0;v>e;e++)h=h<<1|1&t,w==o-1?(w=0,d.push(n(h)),h=0):w++,t>>=1;for(;;){if(h<<=1,w==o-1){d.push(n(h));break}w++}return d.join("")},decompress:function(r){return null==r?"":""==r?null:e._decompress(r.length,32768,function(o){return r.charCodeAt(o)})},_decompress:function(r,o,n){var e,t,a,i,u,c,f,l=[],s=4,p=4,v=3,d="",h=[],w={val:n(0),position:o,index:1};for(e=0;3>e;e+=1)l[e]=e;for(a=0,c=Math.pow(2,2),f=1;f!=c;)i=w.val&w.position,w.position>>=1,0==w.position&&(w.position=o,w.val=n(w.index++)),a|=(i>0?1:0)*f,f<<=1;switch(a){case 0:for(a=0,c=Math.pow(2,8),f=1;f!=c;)i=w.val&w.position,w.position>>=1,0==w.position&&(w.position=o,w.val=n(w.index++)),a|=(i>0?1:0)*f,f<<=1;u=String.fromCharCode(a);break;case 1:for(a=0,c=Math.pow(2,16),f=1;f!=c;)i=w.val&w.position,w.position>>=1,0==w.position&&(w.position=o,w.val=n(w.index++)),a|=(i>0?1:0)*f,f<<=1;u=String.fromCharCode(a);break;case 2:return""}for(l[3]=u,t=u,h.push(u);;){if(w.index>r)return"";for(a=0,c=Math.pow(2,v),f=1;f!=c;)i=w.val&w.position,w.position>>=1,0==w.position&&(w.position=o,w.val=n(w.index++)),a|=(i>0?1:0)*f,f<<=1;switch(u=a){case 0:for(a=0,c=Math.pow(2,8),f=1;f!=c;)i=w.val&w.position,w.position>>=1,0==w.position&&(w.position=o,w.val=n(w.index++)),a|=(i>0?1:0)*f,f<<=1;l[p++]=String.fromCharCode(a),u=p-1,s--;break;case 1:for(a=0,c=Math.pow(2,16),f=1;f!=c;)i=w.val&w.position,w.position>>=1,0==w.position&&(w.position=o,w.val=n(w.index++)),a|=(i>0?1:0)*f,f<<=1;l[p++]=String.fromCharCode(a),u=p-1,s--;break;case 2:return h.join("")}if(0==s&&(s=Math.pow(2,v),v++),l[u])d=l[u];else{if(u!==p)return null;d=t+t.charAt(0)}h.push(d),l[p++]=t+d.charAt(0),s--,t=d,0==s&&(s=Math.pow(2,v),v++)}}};return e}();
+
+const app = (() => {
+    let payload = JSON.parse(document.getElementById('payload').textContent);
+    let pubKeys = JSON.parse(document.getElementById('pubkeys').textContent);
+    let currentAtt = null;
+
+    // --- CRYPTO ---
+    const enc = new TextEncoder(); const dec = new TextDecoder();
+    const buf2b64 = b => btoa(String.fromCharCode(...new Uint8Array(b)));
+    const b642buf = b => Uint8Array.from(atob(b), c => c.charCodeAt(0));
+
+    // KEY GEN: Encryption (RSA-OAEP) & Signing (RSA-PSS)
+    async function genKeys() {
+        const encK = await crypto.subtle.generateKey({name:"RSA-OAEP", modulusLength:2048, publicExponent:new Uint8Array([1,0,1]), hash:"SHA-256"}, true, ["encrypt","decrypt"]);
+        const signK = await crypto.subtle.generateKey({name:"RSA-PSS", modulusLength:2048, publicExponent:new Uint8Array([1,0,1]), hash:"SHA-256"}, true, ["sign","verify"]);
+        return { enc: encK, sign: signK };
+    }
+
+    // COMPRESS & SIGN & ENCRYPT (Digital Envelope)
+    async function pack(dataObj, password, signPrivKeyJson = null) {
+        // 1. Compress
+        const jsonStr = JSON.stringify(dataObj);
+        const originalSize = enc.encode(jsonStr).length;
+        const compressed = LZString.compressToUint8Array(jsonStr);
+        const compSize = compressed.length;
+        const ratio = Math.round((1 - (compSize/originalSize))*100);
+
+        // 2. Sign (if key provided)
+        let signature = null;
+        if(signPrivKeyJson) {
+            const k = await crypto.subtle.importKey("jwk", JSON.parse(signPrivKeyJson), {name:"RSA-PSS", hash:"SHA-256"}, false, ["sign"]);
+            const s = await crypto.subtle.sign({name:"RSA-PSS", saltLength:32}, k, compressed);
+            signature = buf2b64(s);
+        }
+
+        // 3. Encrypt Payload (AES-GCM)
+        const aesK = await crypto.subtle.generateKey({name:"AES-GCM", length:256}, true, ["encrypt","decrypt"]);
+        const iv = crypto.getRandomValues(new Uint8Array(12));
+        
+        // Payload structure: { c: compressed_data, s: signature }
+        const innerPayload = enc.encode(JSON.stringify({ c: buf2b64(compressed), s: signature, ratio: ratio }));
+        const encrypted = await crypto.subtle.encrypt({name:"AES-GCM", iv}, aesK, innerPayload);
+
+        // 4. Wrap AES Key
+        let slot;
+        if(password) {
+            // Password Wrap
+            const salt = crypto.getRandomValues(new Uint8Array(16));
+            const pwK = await crypto.subtle.importKey("raw", enc.encode(password), "PBKDF2", false, ["deriveKey"]);
+            const wK = await crypto.subtle.deriveKey({name:"PBKDF2", salt, iterations:100000, hash:"SHA-256"}, pwK, {name:"AES-KW", length:256}, false, ["wrapKey"]);
+            const w = await crypto.subtle.wrapKey("raw", aesK, wK, "AES-KW");
+            slot = { alg: "PASS", salt: buf2b64(salt), data: buf2b64(w) };
+        } else if (pubKeys && pubKeys.enc) {
+            // RSA Wrap (Reply)
+            const pub = await crypto.subtle.importKey("jwk", pubKeys.enc, {name:"RSA-OAEP", hash:"SHA-256"}, false, ["encrypt"]);
+            const e = await crypto.subtle.encrypt({name:"RSA-OAEP"}, pub, await crypto.subtle.exportKey("raw", aesK));
+            slot = { alg: "RSA", data: buf2b64(e) };
+        }
+
+        return { iv: buf2b64(iv), data: buf2b64(encrypted), slot: slot };
+    }
+
+    // DECRYPT & VERIFY & DECOMPRESS
+    async function unpack(secret, mode) {
+        const slot = payload.slot;
+        let aesK;
+
+        // 1. Unwrap Key
+        if(mode === 'pass') {
+            const salt = b642buf(slot.salt);
+            const wK = await crypto.subtle.deriveKey({name:"PBKDF2", salt, iterations:100000, hash:"SHA-256"}, await crypto.subtle.importKey("raw", enc.encode(secret), "PBKDF2", false, ["deriveKey"]), {name:"AES-KW", length:256}, false, ["unwrapKey"]);
+            aesK = await crypto.subtle.unwrapKey("raw", b642buf(slot.data), wK, "AES-KW", "AES-GCM", false, ["decrypt"]);
+        } else {
+            const priv = await crypto.subtle.importKey("jwk", JSON.parse(secret), {name:"RSA-OAEP", hash:"SHA-256"}, false, ["decrypt"]);
+            const raw = await crypto.subtle.decrypt({name:"RSA-OAEP"}, priv, b642buf(slot.data));
+            aesK = await crypto.subtle.importKey("raw", raw, "AES-GCM", false, ["decrypt"]);
+        }
+
+        // 2. Decrypt Payload
+        const decBytes = await crypto.subtle.decrypt({name:"AES-GCM", iv:b642buf(payload.iv)}, aesK, b642buf(payload.data));
+        const inner = JSON.parse(dec.decode(decBytes)); // { c, s, ratio }
+
+        // 3. Verify Signature (if exists and public verify key known)
+        let verified = false;
+        if(inner.s && pubKeys && pubKeys.sign) {
+            const pubSign = await crypto.subtle.importKey("jwk", pubKeys.sign, {name:"RSA-PSS", hash:"SHA-256"}, false, ["verify"]);
+            verified = await crypto.subtle.verify({name:"RSA-PSS", saltLength:32}, pubSign, b642buf(inner.s), b642buf(inner.c));
+        }
+
+        // 4. Decompress
+        const compressedBytes = b642buf(inner.c);
+        const jsonStr = LZString.decompressFromUint8Array(compressedBytes);
+        const data = JSON.parse(jsonStr);
+        data.verified = verified;
+        data.ratio = inner.ratio;
+        return data;
+    }
+
+    // --- UI ---
+    function init() {
+        if(!payload) document.getElementById('view-setup').classList.remove('hidden');
+        else {
+            document.getElementById('view-decrypt').classList.remove('hidden');
+            if(payload.slot.alg === 'RSA') {
+                document.getElementById('btn-pass').style.display='none';
+                setMode('key');
+            } else setMode('pass');
+        }
+    }
+
+    function setMode(m) {
+        document.getElementById('in-pass').classList.toggle('hidden', m!=='pass');
+        document.getElementById('in-key').classList.toggle('hidden', m!=='key');
+    }
+
+    async function decrypt() {
+        const m = document.getElementById('in-pass').classList.contains('hidden') ? 'key' : 'pass';
+        const s = m==='pass' ? document.getElementById('inp-pass').value : document.getElementById('inp-key').value;
+        try {
+            const d = await unpack(s, m);
+            document.getElementById('read-subject').textContent = d.sub;
+            document.getElementById('read-content').innerHTML = d.msg;
+            document.getElementById('read-meta').textContent = `Compression: ${d.ratio}% Saved | ${d.verified ? "Signed & Verified" : "Unsigned"}`;
+            
+            if(d.verified) document.getElementById('sig-badge').style.display = 'inline-block';
+            if(d.att) {
+                currentAtt = d.att;
+                document.getElementById('att-area').classList.remove('hidden');
+                document.getElementById('att-name').textContent = d.att.name;
+            }
+            document.getElementById('view-decrypt').classList.add('hidden');
+            document.getElementById('view-read').classList.remove('hidden');
+        } catch(e) { 
+            console.error(e);
+            document.getElementById('error-msg').style.display='block'; 
+        }
+    }
+
+    async function genKeys() {
+        const k = await genKeys();
+        const encJ = await crypto.subtle.exportKey("jwk", k.enc.privateKey);
+        const signJ = await crypto.subtle.exportKey("jwk", k.sign.privateKey);
+        
+        // Public Keys to embed
+        pubKeys = {
+            enc: await crypto.subtle.exportKey("jwk", k.enc.publicKey),
+            sign: await crypto.subtle.exportKey("jwk", k.sign.publicKey)
+        };
+
+        document.getElementById('out-enc').value = JSON.stringify(encJ);
+        document.getElementById('out-sign').value = JSON.stringify(signJ);
+        document.getElementById('setup-out').classList.remove('hidden');
+    }
+
+    function start() {
+        document.getElementById('view-setup').classList.add('hidden');
+        document.getElementById('view-compose').classList.remove('hidden');
+        // Show signing area for doctor
+        document.getElementById('sign-area').classList.remove('hidden');
+    }
+    
+    function showCompose(reply) {
+        document.getElementById('view-read').classList.add('hidden');
+        document.getElementById('view-compose').classList.remove('hidden');
+        document.getElementById('comp-subject').value = "Re: " + document.getElementById('read-subject').textContent;
+        // If reply, hide password field (auto-encrypt)
+        if(pubKeys && pubKeys.enc) document.getElementById('new-pass-area').classList.add('hidden');
+    }
+
+    async function generate() {
+        const sub = document.getElementById('comp-subject').value;
+        const msg = document.getElementById('comp-editor').innerHTML;
+        const pw = document.getElementById('comp-pass').value;
+        const signKey = document.getElementById('comp-sign-key').value;
+        
+        document.getElementById('btn-enc').textContent = "Compressing & Encrypting...";
+
+        let att = null;
+        const f = document.getElementById('comp-file').files[0];
+        if(f) {
+            const b64 = await new Promise(r=>{const fr=new FileReader();fr.onload=()=>r(fr.result);fr.readAsDataURL(f)});
+            att = {name:f.name, data:b64};
+        }
+
+        const pkg = await pack({sub, msg, att}, pw, signKey);
+
+        const doc = new DOMParser().parseFromString(document.documentElement.outerHTML, 'text/html');
+        ['view-read','view-compose','view-setup'].forEach(id=>doc.getElementById(id).classList.add('hidden'));
+        doc.getElementById('view-decrypt').classList.remove('hidden');
+        doc.getElementById('payload').textContent = JSON.stringify(pkg);
+        doc.getElementById('pubkeys').textContent = JSON.stringify(pubKeys);
+        doc.querySelectorAll('input,textarea').forEach(e=>e.value='');
+        doc.getElementById('read-content').innerHTML='';
+
+        const blob = new Blob([`<!DOCTYPE html>\n${doc.documentElement.outerHTML}`],{type:'text/html'});
+        const a = document.createElement('a'); a.href=URL.createObjectURL(blob); a.download="secure_message.html";
+        document.body.appendChild(a); a.click(); document.body.removeChild(a);
+        document.getElementById('btn-enc').textContent = "Compress, Sign & Encrypt";
+    }
+
+    function dlAtt() {
+        if(!currentAtt) return;
+        const a = document.createElement('a'); a.href=currentAtt.data; a.download=currentAtt.name;
+        document.body.appendChild(a); a.click();
+    }
+
+    return { init, setMode, decrypt, genKeys, start, showCompose, generate, dlAtt };
+})();
+
+app.init();
+</script>
+</body>
+</html>
