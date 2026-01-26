@@ -1,0 +1,357 @@
+<html>
+  <body>
+  <div id="match-wizard-container">
+<style>
+  /* --- BRANDING & SHARED STYLES --- */
+  #match-wizard-container { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; color: #353535; max-width: 800px; margin: 0 auto; background: #fff; border: 1px solid #d9d9d9; border-radius: 8px; overflow: hidden; }
+  
+  /* Wizard Header & Progress */
+  .mw-header { background: #f4f6f8; padding: 20px; border-bottom: 1px solid #d9d9d9; text-align: center; }
+  .mw-header h3 { margin: 0 0 10px 0; color: #284b63; font-size: 1.5rem; }
+  .mw-progress { height: 6px; background: #d9d9d9; border-radius: 3px; max-width: 300px; margin: 0 auto; position: relative; overflow: hidden; }
+  .mw-bar { height: 100%; background: #3C6E71; width: 0%; transition: width 0.3s ease; }
+
+  /* Steps Container */
+  .mw-body { padding: 30px 20px; min-height: 300px; position: relative; }
+  
+  /* Loading Overlay */
+  #mw-loading { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255,255,255,0.9); z-index: 10; display: flex; align-items: center; justify-content: center; font-style: italic; color: #666; }
+  
+  /* Step Visibility */
+  .mw-step { display: none; animation: fadeIn 0.4s; }
+  .mw-step.active { display: block; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* Question Styling */
+  .mw-question { font-size: 1.2rem; font-weight: bold; color: #284b63; margin-bottom: 20px; text-align: center; }
+  
+  /* Option Grids (Radio/Checkbox buttons) */
+  .mw-options-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 15px; }
+  
+  /* Selectable Option Cards */
+  .mw-opt-label { display: flex; align-items: center; gap: 10px; padding: 15px; border: 1px solid #d9d9d9; border-radius: 6px; cursor: pointer; transition: all 0.2s; background: #fff; }
+  .mw-opt-label:hover { border-color: #3C6E71; background: #f9f9f9; }
+  .mw-opt-label input { accent-color: #284b63; width: 18px; height: 18px; cursor: pointer; }
+  
+  /* Navigation Buttons */
+  .mw-footer { padding: 20px; border-top: 1px solid #d9d9d9; display: flex; justify-content: space-between; align-items: center; background: #fff; }
+  .mw-btn { padding: 12px 24px; border-radius: 4px; font-weight: bold; cursor: pointer; border: none; font-size: 1rem; transition: background 0.2s; }
+  .mw-btn-primary { background: #284b63; color: #fff; }
+  .mw-btn-primary:hover { background: #3C6E71; }
+  .mw-btn-secondary { background: #fff; color: #666; border: 1px solid #d9d9d9; }
+  .mw-btn-secondary:hover { border-color: #333; color: #333; }
+  .mw-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  /* --- RESULT CARD STYLES --- */
+  .mw-results-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px; }
+  .pw-card { border: 1px solid #d9d9d9; border-radius: 8px; overflow: hidden; background: #fff; display: flex; flex-direction: column; position: relative; text-align: left; }
+  .pw-img-box { position: relative; height: 200px; width: 100%; background: #eee; border-bottom: 1px solid #d9d9d9; }
+  .pw-card-img { width: 100%; height: 100%; object-fit: cover; }
+  .pw-badge { position: absolute; bottom: 10px; right: 10px; padding: 4px 8px; border-radius: 4px; font-size: 0.7rem; font-weight: bold; text-transform: uppercase; background: #e8f5e9; color: #2e7d32; border: 1px solid #c8e6c9; box-shadow: 0 2px 4px rgba(0,0,0,0.2); }
+  .pw-body { padding: 15px; flex-grow: 1; display: flex; flex-direction: column; }
+  .pw-body h3 { margin: 0 0 10px 0; color: #284b63; font-size: 1.1rem; }
+  .pw-tags { margin-bottom: 10px; display: flex; flex-wrap: wrap; gap: 5px; }
+  .pw-tag { padding: 3px 8px; border-radius: 12px; font-size: 0.7rem; font-weight: 600; color: #fff; }
+  .pw-tag.loc { background: #284b63; }
+  .pw-tag.ins { background: #3C6E71; }
+  .pw-bio { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; margin-bottom: 15px; line-height: 1.4; font-size: 0.9rem; }
+  .pw-card-btn { display: block; width: 100%; padding: 10px; margin-top: auto; background: #284b63; color: #fff; text-align: center; text-decoration: none; border-radius: 4px; font-weight: bold; font-size: 0.9rem; }
+  .pw-card-btn:hover { background: #3C6E71; }
+  
+  /* Scrollable Area for Diagnosis */
+  .mw-scroll-box { max-height: 300px; overflow-y: auto; padding: 5px; border: 1px solid #eee; border-radius: 4px; }
+  
+  /* Mobile Adjustments */
+  @media (max-width: 600px) {
+    .mw-options-grid { grid-template-columns: 1fr; }
+    .mw-footer { flex-direction: column-reverse; gap: 10px; }
+    .mw-btn { width: 100%; }
+  }
+</style>
+
+<div class="mw-header">
+  <h3 id="mwTitle">Find Your Match</h3>
+  <div class="mw-progress"><div class="mw-bar" id="mwBar"></div></div>
+</div>
+
+<div class="mw-body">
+  
+  <div id="mw-loading">Loading Survey...</div>
+  
+  <div id="step-1" class="mw-step active">
+    <div class="mw-question">Where are you located?</div>
+    <div class="mw-options-grid" id="opt-state">
+      </div>
+  </div>
+
+  <div id="step-2" class="mw-step">
+    <div class="mw-question">Which insurance do you plan to use?</div>
+    <div class="mw-options-grid" id="opt-ins">
+      </div>
+  </div>
+
+  <div id="step-3" class="mw-step">
+    <div class="mw-question">What are your primary concerns? (Select all that apply)</div>
+    <div class="mw-scroll-box">
+        <div class="mw-options-grid" id="opt-diag">
+          </div>
+    </div>
+  </div>
+
+  <div id="step-4" class="mw-step">
+    <div class="mw-question" id="result-title">Here are your best matches:</div>
+    <div class="mw-results-grid" id="mw-results-grid"></div>
+    <div id="mw-no-results" style="display:none; text-align:center; padding:20px;">
+        <p>We couldn't find a perfect match for those specific filters.</p>
+        <button class="mw-btn mw-btn-secondary" onclick="restartWizard()">Try Again</button>
+    </div>
+  </div>
+
+</div>
+
+<div class="mw-footer" id="mwFooter">
+  <button class="mw-btn mw-btn-secondary" id="btnBack" onclick="changeStep(-1)" disabled>Back</button>
+  <button class="mw-btn mw-btn-primary" id="btnNext" onclick="changeStep(1)" disabled>Next</button>
+</div>
+
+<script>
+(function() {
+  
+  // *** CONFIG: PASTE YOUR JSON URL HERE ***
+  var JSON_URL = "https://gist.githubusercontent.com/GuzmanBaker/403271f4b1dac4ab99667151176c1cbb/raw/d8c4bb8b9b07b2861944a9d900678794b42df891/providers.json"; 
+
+  // Variables
+  var providers = [];
+  var currentStep = 1;
+  var selState = null;
+  var selIns = null;
+  var selDiags = [];
+
+  // Helper: Get Unique and Sorted
+  function getUniques(k) {
+    var a = [];
+    providers.forEach(function(i){ if(i[k]) i[k].forEach(function(x){ a.push(x); }); });
+    return a.filter(function(v,i,s){ return s.indexOf(v)===i; }).sort();
+  }
+
+  // --- POPULATION LOGIC ---
+  function initWizard() {
+    // Hide Loader
+    var loader = document.getElementById('mw-loading');
+    if(loader) loader.style.display = 'none';
+
+    // 1. Populate States
+    var uSt = getUniques('states');
+    var divSt = document.getElementById('opt-state');
+    uSt.forEach(function(st){
+        var lbl = document.createElement('label');
+        lbl.className = 'mw-opt-label';
+        lbl.innerHTML = '<input type="radio" name="state" value="'+st+'" onchange="window.mwStateSel(this)"> ' + st;
+        divSt.appendChild(lbl);
+    });
+
+    // 2. Populate Insurance
+    var uIn = getUniques('insurance');
+    var divIn = document.getElementById('opt-ins');
+    uIn.forEach(function(ins){
+        var lbl = document.createElement('label');
+        lbl.className = 'mw-opt-label';
+        lbl.innerHTML = '<input type="radio" name="ins" value="'+ins+'" onchange="window.mwInsSel(this)"> ' + ins;
+        divIn.appendChild(lbl);
+    });
+    // Add "Self Pay" Option manually
+    var lblSelf = document.createElement('label');
+    lblSelf.className = 'mw-opt-label';
+    lblSelf.innerHTML = '<input type="radio" name="ins" value="Self Pay" onchange="window.mwInsSel(this)"> None / Self Pay';
+    divIn.appendChild(lblSelf);
+
+    // 3. Populate Diagnoses (Multi)
+    var uDi = getUniques('diagnoses');
+    var divDi = document.getElementById('opt-diag');
+    uDi.forEach(function(d){
+        var lbl = document.createElement('label');
+        lbl.className = 'mw-opt-label';
+        lbl.innerHTML = '<input type="checkbox" value="'+d+'" onchange="window.mwDiagChange(this)"> ' + d;
+        divDi.appendChild(lbl);
+    });
+  }
+
+  // --- EVENT HANDLERS ---
+  
+  window.mwStateSel = function(el) {
+    selState = el.value;
+    document.getElementById('btnNext').disabled = false;
+  };
+
+  window.mwInsSel = function(el) {
+    selIns = el.value;
+    document.getElementById('btnNext').disabled = false;
+  };
+
+  window.mwDiagChange = function(el) {
+    if(el.checked) {
+        selDiags.push(el.value);
+    } else {
+        var index = selDiags.indexOf(el.value);
+        if (index > -1) selDiags.splice(index, 1);
+    }
+    document.getElementById('btnNext').disabled = false;
+  };
+
+  window.changeStep = function(dir) {
+    document.getElementById('step-' + currentStep).classList.remove('active');
+    
+    currentStep += dir;
+    
+    // Logic to disable/enable buttons based on step data
+    var btnNext = document.getElementById('btnNext');
+    var btnBack = document.getElementById('btnBack');
+    
+    if(currentStep === 1) {
+        btnBack.disabled = true;
+        btnNext.disabled = !selState;
+    } else if(currentStep === 2) {
+        btnBack.disabled = false;
+        btnNext.disabled = !selIns;
+    } else if(currentStep === 3) {
+        btnBack.disabled = false;
+        btnNext.disabled = false; 
+        btnNext.innerHTML = "Find Matches";
+    } else if(currentStep === 4) {
+        // Results Page
+        document.getElementById('mwFooter').style.display = 'none'; 
+        document.getElementById('mwTitle').innerText = "Your Results";
+        calculateResults();
+    }
+    
+    // Update Bar
+    var pct = (currentStep - 1) * 33;
+    if(currentStep === 4) pct = 100;
+    document.getElementById('mwBar').style.width = pct + '%';
+
+    document.getElementById('step-' + currentStep).classList.add('active');
+  };
+  
+  window.restartWizard = function() {
+      // Reset variables
+      currentStep = 1;
+      selState = null;
+      selIns = null;
+      selDiags = [];
+      
+      // Reset Inputs
+      var inputs = document.querySelectorAll('#match-wizard-container input');
+      inputs.forEach(function(i){ i.checked = false; });
+      
+      // Reset UI
+      document.getElementById('mwFooter').style.display = 'flex';
+      document.getElementById('btnNext').innerHTML = "Next";
+      document.getElementById('mwTitle').innerText = "Find Your Match";
+      document.getElementById('mwBar').style.width = '0%';
+      
+      // Hide all steps, show 1
+      for(var i=1; i<=4; i++) document.getElementById('step-'+i).classList.remove('active');
+      document.getElementById('step-1').classList.add('active');
+      
+      // Reset Buttons
+      document.getElementById('btnNext').disabled = true;
+      document.getElementById('btnBack').disabled = true;
+  };
+
+  function calculateResults() {
+    var grid = document.getElementById('mw-results-grid');
+    var noRes = document.getElementById('mw-no-results');
+    grid.innerHTML = '';
+    
+    // FILTERING LOGIC
+    var matches = providers.filter(function(p){
+        // 1. Check State
+        if(p.states.indexOf(selState) === -1) return false;
+        
+        // 2. Check Insurance
+        if(selIns === 'Self Pay') {
+             return true; 
+        } else {
+             if(p.insurance.indexOf(selIns) === -1) return false;
+        }
+        return true;
+    });
+
+    // SCORING LOGIC (Sort by Diagnosis Matches)
+    matches.forEach(function(p){
+        var score = 0;
+        if(selDiags.length > 0) {
+            selDiags.forEach(function(d){
+                if(p.diagnoses.indexOf(d) > -1) score++;
+            });
+        }
+        p._score = score;
+    });
+    
+    // Sort Descending by Score
+    matches.sort(function(a,b){ return b._score - a._score; });
+
+    if(matches.length === 0) {
+        noRes.style.display = 'block';
+    } else {
+        noRes.style.display = 'none';
+        
+        matches.forEach(function(d){
+             var stTags = d.states.map(function(x){ return '<span class="pw-tag loc">'+x+'</span>'; }).join(' ');
+             var inTags = d.insurance.map(function(x){ return '<span class="pw-tag ins">'+x+'</span>'; }).join(' ');
+             var badge = d.accepting_new ? '<span class="pw-badge">Accepting New Patients</span>' : '';
+             
+             // Match Text
+             var matchText = '';
+             if(selDiags.length > 0 && d._score > 0) {
+                 matchText = '<div style="margin-bottom:10px; color:#2e7d32; font-weight:bold; font-size:0.8rem;">Matched ' + d._score + ' of your concerns</div>';
+             }
+
+             var h = '<div class="pw-card">';
+             h += '<div class="pw-img-box">';
+             if(badge) h += badge;
+             h += '<img src="'+d.headshot_url+'" class="pw-card-img">';
+             h += '</div>';
+             
+             h += '<div class="pw-body">';
+             h += '<h3>'+d.name+'</h3>';
+             h += matchText;
+             h += '<div class="pw-tags">'+stTags+' '+inTags+'</div>';
+             if(d.bio) h += '<div class="pw-bio">'+d.bio+'</div>';
+             h += '<a href="'+d.profile_url+'" target="_blank" class="pw-card-btn">Get Started</a>';
+             h += '</div></div>';
+             grid.innerHTML += h;
+        });
+        
+        // Add "Start Over" button
+        var restartBtn = document.createElement('div');
+        restartBtn.style.textAlign = 'center';
+        restartBtn.style.marginTop = '30px';
+        restartBtn.style.gridColumn = '1 / -1';
+        restartBtn.innerHTML = '<button class="mw-btn mw-btn-secondary" onclick="restartWizard()">Start Over</button>';
+        grid.appendChild(restartBtn);
+    }
+  }
+
+  // --- FETCH DATA ---
+  function loadData() {
+     fetch(JSON_URL)
+     .then(function(res) { return res.json(); })
+     .then(function(json) {
+        providers = json;
+        initWizard();
+     })
+     .catch(function(err) {
+        console.error('Error loading JSON:', err);
+        document.getElementById('mw-loading').innerText = "Error loading survey data.";
+     });
+  }
+
+  // Start
+  loadData();
+
+})();
+</script>
+</div>
+  </body>
+</html>
