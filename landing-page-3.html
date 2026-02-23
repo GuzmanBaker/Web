@@ -1,0 +1,2061 @@
+<!DOCTYPE html>
+                <html lang="en-US">
+
+                <head>
+                    <meta charset="UTF-8" />
+                    <meta name="viewport" content="width=device-width" />
+                    <link rel="profile" href="https://gmpg.org/xfn/11" />
+                    <title>Landing Page 3 | SpeedyUi.com</title>
+                    <meta name="robots" content="noindex"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css" />
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous"/><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css" />
+<script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script><style>
+                        @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap");
+.speedyui {
+  --su-primary-color: #ed3364;
+  --su-nav-link-color:var(--bs-white);
+  font-family: "Poppins", sans-serif;
+}
+.speedyui .primary-text{
+  color: var(--su-primary-color);
+}
+
+.speedyui-section-title .section-title-tagline {
+  color: var(--su-primary-color);
+}
+
+.speedyui-header {
+  z-index: 9;
+}
+.speedyui-header ul, .speedyui-header ol, .speedyui-header p, .speedyui-header h1, .speedyui-header h2, .speedyui-header h3, .speedyui-header h4, .speedyui-header h5, .speedyui-header h6, .speedyui-header figure {
+  margin: 0;
+  padding: 0;
+}
+.speedyui-header ul.navbar-nav li.nav-item {
+  margin: 0 1.25rem;
+}
+@media (min-width: 1200px) {
+  .speedyui-header ul.navbar-nav li.nav-item {
+    margin: 0 1.85rem;
+  }
+}
+.speedyui-header ul.navbar-nav li.nav-item a.nav-link {
+  color: var(--su-nav-link-color);
+  padding: 2rem 0;
+  font-size: 0.9rem;
+  font-weight: 500;
+  position: relative;
+  transition: all 0.3s;
+}
+.speedyui-header ul.navbar-nav li.nav-item a.nav-link.active {
+  color: var(--su-primary-color);
+}
+.speedyui-header ul.navbar-nav li.nav-item a.nav-link.active:after {
+  border-color: currentColor;
+}
+.speedyui-header ul.navbar-nav li.nav-item a.nav-link:hover {
+  color: var(--su-primary-color);
+}
+.speedyui-header ul.navbar-nav li.nav-item a.nav-link:hover:after {
+  border-color: currentColor;
+}
+.speedyui-header ul.navbar-nav li.nav-item:last-of-type a.nav-link {
+  margin-right: 0;
+  padding-right: 0;
+}
+.speedyui-header ul.navbar-nav li.nav-item:first-of-type a.nav-link {
+  margin-left: 0;
+  padding-left: 0;
+}
+.speedyui-header ul.navbar-nav .dropdown-menu {
+  border-radius: 0;
+  box-shadow: 0 0px 10px rgba(37, 37, 37, 0.12);
+  margin: 0;
+  background: var(--bs-dark);
+  transition: all 0.3s;
+  top: 115% !important;
+  z-index: 9;
+}
+.speedyui-header ul.navbar-nav .dropdown-menu a.dropdown-item {
+  padding: 0.35rem 1rem;
+  transition: all 0.3s;
+  font-size: 0.9rem;
+  color: var(--su-nav-link-color);
+  font-weight: 500;
+}
+.speedyui-header ul.navbar-nav .dropdown-menu a.dropdown-item:after {
+  border-color: var(--su-nav-link-color);
+}
+.speedyui-header ul.navbar-nav .dropdown-menu a.dropdown-item:hover {
+  padding-left: 1.5rem;
+  color: var(--su-primary-color);
+}
+.speedyui-header ul.navbar-nav .dropdown-menu a.dropdown-item:hover:after {
+  border-color: var(--su-primary-color);
+}
+.speedyui-header ul.navbar-nav .dropdown-menu a.dropdown-item.active {
+  color: var(--su-primary-color);
+}
+.speedyui-header ul.navbar-nav .dropdown-toggle:after {
+  border-color: currentColor;
+  box-sizing: border-box;
+  height: 0.4em;
+  width: 0.4em;
+  border-style: solid;
+  border-width: 0px 1px 1px 0px;
+  transform: rotate(45deg);
+  transition: all 0.3s;
+  margin-left: 0.355em;
+}
+.speedyui-header ul.nav-controls li {
+  color: var(--su-nav-link-color);
+  transition: all 0.3s;
+}
+.speedyui-header ul.nav-controls li:hover {
+  color: var(--su-primary-color);
+}
+.speedyui-header .offcanvas-toggle .icon-wrapper {
+  z-index: 0;
+  color: var(--bs-white);
+  transition: all 0.3s;
+}
+.speedyui-header .offcanvas-toggle:hover .icon-wrapper {
+  color: var(--su-primary-color);
+}
+.speedyui-header .offcanvas-toggle:hover .icon-wrapper:before {
+  opacity: 1;
+}
+@media screen and (min-width: 992px) {
+  .speedyui-header .dropdown .dropdown-menu {
+    opacity: 0;
+    visibility: hidden;
+    display: block;
+    min-width: 12em;
+  }
+  .speedyui-header .dropdown:hover .dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    top: 100% !important;
+  }
+}
+
+.speedyui-offcanvas {
+  --su-width: 100%;
+  --bs-border-color: #3b3838;
+}
+.speedyui-offcanvas .btn-close {
+  transition: all ease 0.4s;
+}
+.speedyui-offcanvas .btn-close:hover {
+  transform: rotate(90deg);
+}
+.speedyui-offcanvas .offcanvas {
+  transition: all 1200ms cubic-bezier(0.645, 0.045, 0.095, 1.08);
+  overflow-y: auto;
+}
+.speedyui-offcanvas .offcanvas.offcanvas-desktop {
+  width: var(--su-width);
+}
+@media (min-width: 768px) {
+  .speedyui-offcanvas .offcanvas.offcanvas-desktop {
+    --su-width: 445px;
+  }
+}
+.speedyui-offcanvas .offcanvas.offcanvas-desktop .offcanvas-header .btn-close {
+  transform: rotate(0);
+  transition: all 300ms linear 0ms;
+}
+.speedyui-offcanvas .offcanvas.offcanvas-desktop .offcanvas-header .btn-close:hover {
+  transform: rotate(90deg);
+}
+.speedyui-offcanvas .offcanvas.offcanvas-desktop .offcanvas-body .btn {
+  color: var(--bs-white);
+  padding: 0.8rem 1.8rem;
+  background-color: var(--su-primary-color);
+}
+.speedyui-offcanvas .offcanvas.offcanvas-desktop .offcanvas-body .btn:hover {
+  color: var(--su-primary-color);
+  background-color: var(--bs-white);
+}
+.speedyui-offcanvas .offcanvas.offcanvas-desktop .offcanvas-body ul.contact-list li a {
+  color: var(--bs-white);
+  transition: all 300ms linear 0ms;
+}
+.speedyui-offcanvas .offcanvas.offcanvas-desktop .offcanvas-body ul.contact-list li a .contact-icon {
+  color: var(--su-primary-color);
+}
+.speedyui-offcanvas .offcanvas.offcanvas-desktop .offcanvas-body ul.contact-list li a:hover {
+  color: var(--su-primary-color);
+}
+.speedyui-offcanvas .offcanvas.offcanvas-mobile {
+  color: var(--bs-white);
+  border: none;
+}
+.speedyui-offcanvas .offcanvas.offcanvas-mobile ul.offcanvas-listing li a {
+  color: var(--bs-white);
+  transition: color 0.3s ease;
+}
+.speedyui-offcanvas .offcanvas.offcanvas-mobile ul.offcanvas-listing li a:hover {
+  color: var(--su-primary-color);
+}
+.speedyui-offcanvas .offcanvas.offcanvas-mobile ul.offcanvas-listing li a span {
+  transform: rotate(180deg);
+  transition: transform 0.3s ease;
+}
+.speedyui-offcanvas .offcanvas.offcanvas-mobile ul.offcanvas-listing li a.collapsed span {
+  transform: rotate(0deg);
+}
+.speedyui-offcanvas .offcanvas.offcanvas-mobile ul.offcanvas-listing .collapse li:last-child {
+  --bs-border-color: transparent;
+}
+.speedyui-offcanvas ul.social-listing li a {
+  color: var(--bs-white);
+  transition: 300ms ease-in;
+}
+.speedyui-offcanvas ul.social-listing li a:hover {
+  color: var(--su-primary-color);
+}
+.speedyui-offcanvas .offcanvas-backdrop {
+  opacity: 0.5;
+  transform: translateX(100%);
+  background-color: rgb(10, 10, 10);
+  transition: all 1500ms cubic-bezier(0.645, 0.045, 0.095, 1.08);
+}
+.speedyui-offcanvas .offcanvas-backdrop.show {
+  transform: translateX(0%);
+}
+
+.speedyui-hero {
+  padding-top: 6rem;
+  padding-bottom: 3rem;
+  z-index: 0;
+}
+.speedyui-hero .hero-content p {
+  line-height: 1.7;
+}
+.speedyui-hero .hero-content .hero-heading {
+  color: #fff;
+}
+.speedyui-hero .hero-content .hero-feature h4 {
+  color: #fff;
+}
+.speedyui-hero .hero-content .primary-btn {
+  background-color: var(--su-primary-color);
+  color: #fff;
+}
+.speedyui-hero .hero-content .cat-list li {
+  color: #fff;
+}
+.speedyui-hero .hero-content .cat-list li a {
+  color: currentColor;
+  opacity: 0.6;
+  transition: all 0.3s;
+  font-weight: 300;
+}
+.speedyui-hero .hero-content .cat-list li a:hover {
+  opacity: 1;
+}
+.speedyui-hero .hero-content .cat-list li:after {
+  content: "/";
+  margin-left: 0.5rem;
+  color: currentColor;
+  opacity: 0.6;
+  font-size: 14px;
+}
+.speedyui-hero .hero-content .cat-list li:last-of-type::after {
+  display: none;
+}
+.speedyui-btn {
+  transform: translateY(0px);
+  transition: all 0.3s;
+  color: var(--bs-dark);
+  letter-spacing: 0.2em;
+  position: relative;
+}
+.speedyui-btn:before {
+  content: "";
+  width: 32px;
+  height: 32px;
+  background-color: var(--bs-dark);
+  position: absolute;
+  top: 1px;
+  left: 0;
+  border-radius: 5rem;
+  opacity: 0.3;
+  transition: all 0.5s;
+}
+.speedyui-btn:hover:before{
+  background-color: var(--su-primary-color);
+}
+.speedyui-btn:hover:before {
+  left: calc(100% - 2rem);
+}
+.speedyui-btn.btn-white{
+  color: var(--bs-white);
+}
+.speedyui-btn.btn-white:before{
+  background: var(--bs-white);
+}
+.speedyui-btn.btn-white:hover:before{
+  background-color: var(--su-primary-color);
+}
+.speedyui-hero .circle-one {
+  top: 2rem;
+  left: 1rem;
+  width: 80px;
+  height: 80px;
+  border-radius: 100%;
+  background-color: #fff;
+  opacity: 0.4;
+  z-index: -1;
+  pointer-events: none;
+  animation: scale-animation 6s ease-in-out infinite;
+}
+.speedyui-hero .circle-two {
+  bottom: 10px;
+  right: -2%;
+  width: 200px;
+  height: 200px;
+  border-radius: 100%;
+  background-color: var(--su-primary-color);
+  opacity: 0.7;
+  z-index: -1;
+  pointer-events: none;
+  animation: move-animation 30s ease-in-out infinite;
+}
+@keyframes move-animation {
+  0% {
+    transform: translateY(0px);
+  }
+  25% {
+    transform: translateY(-200px);
+  }
+  75% {
+    transform: translateX(-200px);
+  }
+  100% {
+    transform: translateX(0px);
+  }
+}
+@keyframes scale-animation {
+  0% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(3rem);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.speedyui-content {
+  padding: 80px 0px;
+}
+
+.speedyui-content .content-img-wrap {
+  position: relative;
+  padding-bottom: 60px;
+  padding-right: 110px;
+}
+
+.speedyui-content .content-img-wrap img:nth-of-type(2) {
+  max-width: 320px;
+  height: auto;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  border: 4px solid var(--su-primary-color);
+  border-right: none;
+  border-bottom: none;
+}
+
+@media screen and (max-width: 1200px) {
+  .speedyui-content .content-img-wrap img:nth-of-type(2) {
+    max-width: 260px;
+  }
+}
+
+@media screen and (max-width: 575px) {
+  .speedyui-content .content-img-wrap img:nth-of-type(2) {
+    width: 50vw;
+  }
+}
+
+
+
+.speedyui-feature .feature-wrap {
+  transition: all .3s;
+}
+
+.speedyui-feature .feature-wrap .icons-wrap {
+  width: 70px;
+  height: 70px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 100px;
+  color: var(--su-primary-color);
+  border:2px solid var(--su-primary-color);
+}
+
+.speedyui-feature .feature-wrap .icons-wrap .icon {
+  transition: all .2s;
+}
+
+.speedyui-feature .feature-wrap .icons-wrap:hover .icon {
+  transform: rotate(-15deg);
+}
+
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap");
+.speedyui-portfolio {
+  --swiper-theme-color: var(--su-primary-color);
+  --swiper-navigation-size:18px;
+  background-color: var(--bs-dark);
+}
+.speedyui-portfolio .pagination-wrapper {
+  margin-top: 4rem;
+}
+.speedyui .swiper-pagination-bullet {
+  width: 1rem;
+  height: 0.4rem;
+  border-radius: 0.3rem;
+  transition: all 0.3s;
+  background: var(--bs-white);
+  opacity: 0.4;
+}
+.speedyui .swiper-pagination-bullet.swiper-pagination-bullet-active {
+  width: 1.5rem;
+  background-color: var(--su-primary-color);
+  opacity: 1;
+}
+
+.speedyui-portfolio .card-wrapper .card-title {
+  font-weight: 500;
+  font-size: 1.5rem;
+  color: var(--bs-white);
+}
+@media (min-width: 768px) {
+  .speedyui-portfolio .card-wrapper .card-title {
+    font-size: 1.25rem;
+  }
+}
+@media (min-width: 992px) {
+  .speedyui-portfolio .card-wrapper .card-title {
+    font-size: 1.5rem;
+  }
+}
+@media (min-width: 1200px) {
+  .speedyui-portfolio .card-wrapper .card-title {
+    font-size: 1.875rem;
+  }
+}
+.speedyui-portfolio .card-wrapper .card-title a {
+  color: var(--bs-white);
+  transition: 300ms;
+}
+.speedyui-portfolio .card-wrapper .card-title a:hover {
+  color: var(--su-primary-color);
+}
+.speedyui-portfolio .card-wrapper .card-title a .arrow-icon {
+  transition: 300ms;
+}
+.speedyui-portfolio .card-wrapper .card-title a:hover .arrow-icon {
+  transform: translateX(1rem);
+  color: var(--su-primary-color);
+}
+.speedyui-portfolio .card-wrapper .card-subtitle {
+  font-weight: 500;
+  font-size: 0.9375rem;
+  color: var(--bs-white);
+  letter-spacing: 0.1rem;
+}
+.speedyui-portfolio .card-wrapper .card {
+  filter: grayscale(100%);
+}
+.speedyui-portfolio .card-wrapper .card .card-img-top {
+  transition: 900ms;
+}
+.speedyui-portfolio .card-wrapper .card:hover {
+  filter: grayscale(0%);
+}
+.speedyui-portfolio .card-wrapper .card:hover .card-img-top {
+  transform: scale(1.1);
+}
+.speedyui-portfolio .card-wrapper .card .card-img-overlay {
+  opacity: 0;
+  visibility: hidden;
+  transform: scale(0);
+  transition: 300ms;
+}
+.speedyui-portfolio .card-wrapper .card .card-img-overlay a {
+  width: 80px;
+  height: 80px;
+  background-color: var(--bs-white);
+  transition: 300ms;
+}
+.speedyui-portfolio .card-wrapper .card .card-img-overlay a span {
+  color: var(--bs-dark);
+  transform: rotate(320deg);
+}
+.speedyui-portfolio .card-wrapper .card .card-img-overlay a:hover {
+  background-color: var(--su-primary-color);
+}
+.speedyui-portfolio .card-wrapper .card:hover .card-img-overlay {
+  opacity: 1;
+  transform: scale(1);
+  visibility: visible;
+}
+
+.speedyui-stats h1, .speedyui-stats h2, .speedyui-stats h3, .speedyui-stats h4, .speedyui-stats h5, .speedyui-stats h6, .speedyui-stats p {
+  margin: 0;
+}
+
+.speedyui-stats .stats-number {
+  font-size: 44px;
+  font-weight: 600;
+  transition: all .4s ease-in-out;
+}
+
+.speedyui-stats p {
+  color: #929292;
+  font-size: 15px;
+  transition: all .4s ease-in-out;
+}
+
+.speedyui-stats .badge {
+  color: var(--su-primary-color);
+}
+
+
+.speedyui-stats .stats-wrapper {
+  background-color: transparent;
+  position: relative;
+  z-index: 0;
+  transform: translateY(0);
+  transition: all .3s;
+}
+
+.speedyui-stats .stats-wrapper .stats-icon {
+  color: var(--su-primary-color);
+  transition: all .4s ease-in-out;
+  position: relative;
+  width: fit-content;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  border-radius: 50rem;
+  overflow: hidden;
+}
+
+.speedyui-stats .stats-wrapper .stats-icon:before {
+  content: '';
+  width: 100%;
+  height: 100%;
+  background-color: var(--su-primary-color);
+  opacity: .1;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.speedyui-stats .stats-wrapper:before {
+  background: #fff;
+  position: absolute;
+  content: "";
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  transform: perspective(500px) rotateY(-5deg);
+  box-shadow: 0 0.75rem 2rem rgba(0, 0, 0, 0.15);
+}
+
+.speedyui-testimonial {
+  --swiper-theme-color: var(--su-primary-color);
+}
+.speedyui-testimonial .testimonial-slider {
+  padding-top: 2rem;
+  padding-bottom: 4rem;
+}
+.speedyui-testimonial .badge {
+  font-size: 14px;
+  background: var(--su-primary-color);
+  letter-spacing: 0.1em;
+}
+.speedyui-testimonial .swiper {
+  width: 100%;
+  height: 100%;
+}
+.speedyui-testimonial .swiper-pagination-bullet{
+  background:var(--bs-dark);
+}
+.speedyui-testimonial .author-title h4 {
+  font-size: 18px;
+  font-weight: 500;
+}
+.speedyui-testimonial .author-title p {
+  font-size: 14px;
+  color: var(--su-primary-color);
+  margin: 0;
+}
+.speedyui-testimonial .author-avatar img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 50rem;
+}
+.speedyui-testimonial .testimonial-content p {
+  font-size: 14px;
+  color: #999da8;
+  line-height: 1.8;
+}
+.speedyui-testimonial .testimonial-content .testimonial-rating .icon {
+  color: #f4c60f;
+}
+.speedyui-testimonial .circle-two {
+  bottom: 10px;
+  left: 2%;
+  width: 220px;
+  height: 220px;
+  border-radius: 100%;
+  background-color: var(--su-primary-color);
+  opacity: 0.7;
+  z-index: -1;
+  pointer-events: none;
+  animation: move-animation 30s ease-in-out infinite;
+}
+@media screen and (max-width: 767.98px) {
+  .speedyui-testimonial .circle-two {
+    width: 120px;
+    height: 120px;
+  }
+}
+@keyframes move-animation {
+  0% {
+    transform: translateY(0px);
+  }
+  25% {
+    transform: translateY(-200px);
+  }
+  75% {
+    transform: translateX(200px);
+  }
+  100% {
+    transform: translateX(0px);
+  }
+}
+
+.speedyui-pricing p, .speedyui-pricing h2, .speedyui-pricing h4 {
+  margin: 0;
+}
+
+.speedyui-pricing .form-switch .form-check-input {
+  width: 3.5em;
+  height: 1.5em;
+  cursor: pointer;
+}
+
+.speedyui-pricing .form-check-input:checked {
+  background-color: var(--su-primary-color);
+  border-color: var(--su-primary-color);
+}
+
+.speedyui-pricing .form-check-input:focus {
+  box-shadow: none;
+}
+
+.speedyui-pricing .form-check {
+  width: fit-content;
+}
+
+.speedyui-pricing .card {
+  transition: all .3s;
+  transform: translateY(0);
+}
+
+.speedyui-pricing .card p {
+  font-size: 14px;
+}
+
+.speedyui-pricing .card:hover {
+  transform: translateY(-5px);
+}
+
+.speedyui-pricing .card .card-body h2 {
+  color: var(--su-primary-color);
+}
+
+.speedyui-pricing .card .card-body hr {
+  margin-left: -1.5rem;
+  margin-right: -1.5rem;
+  opacity: .1;
+}
+
+.speedyui-pricing .card .card-body ul li {
+  font-size: 14px;
+  font-weight: 300;
+}
+
+.speedyui-pricing .card .btn {
+  background-color: var(--su-primary-color);
+  border-color: var(--su-primary-color);
+  color: #fff;
+  font-size: 14px;
+}
+
+.speedyui-pricing .card .btn:hover {
+  background-color: var(--bs-dark);
+  border-color: var(--bs-dark);
+}
+
+.speedyui-pricing .list-icon {
+  color: var(--su-primary-color);
+}
+
+.speedyui-team .card-wrapper {
+  transition: 0.3s all linear;
+}
+.speedyui-team .card-wrapper .image-wrapper {
+  aspect-ratio: 1/1;
+  background: rgb(228, 228, 228);
+  background: radial-gradient(circle, rgb(228, 228, 228) 0%, rgb(214, 214, 214) 100%);
+}
+.speedyui-team .card-wrapper .image-wrapper img {
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+.speedyui-team .card-wrapper:hover {
+  transform: translateY(-10px);
+}
+
+.speedyui-partner .partner-wrapper {
+  transition: all .3s;
+}
+
+.speedyui-partner .partner-wrapper img {
+  filter: grayscale(100%);
+  transition: all .3s;
+  opacity: .8;
+}
+
+.speedyui-partner .partner-wrapper:hover img {
+  filter: grayscale(0%);
+  opacity: 1;
+}
+
+.speedyui-footer {
+  --su-content-color: #e0e0e0;
+  --su-social-icons-color:#fff;
+  line-height: 1.5;
+  background: #2a2a2a;
+}
+.speedyui-footer dl, .speedyui-footer ol, .speedyui-footer ul {
+  margin: 0;
+  padding: 0;
+}
+
+.speedyui-footer .btn-check:focus + .btn, .speedyui-footer .btn:focus {
+  box-shadow: none;
+}
+.speedyui-footer .form-control:focus {
+  border-color: var(--su-primary-color);
+}
+.speedyui-footer p {
+  color: var(--su-content-color);
+  margin: 0;
+}
+.speedyui-footer a {
+  color: #fff;
+  transition: all 0.3s;
+}
+.speedyui-footer ul li a:hover {
+  color: var(--su-primary-color);
+}
+.speedyui-footer .nav-link {
+  color: var(--su-content-color);
+}
+.speedyui-footer .nav-link:hover {
+  color: var(--su-primary-color);
+}
+.speedyui-footer .footer-bg {
+  position: relative;
+  background: url(../assets/images/footer-bg.jpg);
+  background-size: cover;
+  background-position: center center;
+  z-index: 0;
+}
+.speedyui-footer .footer-bg::before {
+  content: "";
+  width: 100%;
+  height: 100%;
+  background-color: rgba(29, 33, 39, 0.95);
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+.speedyui-footer .footer-top {
+  padding: 3.5rem 0;
+  overflow: hidden;
+  z-index: 0;
+}
+@media screen and (min-width: 768px) {
+  .speedyui-footer .footer-top {
+    padding: 5rem 0;
+  }
+}
+.speedyui-footer .footer-bottom {
+  font-size: 14px;
+  background-color: var(--bs-dark);
+}
+                    </style>
+                </head>
+                <body><!--=============== Start Header Section  ===============-->
+<header class="speedyui speedyui-header speedyui-offcanvas position-absolute w-100">
+    <div class="main-nav">
+        <nav class="navbar navbar-expand-lg nav-bg py-4 py-lg-0">
+          <div class="container">
+              <div class="logo-wrapper">
+                  <a href="#"><img src="https://s3.amazonaws.com/speedyui-static/navbar-horizontal/logo-white.png" class="logo" alt=""></a>
+              </div><!--.logo-wrapper-->
+            <div class="collapse navbar-collapse justify-content-center" id="navbarToggler">
+              <ul class="navbar-nav">
+                <li class="nav-item">
+                  <a class="nav-link active" aria-current="page" href="#">Home</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">About</a>
+                </li>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">
+                  Services
+                  </a>
+                  <ul class="dropdown-menu rounded-3 py-2">
+                      <li><a class="dropdown-item my-1" href="#">All Services</a></li>
+                      <li><a class="dropdown-item my-1" href="#">Digital Marketing</a></li>
+                      <li><a class="dropdown-item my-1" href="#">UX/UI Design</a></li>
+                      <li><a class="dropdown-item my-1" href="#">Web Development</a></li>
+                  </ul>
+                </li>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">
+                  Pages
+                  </a>
+                  <ul class="dropdown-menu rounded-3 py-2">
+                      <li><a class="dropdown-item my-1" href="#">Portfolio</a></li>
+                      <li><a class="dropdown-item my-1" href="#">Pricing</a></li>
+                      <li><a class="dropdown-item my-1" href="#">FAQ's</a></li>
+                      <li><a class="dropdown-item my-1" href="#">Sign In</a></li>
+                      <li><a class="dropdown-item my-1" href="#">Sign Up</a></li>
+                  </ul>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">Blog</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">Contact</a>
+                </li>
+              </ul> 
+            </div><!--.navbar-collapse-->
+            <ul class="nav-controls d-flex align-items-center ms-auto">
+                <li class="list-inline-item ms-xl-3 m-0">
+                    <a class="d-none d-lg-inline-block offcanvas-toggle" data-bs-toggle="offcanvas" href="#offcanvas" role="button" aria-controls="offcanvas">
+                        <span class="icon-wrapper">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
+                              </svg>
+                        </span>
+                    </a><!--.for-desktop-->
+                    <a class="d-block d-lg-none offcanvas-toggle" data-bs-toggle="offcanvas" href="#offcanvas-mobile" role="button" aria-controls="offcanvas-mobile">
+                        <span class="icon-wrapper d-flex align-items-center justify-content-center position-relative rounded-pill overflow-hidden">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
+                              </svg>
+                        </span>
+                    </a><!--.for-mobile-->
+                </li>
+            </ul>
+          </div><!--.container-->
+        </nav><!--.navbar-->
+    </div><!--.main-nav-->
+    <div class="offcanvas offcanvas-desktop offcanvas-end text-bg-dark shadow border-0 d-none d-lg-flex bg-dark" data-bs-scroll="true" data-bs-backdrop="true" tabindex="-1" id="offcanvas" aria-labelledby="offcanvasLabel">
+        <div class="offcanvas-header px-4 py-0 px-md-5 mb-5">
+            <div class="w-100 d-flex flex-column align-items-start border-bottom py-4">
+                <button type="button" class="btn-close btn-close-white shadow-none ps-0 mb-3" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                <img src="https://s3.amazonaws.com/speedyui-static/navbar-horizontal/logo-white.png" alt="">
+            </div>
+        </div><!--.offcanvas-header-->
+        <div class="offcanvas-body d-flex flex-column justify-content-between px-4 px-lg-5 pt-0 pb-4">
+            <div>
+                <div class="mb-5">
+                    <p class="mb-4">Think Creative Agency are a full-service design, communications and branding agency There are many variations of passages of Lorem Ipsum available.</p>
+                    <img src="https://speedyui-static.s3.amazonaws.com/blog/blog-1.jpg" class="img-fluid" alt="">
+                </div>
+                <h4 class="fs-4 fw-semibold mb-3">Contact Us</h4>
+                <ul class="contact-list list-unstyled">
+                    <li>
+                        <a href="#" class="d-flex align-items-start text-decoration-none gap-3 mb-4">
+                            <span class="contact-icon d-inline-flex align-items-center mt-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-geo-alt" viewBox="0 0 16 16">
+                                    <path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A31.493 31.493 0 0 1 8 14.58a31.481 31.481 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94zM8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10z"/>
+                                    <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                                </svg>
+                            </span>
+                            70 Washington Square South, New York, United States
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="d-flex align-items-start text-decoration-none gap-3 mb-4">
+                            <span class="contact-icon lh-lg d-inline-flex align-items-center mt-1">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-envelope" viewBox="0 0 16 16">
+                                    <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4Zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2Zm13 2.383-4.708 2.825L15 11.105V5.383Zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741ZM1 11.105l4.708-2.897L1 5.383v5.722Z"/>
+                                </svg>
+                            </span>
+                            <span class="__cf_email__" data-cfemail="7f0c0a0f0f100d0b3f06100a0d0c160b1a511c1012">[email&#160;protected]</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="d-flex align-items-start text-decoration-none gap-3 mb-4">
+                            <span class="contact-icon d-inline-flex align-items-center mt-1">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-telephone" viewBox="0 0 16 16">
+                                    <path d="M3.654 1.328a.678.678 0 0 0-1.015-.063L1.605 2.3c-.483.484-.661 1.169-.45 1.77a17.568 17.568 0 0 0 4.168 6.608 17.569 17.569 0 0 0 6.608 4.168c.601.211 1.286.033 1.77-.45l1.034-1.034a.678.678 0 0 0-.063-1.015l-2.307-1.794a.678.678 0 0 0-.58-.122l-2.19.547a1.745 1.745 0 0 1-1.657-.459L5.482 8.062a1.745 1.745 0 0 1-.46-1.657l.548-2.19a.678.678 0 0 0-.122-.58L3.654 1.328zM1.884.511a1.745 1.745 0 0 1 2.612.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511z"/>
+                                </svg>
+                            </span>
+                            ( +1 ) 11 22 33 44
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <ul class="social-listing d-flex align-items-center gap-4 list-unstyled mt-auto">
+                <li>
+                    <a href="#">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-google" viewBox="0 0 16 16">
+                            <path d="M15.545 6.558a9.42 9.42 0 0 1 .139 1.626c0 2.434-.87 4.492-2.384 5.885h.002C11.978 15.292 10.158 16 8 16A8 8 0 1 1 8 0a7.689 7.689 0 0 1 5.352 2.082l-2.284 2.284A4.347 4.347 0 0 0 8 3.166c-2.087 0-3.86 1.408-4.492 3.304a4.792 4.792 0 0 0 0 3.063h.003c.635 1.893 2.405 3.301 4.492 3.301 1.078 0 2.004-.276 2.722-.764h-.003a3.702 3.702 0 0 0 1.599-2.431H8v-3.08h7.545z"/>
+                        </svg>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-pinterest" viewBox="0 0 16 16">
+                            <path d="M8 0a8 8 0 0 0-2.915 15.452c-.07-.633-.134-1.606.027-2.297.146-.625.938-3.977.938-3.977s-.239-.479-.239-1.187c0-1.113.645-1.943 1.448-1.943.682 0 1.012.512 1.012 1.127 0 .686-.437 1.712-.663 2.663-.188.796.4 1.446 1.185 1.446 1.422 0 2.515-1.5 2.515-3.664 0-1.915-1.377-3.254-3.342-3.254-2.276 0-3.612 1.707-3.612 3.471 0 .688.265 1.425.595 1.826a.24.24 0 0 1 .056.23c-.061.252-.196.796-.222.907-.035.146-.116.177-.268.107-1-.465-1.624-1.926-1.624-3.1 0-2.523 1.834-4.84 5.286-4.84 2.775 0 4.932 1.977 4.932 4.62 0 2.757-1.739 4.976-4.151 4.976-.811 0-1.573-.421-1.834-.919l-.498 1.902c-.181.695-.669 1.566-.995 2.097A8 8 0 1 0 8 0z"/>
+                        </svg>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-slack" viewBox="0 0 16 16">
+                            <path d="M3.362 10.11c0 .926-.756 1.681-1.681 1.681S0 11.036 0 10.111C0 9.186.756 8.43 1.68 8.43h1.682v1.68zm.846 0c0-.924.756-1.68 1.681-1.68s1.681.756 1.681 1.68v4.21c0 .924-.756 1.68-1.68 1.68a1.685 1.685 0 0 1-1.682-1.68v-4.21zM5.89 3.362c-.926 0-1.682-.756-1.682-1.681S4.964 0 5.89 0s1.68.756 1.68 1.68v1.682H5.89zm0 .846c.924 0 1.68.756 1.68 1.681S6.814 7.57 5.89 7.57H1.68C.757 7.57 0 6.814 0 5.89c0-.926.756-1.682 1.68-1.682h4.21zm6.749 1.682c0-.926.755-1.682 1.68-1.682.925 0 1.681.756 1.681 1.681s-.756 1.681-1.68 1.681h-1.681V5.89zm-.848 0c0 .924-.755 1.68-1.68 1.68A1.685 1.685 0 0 1 8.43 5.89V1.68C8.43.757 9.186 0 10.11 0c.926 0 1.681.756 1.681 1.68v4.21zm-1.681 6.748c.926 0 1.682.756 1.682 1.681S11.036 16 10.11 16s-1.681-.756-1.681-1.68v-1.682h1.68zm0-.847c-.924 0-1.68-.755-1.68-1.68 0-.925.756-1.681 1.68-1.681h4.21c.924 0 1.68.756 1.68 1.68 0 .926-.756 1.681-1.68 1.681h-4.21z"/>
+                        </svg>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-twitter" viewBox="0 0 16 16">
+                            <path d="M5.026 15c6.038 0 9.341-5.003 9.341-9.334 0-.14 0-.282-.006-.422A6.685 6.685 0 0 0 16 3.542a6.658 6.658 0 0 1-1.889.518 3.301 3.301 0 0 0 1.447-1.817 6.533 6.533 0 0 1-2.087.793A3.286 3.286 0 0 0 7.875 6.03a9.325 9.325 0 0 1-6.767-3.429 3.289 3.289 0 0 0 1.018 4.382A3.323 3.323 0 0 1 .64 6.575v.045a3.288 3.288 0 0 0 2.632 3.218 3.203 3.203 0 0 1-.865.115 3.23 3.23 0 0 1-.614-.057 3.283 3.283 0 0 0 3.067 2.277A6.588 6.588 0 0 1 .78 13.58a6.32 6.32 0 0 1-.78-.045A9.344 9.344 0 0 0 5.026 15z"/>
+                        </svg>
+                    </a>
+                </li>
+            </ul><!--.social-listing-->
+        </div><!--.offcanvas-body-->
+    </div><!--.offcanvas-desktop-->
+    <div class="offcanvas offcanvas-mobile offcanvas-end d-block d-lg-none bg-dark p-3" tabindex="-1" id="offcanvas-mobile" aria-labelledby="offcanvasLabel">
+        <div class="offcanvas-header justify-content-between px-4 py-0 mt-4 mb-5">
+            <img src="https://s3.amazonaws.com/speedyui-static/navbar-horizontal/logo-white.png" alt="">
+            <button type="button" class="btn-close btn-close-white rounded-pill shadow-none p-3 pe-0" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div><!--.offcanvas-header-->
+        <div class="offcanvas-body p-0 pb-4">
+            <ul class="offcanvas-listing list-unstyled">
+                <li>
+                    <a class="nav-link p-3 px-4" href="#">
+                        Home
+                    </a>
+                </li>
+                <li>
+                    <a class="nav-link p-3 px-4" href="#">
+                        Team
+                    </a>
+                </li>
+                <li>
+                    <a class="nav-link d-flex align-items-center justify-content-between collapsed p-3 px-4" href="#services" data-bs-toggle="collapse" aria-expanded="false" aria-controls="services">
+                        Services
+                        <span>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
+                            </svg>
+                        </span>
+                    </a>
+                    <ul class="collapse list-unstyled" id="services" data-bs-parent="#offcanvas">
+                        <li>
+                            <a class="nav-link ps-5 py-3" href="#">UI Designer</a>
+                        </li>
+                        <li>
+                            <a class="nav-link ps-5 py-3" href="#">Web Developer</a>
+                        </li>
+                        <li>
+                            <a class="nav-link ps-5 py-3" href="#">SEO Optimization</a>
+                        </li>
+                        <li>
+                            <a class="nav-link ps-5 py-3" href="#">Digital Marketing</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a class="nav-link p-3 px-4" href="#">
+                        News
+                    </a>
+                </li>
+                <li>
+                    <a class="nav-link fw-semibold p-3 px-4" href="#">
+                        FAQ's
+                    </a>
+                </li>
+                <li>
+                    <a class="nav-link p-3 px-4" href="#">
+                        Contact
+                    </a>
+                </li>
+            </ul><!--.offcanvas-listing-->
+            <ul class="social-listing d-flex align-items-center gap-4 list-unstyled px-4 mt-5">
+                <li>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-google" viewBox="0 0 16 16">
+                        <path d="M15.545 6.558a9.42 9.42 0 0 1 .139 1.626c0 2.434-.87 4.492-2.384 5.885h.002C11.978 15.292 10.158 16 8 16A8 8 0 1 1 8 0a7.689 7.689 0 0 1 5.352 2.082l-2.284 2.284A4.347 4.347 0 0 0 8 3.166c-2.087 0-3.86 1.408-4.492 3.304a4.792 4.792 0 0 0 0 3.063h.003c.635 1.893 2.405 3.301 4.492 3.301 1.078 0 2.004-.276 2.722-.764h-.003a3.702 3.702 0 0 0 1.599-2.431H8v-3.08h7.545z"/>
+                    </svg>
+                </li>
+                <li>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-pinterest" viewBox="0 0 16 16">
+                        <path d="M8 0a8 8 0 0 0-2.915 15.452c-.07-.633-.134-1.606.027-2.297.146-.625.938-3.977.938-3.977s-.239-.479-.239-1.187c0-1.113.645-1.943 1.448-1.943.682 0 1.012.512 1.012 1.127 0 .686-.437 1.712-.663 2.663-.188.796.4 1.446 1.185 1.446 1.422 0 2.515-1.5 2.515-3.664 0-1.915-1.377-3.254-3.342-3.254-2.276 0-3.612 1.707-3.612 3.471 0 .688.265 1.425.595 1.826a.24.24 0 0 1 .056.23c-.061.252-.196.796-.222.907-.035.146-.116.177-.268.107-1-.465-1.624-1.926-1.624-3.1 0-2.523 1.834-4.84 5.286-4.84 2.775 0 4.932 1.977 4.932 4.62 0 2.757-1.739 4.976-4.151 4.976-.811 0-1.573-.421-1.834-.919l-.498 1.902c-.181.695-.669 1.566-.995 2.097A8 8 0 1 0 8 0z"/>
+                    </svg>
+                </li>
+                <li>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-slack" viewBox="0 0 16 16">
+                        <path d="M3.362 10.11c0 .926-.756 1.681-1.681 1.681S0 11.036 0 10.111C0 9.186.756 8.43 1.68 8.43h1.682v1.68zm.846 0c0-.924.756-1.68 1.681-1.68s1.681.756 1.681 1.68v4.21c0 .924-.756 1.68-1.68 1.68a1.685 1.685 0 0 1-1.682-1.68v-4.21zM5.89 3.362c-.926 0-1.682-.756-1.682-1.681S4.964 0 5.89 0s1.68.756 1.68 1.68v1.682H5.89zm0 .846c.924 0 1.68.756 1.68 1.681S6.814 7.57 5.89 7.57H1.68C.757 7.57 0 6.814 0 5.89c0-.926.756-1.682 1.68-1.682h4.21zm6.749 1.682c0-.926.755-1.682 1.68-1.682.925 0 1.681.756 1.681 1.681s-.756 1.681-1.68 1.681h-1.681V5.89zm-.848 0c0 .924-.755 1.68-1.68 1.68A1.685 1.685 0 0 1 8.43 5.89V1.68C8.43.757 9.186 0 10.11 0c.926 0 1.681.756 1.681 1.68v4.21zm-1.681 6.748c.926 0 1.682.756 1.682 1.681S11.036 16 10.11 16s-1.681-.756-1.681-1.68v-1.682h1.68zm0-.847c-.924 0-1.68-.755-1.68-1.68 0-.925.756-1.681 1.68-1.681h4.21c.924 0 1.68.756 1.68 1.68 0 .926-.756 1.681-1.68 1.681h-4.21z"/>
+                    </svg>
+                </li>
+                <li>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-twitter" viewBox="0 0 16 16">
+                        <path d="M5.026 15c6.038 0 9.341-5.003 9.341-9.334 0-.14 0-.282-.006-.422A6.685 6.685 0 0 0 16 3.542a6.658 6.658 0 0 1-1.889.518 3.301 3.301 0 0 0 1.447-1.817 6.533 6.533 0 0 1-2.087.793A3.286 3.286 0 0 0 7.875 6.03a9.325 9.325 0 0 1-6.767-3.429 3.289 3.289 0 0 0 1.018 4.382A3.323 3.323 0 0 1 .64 6.575v.045a3.288 3.288 0 0 0 2.632 3.218 3.203 3.203 0 0 1-.865.115 3.23 3.23 0 0 1-.614-.057 3.283 3.283 0 0 0 3.067 2.277A6.588 6.588 0 0 1 .78 13.58a6.32 6.32 0 0 1-.78-.045A9.344 9.344 0 0 0 5.026 15z"/>
+                    </svg>
+                </li>
+            </ul><!--.social-listing-->
+        </div><!--.offcanvas-body-->
+    </div><!--.offcanvas-mobile-->
+</header>
+<!--=============== End Header Section  ===============-->
+<!--==================== Start Hero Section =====================-->
+<section class="speedyui speedyui-hero position-relative overflow-hidden bg-dark">
+    <div class="container">
+        <div class="row align-items-center py-lg-5">
+            <div class="col-lg-6 my-2">
+                <div class="hero-content">
+                    <ul class="cat-list list-unstyled d-flex mb-3">
+                        <li class="pe-2"><a href="#" class="text-decoration-none">Tech</a></li>
+                        <li class="pe-2"><a href="#" class="text-decoration-none">Design</a></li>
+                    </ul>
+                    <h1 class="hero-heading mb-4 fw-semibold display-4">Designing and Marketing Services</h1>
+                    <div class="row">
+                        <div class="col-md-6 my-md-3">
+                            <div class="hero-feature py-2">
+                                <h4 class="fs-6 text-uppercase mb-2">Web design</h4>
+                                <p class="text-secondary">Lorem ipsum dolor sit amet</p>
+                            </div>
+                        </div><!--.col-grid-->
+                        <div class="col-md-6 my-md-3">
+                            <div class="hero-feature py-2">
+                                <h4 class="fs-6 text-uppercase mb-2">Digital Marketing</h4>
+                                <p class="text-secondary">Lorem ipsum dolor sit amet</p>
+                            </div>
+                        </div><!--.col-grid-->
+                    </div><!--.row-->
+                    <a href="#" class="speedyui-btn btn btn-md btn-white px-3 text-uppercase">Get started</a>
+                </div><!--.hero-content-->
+            </div><!--.col-grid-->
+            <div class="col-lg-6 my-2">
+                <img src="https://speedyui-static.s3.amazonaws.com/header/header-6/hero-img.png" class="img-fluid" alt="" />
+            </div><!--.col-grid-->
+        </div><!--.row-->
+    </div><!--.container-->
+    <div class="circle-one d-none d-lg-block position-absolute"></div><!--.circle-one-->
+    <div class="circle-two d-none d-lg-block position-absolute"></div><!--.circle-two-->
+</section>
+<!--==================== End Hero Section =====================-->
+<!--====================== Start Content Section ======================-->
+<section class="speedyui speedyui-content py-5">
+    <div class="container">
+        <div class="row gx-lg-5 align-items-center">
+            <div class="col-lg-6">
+                <div class="content-img-wrap">
+                    <img src="https://speedyui-static.s3.amazonaws.com/content-section/content-1/content-img-1-2.jpg" alt="" class="img-fluid content-img-one">
+                    <img src="https://speedyui-static.s3.amazonaws.com/content-section/content-1/content-img-1.jpg" alt="" class="img-fluid content-img-two">
+                </div><!--.content-img-wrap-->
+            </div><!--.col-grid-->
+            <div class="col-lg-6">
+                <div class="content-wrap my-3">
+                    <span class="primary-text d-block mb-2 fw-semibold">About Our Company</span>
+                    <h2 class="fs-1 mb-4">Best Award Winning Creative Agency Shape Of Perfect Solution</h2>
+                    <p class="text-muted">Lorem ipsum dolor sit amet consectetur adipiscing elit et fames maecenas amet est scelerisque lectus tortor sit lorem ipsum dolor sit amet consectetur adipiscing elit et fames maecenas amet est scelerisque lectus tortor sit.</p>
+                    <p class="text-muted">
+                        Lorem ipsum dolor sit amet consectetur adipiscing elit et fames maecenas amet est scelerisque lectus tortor sit lorem ipsum dolor sit amet consectetur adipiscing elit et fames maecenas amet est scelerisque lectus tortor sit.
+                    </p>
+                    <a href="#" class="speedyui-btn btn btn-md px-3 text-uppercase mt-3">Learn More</a>
+                </div><!--.content-wrap-->
+            </div><!--.col-grid-->
+        </div><!--.row-->
+    </div><!--.container-->
+</section>
+<!--====================== End Content Section ======================-->
+<!--====================== Start Feature Section ======================-->
+<section class="speedyui speedyui-feature bg-light py-5">
+    <div class="container">
+        <!-- Start Section Title -->
+            <div class="row align-items-center justify-content-center mb-4">
+                <div class="col-xl-7 col-lg-9">
+                    <div class="speedyui-section-title text-center">
+                        <span class="section-title-tagline d-inline-flex align-items-center fw-semibold mb-3">Speedyui Components</span>
+                        <h2 class="section-title display-6 fw-semibold mb-3">Why Choose Our Agency</h2>
+                    </div><!--.speedyui-section-title-->
+                </div><!--.col-grid-->
+            </div><!--.row-->
+        <!-- End Section Title -->
+        <div class="row">
+            <div class="col-lg-4 col-md-6">
+                <div class="feature-wrap row gx-3 my-3">
+                    <div class="col-auto">
+                        <span class="icons-wrap position-relative bg-transparent">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="icon" viewBox="0 0 16 16">
+                                <path d="M4 11H2v3h2v-3zm5-4H7v7h2V7zm5-5v12h-2V2h2zm-2-1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1h-2zM6 7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7zm-5 4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1v-3z"/>
+                            </svg>
+                        </span>
+                    </div><!--.col-grid-->
+                    <div class="col pe-md-4">
+                        <h4 class="fs-4 fw-semibold mb-2">Digital Marketing</h4>
+                        <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus faucibus ante vitae justo</p>
+                    </div><!--.col-grid-->
+                </div><!--.feature-wrap-->
+            </div><!--.col-grid-->
+            <div class="col-lg-4 col-md-6">
+                <div class="feature-wrap row gx-3 my-3">
+                    <div class="col-auto">
+                        <span class="icons-wrap position-relative bg-transparent">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="icon" viewBox="0 0 16 16">
+                                <path d="M0 .5A.5.5 0 0 1 .5 0h5a.5.5 0 0 1 .5.5v5.277l4.147-4.131a.5.5 0 0 1 .707 0l3.535 3.536a.5.5 0 0 1 0 .708L10.261 10H15.5a.5.5 0 0 1 .5.5v5a.5.5 0 0 1-.5.5H3a2.99 2.99 0 0 1-2.121-.879A2.99 2.99 0 0 1 0 13.044m6-.21 7.328-7.3-2.829-2.828L6 7.188v5.647zM4.5 13a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0zM15 15v-4H9.258l-4.015 4H15zM0 .5v12.495V.5z"/>
+                                <path d="M0 12.995V13a3.07 3.07 0 0 0 0-.005z"/>
+                            </svg>
+                        </span>
+                    </div><!--.col-grid-->
+                    <div class="col pe-md-4">
+                        <h4 class="fs-4 fw-semibold mb-2">UX/UI Design</h4>
+                        <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus faucibus ante vitae justo</p>
+                    </div><!--.col-grid-->
+                </div><!--.feature-wrap-->
+            </div><!--.col-grid-->
+            <div class="col-lg-4 col-md-6">
+                <div class="feature-wrap row gx-3 my-3">
+                    <div class="col-auto">
+                        <span class="icons-wrap position-relative bg-transparent">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="icon" viewBox="0 0 16 16">
+                                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                              </svg>
+                        </span>
+                    </div><!--.col-grid-->
+                    <div class="col pe-md-4">
+                        <h4 class="fs-4 fw-semibold mb-2">SEO Optimization</h4>
+                        <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus faucibus ante vitae justo</p>
+                    </div><!--.col-grid-->
+                </div><!--.feature-wrap-->
+            </div><!--.col-grid-->
+            <div class="col-lg-4 col-md-6">
+                <div class="feature-wrap row gx-3 my-3">
+                    <div class="col-auto">
+                        <span class="icons-wrap position-relative bg-transparent">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="icon" viewBox="0 0 16 16">
+                                <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                                <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                              </svg>
+                        </span>
+                    </div><!--.col-grid-->
+                    <div class="col pe-md-4">
+                        <h4 class="fs-4 fw-semibold mb-2">Content Marketing</h4>
+                        <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus faucibus ante vitae justo</p>
+                    </div><!--.col-grid-->
+                </div><!--.feature-wrap-->
+            </div><!--.col-grid-->
+            <div class="col-lg-4 col-md-6">
+                <div class="feature-wrap row gx-3 my-3">
+                    <div class="col-auto">
+                        <span class="icons-wrap position-relative bg-transparent">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="icon" viewBox="0 0 16 16">
+                                <path d="M10.478 1.647a.5.5 0 1 0-.956-.294l-4 13a.5.5 0 0 0 .956.294l4-13zM4.854 4.146a.5.5 0 0 1 0 .708L1.707 8l3.147 3.146a.5.5 0 0 1-.708.708l-3.5-3.5a.5.5 0 0 1 0-.708l3.5-3.5a.5.5 0 0 1 .708 0zm6.292 0a.5.5 0 0 0 0 .708L14.293 8l-3.147 3.146a.5.5 0 0 0 .708.708l3.5-3.5a.5.5 0 0 0 0-.708l-3.5-3.5a.5.5 0 0 0-.708 0z"/>
+                            </svg>
+                        </span>
+                    </div><!--.col-grid-->
+                    <div class="col pe-md-4">
+                        <h4 class="fs-4 fw-semibold mb-2">Web Development</h4>
+                        <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus faucibus ante vitae justo</p>
+                    </div><!--.col-grid-->
+                </div><!--.feature-wrap-->
+            </div><!--.col-grid-->
+            <div class="col-lg-4 col-md-6">
+                <div class="feature-wrap row gx-3 my-3">
+                    <div class="col-auto">
+                        <span class="icons-wrap position-relative bg-transparent">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="icon" viewBox="0 0 16 16">
+                                <path d="M0 4s0-2 2-2h12s2 0 2 2v6s0 2-2 2h-4c0 .667.083 1.167.25 1.5H11a.5.5 0 0 1 0 1H5a.5.5 0 0 1 0-1h.75c.167-.333.25-.833.25-1.5H2s-2 0-2-2V4zm1.398-.855a.758.758 0 0 0-.254.302A1.46 1.46 0 0 0 1 4.01V10c0 .325.078.502.145.602.07.105.17.188.302.254a1.464 1.464 0 0 0 .538.143L2.01 11H14c.325 0 .502-.078.602-.145a.758.758 0 0 0 .254-.302 1.464 1.464 0 0 0 .143-.538L15 9.99V4c0-.325-.078-.502-.145-.602a.757.757 0 0 0-.302-.254A1.46 1.46 0 0 0 13.99 3H2c-.325 0-.502.078-.602.145z"/>
+                            </svg>
+                        </span>
+                    </div><!--.col-grid-->
+                    <div class="col pe-md-4">
+                        <h4 class="fs-4 fw-semibold mb-2">Graphic Design</h4>
+                        <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus faucibus ante vitae justo</p>
+                    </div><!--.col-grid-->
+                </div><!--.feature-wrap-->
+            </div><!--.col-grid-->
+        </div><!--.row-->
+    </div><!--.container-->
+</section>
+<!--====================== End Feature Section ======================-->
+<!--====================== Start Portfolio Section ======================-->
+<section class="speedyui speedyui-portfolio py-5">
+    <div class="container">
+         <!-- Start Section Title -->
+            <div class="row align-items-center justify-content-center mb-4">
+                <div class="col-xl-7 col-lg-9">
+                    <div class="speedyui-section-title text-center">
+                        <span class="section-title-tagline d-inline-flex align-items-center fw-semibold mb-3">Portfolio</span>
+                        <h2 class="section-title display-6 fw-semibold mb-3 text-white">Our Recent Work</h2>
+                    </div><!--.speedyui-section-title-->
+                </div><!--.col-grid-->
+            </div><!--.row-->
+        <!-- End Section Title -->
+        <div class="row">
+            <div class="col-12">
+                <div class="swiper portfolio-slider pt-3">
+                    <div class="swiper-wrapper align-items-center">
+                        <div class="swiper-slide">
+                            <div class="card-wrapper">
+                                <h6 class="card-subtitle d-block opacity-75 px-2 mb-2">Logo</h6>
+                                <h4 class="card-title px-2 mb-4">
+                                    <a class="fw-semibold d-flex align-items-center text-decoration-none gap-4" href="#">
+                                        Logo Design
+                                        <span class="arrow-icon d-inline-flex">
+                                            <svg width="15" height="24" viewBox="0 0 18 33" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                <line x1="0.707107" y1="1.18181" x2="16.7071" y2="17.1818" stroke="currentColor" stroke-width="2.6"></line>
+                                                <line x1="1.07121" y1="31.4041" x2="15.2934" y2="17.1819" stroke="currentColor" stroke-width="2.6"></line>
+                                            </svg>
+                                        </span>
+                                    </a>
+                                </h4>
+                                <div class="card position-relative overflow-hidden rounded-4 border-0 p-0">
+                                    <img src="https://speedyui-static.s3.amazonaws.com/portfolio/portfolio-7/img-1.jpg" class="card-img-top rounded-0" alt="" />
+                                    <div class="card-img-overlay d-flex justify-content-center align-items-center">
+                                        <a class="d-flex align-items-center justify-content-center rounded-pill" href="#">
+                                            <span class="d-inline-flex">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="46" height="46" fill="currentColor" class="bi bi-arrow-right-short" viewBox="0 0 16 16">
+                                                    <path fill-rule="evenodd" d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8z"/>
+                                                </svg>
+                                            </span>
+                                        </a>
+                                    </div><!--.card-img-overlay-->
+                                </div><!--.card-->
+                            </div><!--.card-wrapper-->
+                        </div><!--.swiper-slide-->
+                        <div class="swiper-slide">
+                            <div class="card-wrapper">
+                                <h6 class="card-subtitle d-block opacity-75 px-2 mb-2">Brand</h6>
+                                <h4 class="card-title px-2 mb-4">
+                                    <a class="fw-semibold d-flex align-items-center text-decoration-none gap-4" href="#">
+                                        Brand Design
+                                        <span class="arrow-icon d-inline-flex">
+                                            <svg width="15" height="24" viewBox="0 0 18 33" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                <line x1="0.707107" y1="1.18181" x2="16.7071" y2="17.1818" stroke="currentColor" stroke-width="2.6"></line>
+                                                <line x1="1.07121" y1="31.4041" x2="15.2934" y2="17.1819" stroke="currentColor" stroke-width="2.6"></line>
+                                            </svg>
+                                        </span>
+                                    </a>
+                                </h4>
+                                <div class="card position-relative overflow-hidden rounded-4 border-0 p-0">
+                                    <img src="https://speedyui-static.s3.amazonaws.com/portfolio/portfolio-7/img-2.jpg" class="card-img-top rounded-0" alt="" />
+                                    <div class="card-img-overlay d-flex justify-content-center align-items-center">
+                                        <a class="d-flex align-items-center justify-content-center rounded-pill" href="#">
+                                            <span class="d-inline-flex">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="46" height="46" fill="currentColor" class="bi bi-arrow-right-short" viewBox="0 0 16 16">
+                                                    <path fill-rule="evenodd" d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8z"/>
+                                                </svg>
+                                            </span>
+                                        </a>
+                                    </div><!--.card-img-overlay-->
+                                </div><!--.card-->
+                            </div><!--.card-wrapper-->
+                        </div><!--.swiper-slide-->
+                        <div class="swiper-slide">
+                            <div class="card-wrapper">
+                                <h6 class="card-subtitle d-block opacity-75 px-2 mb-2">SEO</h6>
+                                <h4 class="card-title px-2 mb-4">
+                                    <a class="fw-semibold d-flex align-items-center text-decoration-none gap-4" href="#">
+                                        SEO Manager
+                                        <span class="arrow-icon d-inline-flex">
+                                            <svg width="15" height="24" viewBox="0 0 18 33" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                <line x1="0.707107" y1="1.18181" x2="16.7071" y2="17.1818" stroke="currentColor" stroke-width="2.6"></line>
+                                                <line x1="1.07121" y1="31.4041" x2="15.2934" y2="17.1819" stroke="currentColor" stroke-width="2.6"></line>
+                                            </svg>
+                                        </span>
+                                    </a>
+                                </h4>
+                                <div class="card position-relative overflow-hidden rounded-4 border-0 p-0">
+                                    <img src="https://speedyui-static.s3.amazonaws.com/portfolio/portfolio-7/img-3.jpg" class="card-img-top rounded-0" alt="" />
+                                    <div class="card-img-overlay d-flex justify-content-center align-items-center">
+                                        <a class="d-flex align-items-center justify-content-center rounded-pill" href="#">
+                                            <span class="d-inline-flex">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="46" height="46" fill="currentColor" class="bi bi-arrow-right-short" viewBox="0 0 16 16">
+                                                    <path fill-rule="evenodd" d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8z"/>
+                                                </svg>
+                                            </span>
+                                        </a>
+                                    </div><!--.card-img-overlay-->
+                                </div><!--.card-->
+                            </div><!--.card-wrapper-->
+                        </div><!--.swiper-slide-->
+                    </div><!--.swiper-wrapper-->
+                    <div class="pagination-wrapper d-flex justify-content-center text-center">
+                        <div class="portfolio-swiper-pagination swiper-pagination"></div><!--.portfolio-swiper-pagination-->
+                    </div><!--.pagination-wrapper-->
+                </div><!--.swiper-->
+            </div><!--.col-grid-->
+        </div><!--.row-->
+      </div><!--.container--> 
+</section>
+<!--====================== End Portfolio Section ======================-->
+<!--====================== Start Stats Section ======================-->
+<section class="speedyui speedyui-stats py-5 bg-light">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-5 my-3">
+                    <span class="primary-text d-block mb-2 fw-semibold">Our Experience</span>
+                    <h2 class="fs-1 mb-4">Best Award Winning Creative Agency</h2>
+                    <p class="text-muted fs-5 fw-light mb-5">Lorem ipsum dolor sit amet consectetur adipiscing elit et fames maecenas amet est scelerisque lectus tortor sit lorem ipsum dolor sit amet consectetur</p>
+                    <a href="#" class="speedyui-btn btn btn-md px-3 text-uppercase mt-3">Learn More</a>
+            </div><!--.col-grid-->
+            <div class="col-lg-6 offset-lg-1 my-3">
+                <div class="row">
+                    <div class="col-lg-6 col-sm-6">
+                        <div class="stats-wrapper text-center rounded-0 px-4 py-5 mb-sm-5">
+                            <div class="stats-icon mb-3 mx-auto">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-layers-half" viewBox="0 0 16 16">
+                                    <path d="M8.235 1.559a.5.5 0 0 0-.47 0l-7.5 4a.5.5 0 0 0 0 .882L3.188 8 .264 9.559a.5.5 0 0 0 0 .882l7.5 4a.5.5 0 0 0 .47 0l7.5-4a.5.5 0 0 0 0-.882L12.813 8l2.922-1.559a.5.5 0 0 0 0-.882l-7.5-4zM8 9.433 1.562 6 8 2.567 14.438 6 8 9.433z"/>
+                                </svg>
+                            </div><!--.stats-icon-->
+                            <h3 class="stats-number d-block mb-2"><span class="count" data-count="170">170</span>+</h3>
+                            <p class="fs-6 fw-normal">Finished Projects</p>
+                        </div><!--.stats-wrapper-->
+                    </div><!--.col-grid-->
+                    <div class="col-lg-6 col-sm-6">
+                        <div class="stats-wrapper text-center rounded-0 px-4 py-5 mt-sm-5">
+                            <div class="stats-icon mb-3 mx-auto">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-people-fill" viewBox="0 0 16 16">
+                                    <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                                    <path fill-rule="evenodd" d="M5.216 14A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216z"/>
+                                    <path d="M4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z"/>
+                                </svg>
+                            </div><!--.stats-icon-->
+                            <h3 class="stats-number d-block mb-2"><span class="count" data-count="520">520</span>+</h3>
+                            <p class="fs-6 fw-normal">Happy Clients</p>
+                        </div><!--.stats-wrapper-->
+                    </div><!--.col-grid-->
+                    <div class="col-lg-6 col-sm-6">
+                        <div class="stats-wrapper text-center rounded-0 px-4 py-5 mb-sm-5">
+                            <div class="stats-icon mb-3 mx-auto">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-trophy-fill" viewBox="0 0 16 16">
+                                    <path d="M2.5.5A.5.5 0 0 1 3 0h10a.5.5 0 0 1 .5.5c0 .538-.012 1.05-.034 1.536a3 3 0 1 1-1.133 5.89c-.79 1.865-1.878 2.777-2.833 3.011v2.173l1.425.356c.194.048.377.135.537.255L13.3 15.1a.5.5 0 0 1-.3.9H3a.5.5 0 0 1-.3-.9l1.838-1.379c.16-.12.343-.207.537-.255L6.5 13.11v-2.173c-.955-.234-2.043-1.146-2.833-3.012a3 3 0 1 1-1.132-5.89A33.076 33.076 0 0 1 2.5.5zm.099 2.54a2 2 0 0 0 .72 3.935c-.333-1.05-.588-2.346-.72-3.935zm10.083 3.935a2 2 0 0 0 .72-3.935c-.133 1.59-.388 2.885-.72 3.935z"/>
+                                </svg>
+                            </div><!--.stats-icon-->
+                            <h3 class="stats-number d-block mb-2"><span class="count" data-count="60">60</span>+</h3>
+                            <p class="fs-6 fw-normal">Awards Wons</p>
+                        </div><!--.stats-wrapper-->
+                    </div><!--.col-grid-->
+                    <div class="col-lg-6 col-sm-6">
+                        <div class="stats-wrapper text-center rounded-0 px-4 py-5 mb-5 mt-sm-5">
+                            <div class="stats-icon mb-3 mx-auto">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-briefcase-fill" viewBox="0 0 16 16">
+                                    <path d="M6.5 1A1.5 1.5 0 0 0 5 2.5V3H1.5A1.5 1.5 0 0 0 0 4.5v1.384l7.614 2.03a1.5 1.5 0 0 0 .772 0L16 5.884V4.5A1.5 1.5 0 0 0 14.5 3H11v-.5A1.5 1.5 0 0 0 9.5 1h-3zm0 1h3a.5.5 0 0 1 .5.5V3H6v-.5a.5.5 0 0 1 .5-.5z"/>
+                                    <path d="M0 12.5A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5V6.85L8.129 8.947a.5.5 0 0 1-.258 0L0 6.85v5.65z"/>
+                                </svg>
+                            </div><!--.stats-icon-->
+                            <h3 class="stats-number d-block mb-2"><span class="count" data-count="15">15</span>+</h3>
+                            <p class="fs-6 fw-normal">Experience Years</p>
+                        </div><!--.stats-wrapper-->
+                    </div><!--.col-grid-->
+                </div><!--.row-->
+            </div><!--.col-grid-->
+        </div><!--.row-->
+    </div><!--.container-->
+</section>
+<!--====================== End Stats Section ======================-->
+<!--====================== Start Testimonial Section ======================-->
+<section class="speedyui speedyui-testimonial position-relative overflow-hidden py-5">
+    <div class="container">
+        <!-- Start Section Title -->
+        <div class="row align-items-center justify-content-center mb-4">
+            <div class="col-xl-7 col-lg-9">
+                <div class="speedyui-section-title text-center">
+                    <span class="section-title-tagline d-inline-flex align-items-center fw-semibold mb-3">Our testimonials</span>
+                    <h2 class="section-title display-6 fw-semibold mb-3">What Clients Saying!</h2>
+                </div><!--.speedyui-section-title-->
+            </div><!--.col-grid-->
+        </div><!--.row-->
+        <!-- End Section Title -->
+        <div class="row">
+            <div class="col-12">
+                <div class="swiper testimonial-slider">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide">
+                            <div class="testimonial-wrapper px-3">
+                                <div class="testimonial-content mb-4 p-4 bg-white shadow rounded-3">
+                                    <p class="mb-4 mt-2">
+                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde consectetur vel dolorem assumenda modi obcaecati nesciunt est minima fugiat recusandae nobis distinctio doloribus 
+                                    </p>
+                                    <div class="testimonial-rating mb-2">
+                                        <span class="icon">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
+                                                <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+                                            </svg>
+                                        </span>
+                                        <span class="icon">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
+                                                <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+                                            </svg>
+                                        </span>
+                                        <span class="icon">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
+                                                <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+                                            </svg>
+                                        </span>
+                                        <span class="icon">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
+                                                <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+                                            </svg>
+                                        </span>
+                                        <span class="icon">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
+                                                <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+                                            </svg>
+                                        </span>
+                                    </div><!--.testimonial-rating-->
+                                </div><!--.testimonial-content-->
+                                <div class="testimonial-author d-flex align-items-center">
+                                    <div class="author-avatar me-3">
+                                        <img src="https://speedyui-static.s3.amazonaws.com/testimonials/1.jpg" class="img-fluid" alt="" />
+                                    </div><!--.author-avatar-->
+                                    <div class="author-title">
+                                        <h4 class="mb-1">Jhon Deo</h4>
+                                        <p>Web Developer</p>
+                                    </div><!--.author-title-->
+                                </div><!--.testimonial-author-->
+                            </div><!--.testimonial-wrapper-->
+                        </div><!--.swiper-slide-->
+                        <div class="swiper-slide">
+                            <div class="testimonial-wrapper px-3">
+                                <div class="testimonial-content mb-4 p-4 bg-white shadow rounded-3">
+                                    <p class="mb-4 mt-2">
+                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde consectetur vel dolorem assumenda modi obcaecati nesciunt est minima fugiat recusandae nobis distinctio doloribus 
+                                    </p>
+                                    <div class="testimonial-rating mb-2">
+                                        <span class="icon">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
+                                                <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+                                            </svg>
+                                        </span>
+                                        <span class="icon">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
+                                                <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+                                            </svg>
+                                        </span>
+                                        <span class="icon">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
+                                                <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+                                            </svg>
+                                        </span>
+                                        <span class="icon">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
+                                                <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+                                            </svg>
+                                        </span>
+                                        <span class="icon">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
+                                                <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+                                            </svg>
+                                        </span>
+                                    </div><!--.testimonial-rating-->
+                                </div><!--.testimonial-content-->
+                                <div class="testimonial-author d-flex align-items-center">
+                                    <div class="author-avatar me-3">
+                                        <img src="https://speedyui-static.s3.amazonaws.com/testimonials/2.jpg" class="img-fluid" alt="" />
+                                    </div><!--.author-avatar-->
+                                    <div class="author-title">
+                                        <h4 class="mb-1">Esther Morgan</h4>
+                                        <p>Quality Assurance</p>
+                                    </div><!--.author-title-->
+                                </div><!--.testimonial-author-->
+                            </div><!--.testimonial-wrapper-->
+                        </div><!--.swiper-slide-->
+                        <div class="swiper-slide">
+                            <div class="testimonial-wrapper px-3">
+                                <div class="testimonial-content mb-4 p-4 bg-white shadow rounded-3">
+                                    <p class="mb-4 mt-2">
+                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde consectetur vel dolorem assumenda modi obcaecati nesciunt est minima fugiat recusandae nobis distinctio doloribus 
+                                    </p>
+                                    <div class="testimonial-rating mb-2">
+                                        <span class="icon">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
+                                                <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+                                            </svg>
+                                        </span>
+                                        <span class="icon">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
+                                                <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+                                            </svg>
+                                        </span>
+                                        <span class="icon">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
+                                                <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+                                            </svg>
+                                        </span>
+                                        <span class="icon">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
+                                                <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+                                            </svg>
+                                        </span>
+                                        <span class="icon">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
+                                                <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+                                            </svg>
+                                        </span>
+                                    </div><!--.testimonial-rating-->
+                                </div><!--.testimonial-content-->
+                                <div class="testimonial-author d-flex align-items-center">
+                                    <div class="author-avatar me-3">
+                                        <img src="https://speedyui-static.s3.amazonaws.com/testimonials/3.jpg" class="img-fluid" alt="" />
+                                    </div><!--.author-avatar-->
+                                    <div class="author-title">
+                                        <h4 class="mb-1">Jose Williams</h4>
+                                        <p>Graphics Designer</p>
+                                    </div><!--.author-title-->
+                                </div><!--.testimonial-author-->
+                            </div><!--.testimonial-wrapper-->
+                        </div><!--.swiper-slide-->
+                        <div class="swiper-slide">
+                            <div class="testimonial-wrapper px-3">
+                                <div class="testimonial-content mb-4 p-4 bg-white shadow rounded-3">
+                                    <p class="mb-4 mt-2">
+                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde consectetur vel dolorem assumenda modi obcaecati nesciunt est minima fugiat recusandae nobis distinctio doloribus 
+                                    </p>
+                                    <div class="testimonial-rating mb-2">
+                                        <span class="icon">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
+                                                <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+                                            </svg>
+                                        </span>
+                                        <span class="icon">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
+                                                <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+                                            </svg>
+                                        </span>
+                                        <span class="icon">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
+                                                <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+                                            </svg>
+                                        </span>
+                                        <span class="icon">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
+                                                <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+                                            </svg>
+                                        </span>
+                                        <span class="icon">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
+                                                <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+                                            </svg>
+                                        </span>
+                                    </div><!--.testimonial-rating-->
+                                </div><!--.testimonial-content-->
+                                <div class="testimonial-author d-flex align-items-center">
+                                    <div class="author-avatar me-3">
+                                        <img src="https://speedyui-static.s3.amazonaws.com/testimonials/4.jpg" class="img-fluid" alt="" />
+                                    </div><!--.author-avatar-->
+                                    <div class="author-title">
+                                        <h4 class="mb-1">Janice Adams</h4>
+                                        <p>SEO Expert</p>
+                                    </div><!--.author-title-->
+                                </div><!--.testimonial-author-->
+                            </div><!--.testimonial-wrapper-->
+                        </div><!--.swiper-slide-->
+                    </div><!--.swiper-wrapper-->
+                    <div class="testimonial-swiper-pagination swiper-pagination text-center"></div><!--.--su-->
+                </div><!--.testimonial-slider-->
+            </div><!--.col-grid-->
+        </div><!--.row-->
+    </div><!--.container-->
+    <div class="circle-two d-none d-lg-block position-absolute"></div>
+</section>
+<!--====================== End Testimonial Section ======================-->
+<!--=================================== Start Pricing Seaction ===================================-->
+<section class="speedyui speedyui-pricing bg-light py-5">
+    <div class="container">
+      <!-- Start Section Title -->
+      <div class="row align-items-center justify-content-center mb-4">
+        <div class="col-xl-7 col-lg-9">
+            <div class="speedyui-section-title text-center">
+                <span class="section-title-tagline d-inline-flex align-items-center fw-semibold mb-3">Our Pricing</span>
+                <h2 class="section-title display-6 fw-semibold mb-3">Pricing Plan!</h2>
+            </div><!--.speedyui-section-title-->
+        </div><!--.col-grid-->
+    </div><!--.row-->
+    <!-- End Section Title -->
+      <div class="row mb-5">
+        <div class="col-12">
+            <div class="form-check form-switch mx-auto px-4 py-2 bg-white rounded-pill text-center mb-2">
+                <label class="form-check-label fw-normal">Monthly</label>
+                <input class="form-check-input float-none mt-0 mx-2" type="checkbox" role="switch" id="priceSwitcher">
+                <label class="form-check-label fw-normal">Annually</label>
+            </div><!--.form-switch-->
+        </div><!--.col-grid-->
+    </div><!--.row-->
+      <div class="row">
+        <div class="col-md-4 mb-4">
+          <div class="card h-100 px-4 py-5 shadow border-0 rounded-3">
+            <div class="card-header mb-4 border-0 p-0 bg-transparent">
+              <h4 class="card-title mb-4 fs-5">Hobby</h4>
+              <p class="text-muted fw-light">Get access to all features for 1 person. A great way to get you started</p>
+            </div><!--.card-header-->
+            <div class="card-body p-0">
+                <div class="d-flex align-items-center mb-3">
+                  <h2 class="card-price mb-2 fw-semibold price-value"  data-annually-price="$99" data-monthly-price="$10">$10</h2>
+                  <span class="bill-type fs-6 fw-normal text-muted price-value" data-annually-price="/annually" data-monthly-price="/monthly">/monthly</span>
+                </div>
+                <a href="#" class="btn btn-outline-primary rounded-pill py-2 d-block mb-4 ">Buy Now</a>
+                <hr class="my-4" />
+              <h5 class="fs-6 mb-3">What's included</h5>
+              <ul class="list-unstyled m-0">
+                <li class="py-1 d-flex align-items-center text-muted">
+                  <span class="list-icon d-inline-flex rounded-pill me-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-check" viewBox="0 0 16 16">
+                        <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"></path>
+                    </svg>
+                </span>Single User
+                </li>
+                <li class="py-1 d-flex align-items-center text-muted">
+                  <span class="list-icon d-inline-flex rounded-pill me-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-check" viewBox="0 0 16 16">
+                        <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"></path>
+                    </svg>
+                </span>5GB Storage
+                </li>
+              </ul>
+            </div><!--.card-body-->
+          </div><!--.card-->
+        </div><!--.col-grid-->
+        <div class="col-md-4 mb-4">
+          <div class="card h-100 px-4 py-5 shadow border-0 rounded-3">
+            <div class="card-header mb-4 border-0 p-0 bg-transparent">
+              <h4 class="card-title mb-4 fs-5">Freelancer</h4>
+              <p class="text-muted fw-light">Get access to all features for 1 person. A great way to get you started</p>
+            </div><!--.card-header-->
+            <div class="card-body p-0">
+              <div class="d-flex align-items-center mb-3">
+                <h2 class="card-price mb-2 fw-semibold price-value"  data-annually-price="$199" data-monthly-price="$20">$20</h2>
+                <span class="bill-type fs-6 fw-normal text-muted price-value" data-annually-price="/annually" data-monthly-price="/monthly">/monthly</span>
+              </div>
+              <a href="#" class="btn btn-outline-primary rounded-pill py-2 d-block mb-4 ">Buy Now</a>
+              <hr class="my-4" />
+              <h5 class="fs-6 mb-3">What's included</h5>
+              <ul class="list-unstyled m-0">
+                <li class="py-1 d-flex align-items-center text-muted">
+                  <span class="list-icon d-inline-flex rounded-pill me-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-check" viewBox="0 0 16 16">
+                        <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"></path>
+                    </svg>
+                </span>Single User
+                </li>
+                <li class="py-1 d-flex align-items-center text-muted">
+                  <span class="list-icon d-inline-flex rounded-pill me-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-check" viewBox="0 0 16 16">
+                        <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"></path>
+                    </svg>
+                </span>5GB Storage
+                </li>
+                <li class="py-1 d-flex align-items-center text-muted">
+                  <span class="list-icon d-inline-flex rounded-pill me-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-check" viewBox="0 0 16 16">
+                        <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"></path>
+                    </svg>
+                </span>5GB SSD Storage
+                </li>
+              </ul>
+            </div><!--.card-body-->
+          </div><!--.card-->
+        </div><!--.col-grid-->
+        <div class="col-md-4 mb-4">
+          <div class="card h-100 px-4 py-5 shadow border-0 rounded-3">
+            <div class="card-header mb-4 border-0 p-0 bg-transparent">
+              <h4 class="card-title mb-4 fs-5">Enterprise</h4>
+              <p class="text-muted fw-light">Get access to all features for 1 person. A great way to get you started</p>
+            </div><!--.card-header-->
+            <div class="card-body p-0">
+              <div class="d-flex align-items-center mb-3">
+                <h2 class="card-price mb-2 fw-semibold price-value"  data-annually-price="$399" data-monthly-price="$40">$40</h2>
+                <span class="bill-type fs-6 fw-normal text-muted price-value" data-annually-price="/annually" data-monthly-price="/monthly">/monthly</span>
+              </div>
+              <a href="#" class="btn btn-outline-primary rounded-pill py-2 d-block mb-4 ">Buy Now</a>
+              <hr class="my-4" />
+              <h5 class="fs-6 mb-3">What's included</h5>
+              <ul class="list-unstyled m-0">
+                <li class="py-1 d-flex align-items-center text-muted">
+                  <span class="list-icon d-inline-flex rounded-pill me-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-check" viewBox="0 0 16 16">
+                        <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"></path>
+                    </svg>
+                </span>Single User
+                </li>
+                <li class="py-1 d-flex align-items-center text-muted">
+                  <span class="list-icon d-inline-flex rounded-pill me-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-check" viewBox="0 0 16 16">
+                        <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"></path>
+                    </svg>
+                </span>5GB Storage
+                </li>
+                <li class="py-1 d-flex align-items-center text-muted">
+                  <span class="list-icon d-inline-flex rounded-pill me-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-check" viewBox="0 0 16 16">
+                        <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"></path>
+                    </svg>
+                </span>5GB SSD Storage
+                </li>
+                <li class="py-1 d-flex align-items-center text-muted">
+                  <span class="list-icon d-inline-flex rounded-pill me-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-check" viewBox="0 0 16 16">
+                        <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"></path>
+                    </svg>
+                </span>1 Month Extra Streaming
+                </li>
+                <li class="py-1 d-flex align-items-center text-muted">
+                  <span class="list-icon d-inline-flex rounded-pill me-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-check" viewBox="0 0 16 16">
+                        <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"></path>
+                    </svg>
+                </span>100/Creadits
+                </li>
+                <li class="py-1 d-flex align-items-center text-muted">
+                  <span class="list-icon d-inline-flex rounded-pill me-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-check" viewBox="0 0 16 16">
+                        <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"></path>
+                    </svg>
+                </span>24/7 Support
+                </li>
+              </ul>
+            </div><!--.card-body-->
+          </div><!--.card-->
+        </div><!--.col-grid-->
+      </div><!--.row-->
+    </div> <!--.container-->
+</section>
+<!--=================================== End Pricing Seaction ===================================-->
+<!--==================== Start Team Section =====================-->
+<section class="speedyui speedyui-team py-5">
+    <div class="container">
+        <div class="container">
+        <!-- Start Section Title -->
+        <div class="row align-items-center justify-content-center mb-4">
+            <div class="col-xl-7 col-lg-9">
+                <div class="speedyui-section-title text-center">
+                    <span class="section-title-tagline d-inline-flex align-items-center fw-semibold mb-3">Our Team</span>
+                    <h2 class="section-title display-6 fw-semibold mb-3">Our Amazing Team</h2>
+                </div><!--.speedyui-section-title-->
+            </div><!--.col-grid-->
+        </div><!--.row-->
+        <!-- End Section Title -->
+        <div class="row">
+            <div class="col-sm-6 col-lg-3">
+                <div class="card-wrapper text-center px-2 mx-auto mt-4">
+                    <div class="image-wrapper d-flex align-items-end rounded-circle overflow-hidden mb-4">
+                        <img class="img-fluid" src="https://speedyui-static.s3.amazonaws.com/team/team-9/03.png" alt="">
+                    </div>
+                    <h4 class="fs-4 text-dark">James Smith</h4>
+                    <span class="text-muted">Oracle DBA</p>
+                </div><!--.card-wrapper-->
+            </div><!--.col-grid-->
+            <div class="col-sm-6 col-lg-3">
+                <div class="card-wrapper text-center px-2 mx-auto mt-4">
+                    <div class="image-wrapper d-flex align-items-end rounded-circle overflow-hidden mb-4">
+                        <img class="img-fluid" src="https://speedyui-static.s3.amazonaws.com/team/team-9/02.png" alt="">
+                    </div>
+                    <h4 class="fs-4 text-dark">Emma Grant</h4>
+                    <span class="text-muted">Data Analyst</p>
+                </div><!--.card-wrapper-->
+            </div><!--.col-grid-->
+            <div class="col-sm-6 col-lg-3">
+                <div class="card-wrapper text-center px-2 mx-auto mt-4">
+                    <div class="image-wrapper d-flex align-items-end rounded-circle overflow-hidden mb-4">
+                        <img class="img-fluid" src="https://speedyui-static.s3.amazonaws.com/team/team-9/01.png" alt="">
+                    </div>
+                    <h4 class="fs-4 text-dark">Daniel Zen</h4>
+                    <span class="text-muted">Devops Engineer</p>
+                </div><!--.card-wrapper-->
+            </div><!--.col-grid-->
+            <div class="col-sm-6 col-lg-3">
+                <div class="card-wrapper text-center px-2 mx-auto mt-4">
+                    <div class="image-wrapper d-flex align-items-end rounded-circle overflow-hidden mb-4">
+                        <img class="img-fluid" src="https://speedyui-static.s3.amazonaws.com/team/team-9/04.png" alt="">
+                    </div>
+                    <h4 class="fs-4 text-dark">Gilbert Doe</h4>
+                    <span class="text-muted">Project Manager</p>
+                </div><!--.card-wrapper-->
+            </div><!--.col-grid-->
+        </div><!--.row-->
+    </div><!--.container-->
+</section><!--.speedyui-team-->
+<!--==================== End Team Section =====================-->
+<!--====================== Start Partner Section ======================-->
+<section class="speedyui speedyui-partner bg-light py-5">
+    <div class="container">
+        <div class="row my-4">
+            <div class="col-12">
+                <div class="swiper partner-slider">
+                    <div class="swiper-wrapper align-items-center">
+                        <div class="swiper-slide">
+                            <div class="partner-wrapper rounded-3 d-flex align-items-center justify-content-center w-100 p-3">
+                                <img src="https://speedyui-static.s3.amazonaws.com/partner-sections/partner-1.png" class="img-fluid" width="180" alt="" />
+                            </div><!--.partner-wrapper-->
+                        </div><!--.swiper-slide-->
+                        <div class="swiper-slide">
+                            <div class="partner-wrapper d-flex align-items-center justify-content-center w-100 p-3">
+                                <img src="https://speedyui-static.s3.amazonaws.com/partner-sections/partner-2.png" class="img-fluid" width="180" alt="" />
+                            </div><!--.partner-wrapper-->
+                        </div><!--.swiper-slide-->
+                        <div class="swiper-slide">
+                            <div class="partner-wrapper d-flex align-items-center justify-content-center w-100 p-3">
+                                <img src="https://speedyui-static.s3.amazonaws.com/partner-sections/partner-3.png" class="img-fluid" width="180" alt="" />
+                            </div><!--.partner-wrapper-->
+                        </div><!--.swiper-slide-->
+                        <div class="swiper-slide">
+                            <div class="partner-wrapper d-flex align-items-center justify-content-center w-100 p-3">
+                                <img src="https://speedyui-static.s3.amazonaws.com/partner-sections/partner-4.png" class="img-fluid" width="180" alt="" />
+                            </div><!--.partner-wrapper-->
+                        </div><!--.swiper-slide-->
+                        <div class="swiper-slide">
+                            <div class="partner-wrapper d-flex align-items-center justify-content-center w-100 p-3">
+                                <img src="https://speedyui-static.s3.amazonaws.com/partner-sections/partner-5.png" class="img-fluid" width="180" alt="" />
+                            </div><!--.partner-wrapper-->
+                        </div><!--.swiper-slide-->
+                        <div class="swiper-slide">
+                            <div class="partner-wrapper d-flex align-items-center justify-content-center w-100 p-3">
+                                <img src="https://speedyui-static.s3.amazonaws.com/partner-sections/partner-6.png" class="img-fluid" width="180" alt="" />
+                            </div><!--.partner-wrapper-->
+                        </div><!--.swiper-slide-->
+                        <div class="swiper-slide">
+                            <div class="partner-wrapper d-flex align-items-center justify-content-center w-100 p-3">
+                                <img src="https://speedyui-static.s3.amazonaws.com/partner-sections/partner-7.png" class="img-fluid" width="180" alt="" />
+                            </div><!--.partner-wrapper-->
+                        </div><!--.swiper-slide-->
+                    </div><!--.swiper-wrapper-->     
+                </div><!--.partner-slider-->
+            </div><!--.col-grid-->
+        </div><!--.row-->
+    </div><!--.container-->
+</section>
+<!--====================== End Partner Section ======================-->
+<!--====================== Start Footer ======================-->
+<footer class="speedyui speedyui-footer">
+    <div class="footer-top footer-bg">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <h2 class="text-white fs-1 fw-bold mb-4">Get in touch <span class="text-danger">!</span></h2>
+                    <p class="mb-4 mb-md-5">
+                        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type
+                    </p>
+                    <a href="#" class="speedyui-btn btn btn-md btn-white px-3 text-uppercase">Contact Us</a>
+                </div><!--.col-grid-->
+                <div class="col-md-5 offset-md-1 mb-3">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d423286.2740658098!2d-118.69192119136834!3d34.020161304907774!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80c2c75ddc27da13%3A0xe22fdf6f254608f4!2sLos%20Angeles%2C%20CA%2C%20USA!5e0!3m2!1sen!2s!4v1667121725721!5m2!1sen!2s" width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div><!--.col-grid-->
+            </div><!--.row-->
+            <div class="row">
+                <div class="col-md-4 mt-md-5 mt-4">
+                    <h5 class="text-white mb-4 fw-semibold">Sydney Office</h5>
+                    <ul class="nav flex-column">
+                        <li class="nav-item mb-3">
+                            <p class="d-flex align-items-center"> 
+                                <span class="text-danger me-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                    <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
+                                  </svg>
+                                </span> 136 Dogwood Lane Vail
+                            </p>
+                        </li>
+                        <li class="nav-item mb-3">
+                            <p class="d-flex align-items-center"> 
+                                <span class="text-danger me-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                        <path d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555ZM0 4.697v7.104l5.803-3.558L0 4.697ZM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586l-1.239-.757Zm3.436-.586L16 11.801V4.697l-5.803 3.546Z"/>
+                                      </svg>
+                                  </svg>
+                                </span><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="71181f171e31081e0403021805145f121e1c">[email&#160;protected]</a>
+                            </p>
+                        </li>
+                        <li class="nav-item mb-3">
+                            <p class="d-flex align-items-center"> 
+                                <span class="text-danger me-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                        <path fill-rule="evenodd" d="M1.885.511a1.745 1.745 0 0 1 2.61.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511z"/>
+                                      </svg>
+                                  </svg>
+                                </span>(+1) 202-67-1165
+                            </p>
+                        </li>
+                    </ul>
+                </div><!--.col-grid-->
+                <div class="col-md-4 mt-md-5 mt-4">
+                    <h5 class="text-white mb-4 fw-semibold">New York Office</h5>
+                    <ul class="nav flex-column">
+                        <li class="nav-item mb-3">
+                            <p class="d-flex align-items-center"> 
+                                <span class="text-danger me-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                    <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
+                                  </svg>
+                                </span> 136 Dogwood Lane Vail
+                            </p>
+                        </li>
+                        <li class="nav-item mb-3">
+                            <p class="d-flex align-items-center"> 
+                                <span class="text-danger me-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                        <path d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555ZM0 4.697v7.104l5.803-3.558L0 4.697ZM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586l-1.239-.757Zm3.436-.586L16 11.801V4.697l-5.803 3.546Z"/>
+                                      </svg>
+                                  </svg>
+                                </span><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="f0999e969fb0899f858283998495de939f9d">[email&#160;protected]</a>
+                            </p>
+                        </li>
+                        <li class="nav-item mb-3">
+                            <p class="d-flex align-items-center"> 
+                                <span class="text-danger me-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                        <path fill-rule="evenodd" d="M1.885.511a1.745 1.745 0 0 1 2.61.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511z"/>
+                                      </svg>
+                                  </svg>
+                                </span>(+1) 202-67-1165
+                            </p>
+                        </li>
+                    </ul>
+                </div><!--.col-grid-->
+                <div class="col-md-4 mt-md-5 mt-4">
+                    <h5 class="text-white mb-4 fw-semibold">London Office</h5>
+                    <ul class="nav flex-column">
+                        <li class="nav-item mb-3">
+                            <p class="d-flex align-items-center"> 
+                                <span class="text-danger me-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                    <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
+                                  </svg>
+                                </span> 136 Dogwood Lane Vail
+                            </p>
+                        </li>
+                        <li class="nav-item mb-3">
+                            <p class="d-flex align-items-center"> 
+                                <span class="text-danger me-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                        <path d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555ZM0 4.697v7.104l5.803-3.558L0 4.697ZM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586l-1.239-.757Zm3.436-.586L16 11.801V4.697l-5.803 3.546Z"/>
+                                      </svg>
+                                  </svg>
+                                </span><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="60090e060f20190f1512130914054e030f0d">[email&#160;protected]</a>
+                            </p>
+                        </li>
+                        <li class="nav-item mb-3">
+                            <p class="d-flex align-items-center"> 
+                                <span class="text-danger me-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                        <path fill-rule="evenodd" d="M1.885.511a1.745 1.745 0 0 1 2.61.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511z"/>
+                                      </svg>
+                                  </svg>
+                                </span>(+1) 202-67-1165
+                            </p>
+                        </li>
+                    </ul>
+                </div><!--.col-grid-->
+            </div><!--.row-->
+        </div><!--.container-->
+    </div><!--.footer-top-->
+    <div class="footer-bottom">
+        <div class="container">
+            <div class="d-flex flex-column flex-md-row align-items-center justify-content-between py-4 text-center text-md-start">
+                <a href="#" class="d-block my-3"><img src="https://s3.amazonaws.com/speedyui-static/navbar-horizontal/logo-white.png" class="img-fluid" alt="" /></a>
+                <ul class="list-unstyled d-flex flex-wrap justify-content-center my-2">
+                    <li class="ms-lg-5 ms-3 my-2"><a class="text-decoration-none text-uppercase fw-semibold" href="#">Home</a></li>
+                    <li class="ms-lg-5 ms-3 my-2"><a class="text-decoration-none text-uppercase fw-semibold" href="#">About</a></li>
+                    <li class="ms-lg-5 ms-3 my-2"><a class="text-decoration-none text-uppercase fw-semibold" href="#">Services</a></li>
+                    <li class="ms-lg-5 ms-3 my-2"><a class="text-decoration-none text-uppercase fw-semibold" href="#">Blog</a></li>
+                    <li class="ms-lg-5 ms-3 my-2"><a class="text-decoration-none text-uppercase fw-semibold" href="#">Contact Us</a></li>
+                </ul>
+            </div><!--.d-flex-->
+        </div><!--.container-->
+    </div><!--.footer-bottom-->
+</footer>
+<!--====================== End Footer ======================--><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script><script>const portfolioSwiper = new Swiper('.portfolio-slider', {
+        slidesPerView: 1,
+        spaceBetween: 30,
+        loop: true,
+        pagination: {
+            el: '.portfolio-swiper-pagination',
+            clickable: true,
+        },
+        breakpoints: {
+        320: {
+            slidesPerView: 1,
+        },
+        576: {
+            slidesPerView: 2,
+        },
+        992: {
+            slidesPerView: 3,
+        },
+        },
+    });
+
+    const testimonialSwiper = new Swiper('.testimonial-slider', {
+        slidesPerView: 1,
+        loop: true,
+        pagination: {
+            el: '.testimonial-swiper-pagination',
+            clickable: true,
+        },
+        breakpoints: {
+        768: {
+            slidesPerView: 2,
+        },
+        992: {
+            slidesPerView: 3,
+        },
+        },
+    });
+
+    const partnerSwiper = new Swiper('.partner-slider', {
+        slidesPerView: 1,
+        spaceBetween: 30,
+        breakpoints: {
+        576: {
+            slidesPerView: 2,
+        },
+        768: {
+            slidesPerView: 3,
+        },
+        1200: {
+            slidesPerView: 4,
+        },
+        },
+    });</script><script defer src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015" integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ==" data-cf-beacon='{"version":"2024.11.0","token":"d5d460aa2340443eab831b0071e781ae","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
+</body>
+                </html>
