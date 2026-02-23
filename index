@@ -1,0 +1,537 @@
+<html>
+<style>
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;500;600;700;800;900&display=swap");
+.speedyui {
+  --su-primary-color: var(--bs-primary);
+  --su-secondary-color: #b65cf9;
+  --su-nav-link-color:var(--bs-dark);
+  font-family: "Inter", sans-serif;
+}
+.speedyui .speedyui-btn {
+  transform: translateY(0px);
+  transition: all 0.3s;
+  background-color: var(--su-primary-color);
+  color: var(--bs-white);
+}
+.speedyui .speedyui-btn:hover {
+  transform: translateY(5px);
+}
+
+.speedyui-header {
+  z-index: 9;
+}
+.speedyui-header ul, .speedyui-header ol, .speedyui-header p, .speedyui-header h1, .speedyui-header h2, .speedyui-header h3, .speedyui-header h4, .speedyui-header h5, .speedyui-header h6, .speedyui-header figure {
+  margin: 0;
+  padding: 0;
+}
+.speedyui-header ul.navbar-nav li.nav-item {
+  margin: 0 1.25rem;
+}
+@media (min-width: 1200px) {
+  .speedyui-header ul.navbar-nav li.nav-item {
+    margin: 0 1.85rem;
+  }
+}
+.speedyui-header ul.navbar-nav li.nav-item a.nav-link {
+  color: var(--su-nav-link-color);
+  padding: 2rem 0;
+  font-size: 0.9rem;
+  font-weight: 500;
+  position: relative;
+}
+.speedyui-header ul.navbar-nav li.nav-item a.nav-link:before {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 24px;
+  width: 100%;
+  border-bottom: 2px solid var(--su-primary-color);
+  transform: scaleX(0);
+  transition: all 0.5s ease;
+}
+.speedyui-header ul.navbar-nav li.nav-item a.nav-link.active:before {
+  transform: scaleX(1);
+}
+.speedyui-header ul.navbar-nav li.nav-item a.nav-link.active::after {
+  border-color: var(--bs-dark);
+}
+.speedyui-header ul.navbar-nav li.nav-item a.nav-link:hover:before {
+  transform: scaleX(1);
+}
+.speedyui-header ul.navbar-nav li.nav-item a.nav-link:hover:after {
+  border-color: var(--su-nav-link-color);
+}
+.speedyui-header ul.navbar-nav li.nav-item:last-of-type a.nav-link {
+  margin-right: 0;
+  padding-right: 0;
+}
+.speedyui-header ul.navbar-nav li.nav-item:first-of-type a.nav-link {
+  margin-left: 0;
+  padding-left: 0;
+}
+.speedyui-header ul.navbar-nav .dropdown-menu {
+  border-radius: 0;
+  box-shadow: 0 0px 10px rgba(37, 37, 37, 0.12);
+  margin: 0;
+  background: #fff;
+  border: none;
+  transition: all 0.3s;
+  top: 115% !important;
+  z-index: 9;
+}
+.speedyui-header ul.navbar-nav .dropdown-menu a.dropdown-item {
+  padding: 0.35rem 1rem;
+  transition: all 0.3s;
+  font-size: 0.9rem;
+  color: var(--su-nav-link-color);
+  font-weight: 500;
+}
+.speedyui-header ul.navbar-nav .dropdown-menu a.dropdown-item:after {
+  border-color: var(--su-nav-link-color);
+}
+.speedyui-header ul.navbar-nav .dropdown-menu a.dropdown-item:hover {
+  padding-left: 1.5rem;
+  color: var(--su-primary-color);
+}
+.speedyui-header ul.navbar-nav .dropdown-menu a.dropdown-item:hover:after {
+  border-color: var(--su-primary-color);
+}
+.speedyui-header ul.navbar-nav .dropdown-menu a.dropdown-item.active {
+  color: var(--su-primary-color);
+}
+.speedyui-header ul.navbar-nav .dropdown-toggle:after {
+  border-color: var(--su-nav-link-colork);
+  box-sizing: border-box;
+  height: 0.4em;
+  width: 0.4em;
+  border-style: solid;
+  border-width: 0px 1px 1px 0px;
+  transform: rotate(45deg);
+  transition: all 0.3s;
+  margin-left: 0.355em;
+}
+.speedyui-header ul.nav-controls li {
+  color: var(--su-nav-link-color);
+  transition: all 0.3s;
+}
+.speedyui-header ul.nav-controls li:hover {
+  color: var(--su-primary-color);
+}
+.speedyui-header .offcanvas-toggle .icon-wrapper {
+  z-index: 0;
+  color: var(--bs-dark);
+  transition: all 0.3s;
+}
+.speedyui-header .offcanvas-toggle:hover .icon-wrapper {
+  color: var(--su-primary-color);
+}
+.speedyui-header .offcanvas-toggle:hover .icon-wrapper:before {
+  opacity: 1;
+}
+@media screen and (min-width: 992px) {
+  .speedyui-header .dropdown .dropdown-menu {
+    opacity: 0;
+    visibility: hidden;
+    display: block;
+    min-width: 12em;
+  }
+  .speedyui-header .dropdown:hover .dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    top: 100% !important;
+  }
+}
+
+.speedyui-offcanvas {
+  --su-width: 100%;
+  --bs-border-color: #3b3838;
+}
+.speedyui-offcanvas .btn-close {
+  transition: all ease 0.4s;
+}
+.speedyui-offcanvas .btn-close:hover {
+  transform: rotate(90deg);
+}
+.speedyui-offcanvas .offcanvas {
+  transition: all 0.6s cubic-bezier(0.77, 0, 0.175, 1);
+  overflow-y: auto;
+}
+.speedyui-offcanvas .offcanvas.offcanvas-desktop {
+  width: var(--su-width);
+}
+@media (min-width: 768px) {
+  .speedyui-offcanvas .offcanvas.offcanvas-desktop {
+    --su-width: 445px;
+  }
+}
+.speedyui-offcanvas .offcanvas.offcanvas-desktop .offcanvas-body p {
+  font-size: 1.125rem;
+}
+.speedyui-offcanvas .offcanvas.offcanvas-desktop .contact-wrapper .contact-icon {
+  cursor: pointer;
+  color: var(--su-primary-color);
+}
+.speedyui-offcanvas .offcanvas.offcanvas-desktop .contact-wrapper a {
+  color: var(--bs-dark);
+}
+.speedyui-offcanvas .offcanvas.offcanvas-desktop .contact-wrapper a:hover {
+  color: var(--su-primary-color);
+}
+.speedyui-offcanvas .offcanvas.offcanvas-mobile {
+  --su-secondary-color: var(--bs-dark);
+  color: var(--bs-white);
+  border: none;
+}
+.speedyui-offcanvas .offcanvas.offcanvas-mobile ul.offcanvas-listing li a {
+  border-bottom: 1px solid #ededed;
+  color: var(--bs-dark);
+  transition: color 0.3s ease;
+}
+.speedyui-offcanvas .offcanvas.offcanvas-mobile ul.offcanvas-listing li a:hover {
+  color: var(--su-primary-color);
+}
+.speedyui-offcanvas .offcanvas.offcanvas-mobile ul.offcanvas-listing li a span {
+  transform: rotate(180deg);
+  transition: transform 0.3s ease;
+}
+.speedyui-offcanvas .offcanvas.offcanvas-mobile ul.offcanvas-listing li a.collapsed span {
+  transform: rotate(0deg);
+}
+.speedyui-offcanvas .offcanvas.offcanvas-mobile ul.offcanvas-listing li:last-of-type a {
+  border-bottom: 0;
+}
+.speedyui-offcanvas .offcanvas.offcanvas-mobile ul.offcanvas-listing .collapse li a {
+  border-bottom: 1px solid #ededed;
+}
+.speedyui-offcanvas .social-listing li a {
+  width: 50px;
+  height: 50px;
+  border-radius: 50rem;
+  color: var(--bs-dark);
+  background-color: var(--bs-light);
+  transition: 300ms ease-in;
+}
+.speedyui-offcanvas .social-listing li a:hover {
+  background-color: var(--su-primary-color);
+  color: var(--bs-white);
+}
+.speedyui-offcanvas .floating-blob {
+  width: 360px;
+  z-index: -1;
+  transform: rotate(-180deg);
+  color: var(--su-primary-color);
+}
+
+.speedyui-hero {
+  padding-top: 6rem;
+  padding-bottom: 3rem;
+  z-index: 0;
+  background-image: linear-gradient(to bottom right, rgba(255, 255, 255, 0.5), #f7f7f7, rgba(255, 255, 255, 0.5));
+}
+.speedyui-hero .primary-text {
+  color: var(--su-primary-color);
+}
+@media (min-width: 992px) {
+  .speedyui-hero {
+    padding-top: 10rem;
+    padding-bottom: 5rem;
+  }
+}
+.speedyui-hero .hero-content .hero-badge {
+  font-size: 13px;
+  font-weight: 600;
+}
+.speedyui-hero .hero-content .l-more {
+  color: #6c757d;
+  transition: all 0.3s;
+}
+.speedyui-hero .hero-content .l-more .icon {
+  transition: all 0.3s;
+  margin-left: 2px;
+}
+.speedyui-hero .hero-content .l-more:hover {
+  color: black;
+}
+.speedyui-hero .hero-content .l-more:hover .icon {
+  margin-left: 8px;
+}
+.speedyui-hero .hero-content .logo-list img {
+  filter: grayscale(100%);
+  opacity: 0.6;
+  transition: all 0.3s;
+}
+.speedyui-hero .hero-content .logo-list img:hover {
+  filter: grayscale(0);
+  opacity: 1;
+}
+</style>
+
+
+<!--=============== Start Header Section  ===============-->
+<header class="speedyui speedyui-header speedyui-offcanvas position-absolute w-100">
+    <div class="main-nav">
+        <nav class="navbar navbar-expand-lg nav-bg py-4 py-lg-0">
+          <div class="container">
+              <div class="logo-wrapper">
+                  <a href="#"><img src="https://speedyui-static.s3.amazonaws.com/header/header-5/logo.png" class="logo" alt=""></a>
+              </div><!--.logo-wrapper-->
+            <div class="collapse navbar-collapse justify-content-center" id="navbarToggler">
+              <ul class="navbar-nav">
+                <li class="nav-item">
+                  <a class="nav-link active" aria-current="page" href="#">Home</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">About</a>
+                </li>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">
+                  Services
+                  </a>
+                  <ul class="dropdown-menu rounded-3 py-2">
+                      <li><a class="dropdown-item my-1" href="#">All Services</a></li>
+                      <li><a class="dropdown-item my-1" href="#">Digital Marketing</a></li>
+                      <li><a class="dropdown-item my-1" href="#">UX/UI Design</a></li>
+                      <li><a class="dropdown-item my-1" href="#">Web Development</a></li>
+                  </ul>
+                </li>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">
+                  Pages
+                  </a>
+                  <ul class="dropdown-menu rounded-3 py-2">
+                      <li><a class="dropdown-item my-1" href="#">Portfolio</a></li>
+                      <li><a class="dropdown-item my-1" href="#">Pricing</a></li>
+                      <li><a class="dropdown-item my-1" href="#">FAQ's</a></li>
+                      <li><a class="dropdown-item my-1" href="#">Sign In</a></li>
+                      <li><a class="dropdown-item my-1" href="#">Sign Up</a></li>
+                  </ul>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">Blog</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">Contact</a>
+                </li>
+              </ul> 
+            </div><!--.navbar-collapse-->
+            <ul class="nav-controls d-flex align-items-center ms-auto">
+                <li class="list-inline-item ms-xl-3 m-0">
+                    <a href="#" class="btn btn-sm px-4 py-2 speedyui-btn rounded-pill d-none d-md-block me-3 me-xl-0">Sign Up</a>
+                </li>
+                <li class="list-inline-item ms-xl-3 m-0">
+                    <a class="d-none d-lg-inline-block offcanvas-toggle" data-bs-toggle="offcanvas" href="#offcanvas" role="button" aria-controls="offcanvas">
+                        <span class="icon-wrapper">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
+                              </svg>
+                        </span>
+                    </a><!--.for-desktop-->
+                    <a class="d-block d-lg-none offcanvas-toggle" data-bs-toggle="offcanvas" href="#offcanvas-mobile" role="button" aria-controls="offcanvas-mobile">
+                        <span class="icon-wrapper d-flex align-items-center justify-content-center position-relative rounded-pill overflow-hidden">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
+                              </svg>
+                        </span>
+                    </a><!--.for-mobile-->
+                </li>
+            </ul>
+          </div><!--.container-->
+        </nav><!--.navbar-->
+    </div><!--.main-nav-->
+    <div class="offcanvas offcanvas-desktop offcanvas-end shadow border-0 d-none d-lg-block" data-bs-scroll="true" data-bs-backdrop="true" tabindex="-1" id="offcanvas" aria-labelledby="offcanvasLabel">
+        <div class="offcanvas-header justify-content-between px-4 px-md-5 py-0 my-5">
+            <img src="https://speedyui-static.s3.amazonaws.com/header/header-5/logo.png" alt="">
+            <button type="button" class="btn-close rounded-pill bg-light shadow-none p-3" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body d-flex flex-column justify-content-between px-4 px-md-5 pt-0 pb-4">
+            <div>
+                <p class="border-bottom border-secondary border-opacity-25 pb-4 mb-4 text-secondary">Lorem ipsum dolor sit amet sint dolor debitis commodi elit. Euismod viverra nibh cras suspen iste. Autem, minus optio rerum neque? </p>
+                <div class="contact-wrapper border-bottom border-secondary border-opacity-25 pb-4 mb-4">
+                    <h2 class="fs-5 fw-semibold my-4">Get In Touch</h2>
+                    <div class="d-flex gap-3 mb-4">
+                        <span class="contact-icon d-inline-flex mt-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-envelope-fill" viewBox="0 0 16 16">
+                                <path d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555ZM0 4.697v7.104l5.803-3.558L0 4.697ZM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586l-1.239-.757Zm3.436-.586L16 11.801V4.697l-5.803 3.546Z"/>
+                              </svg>
+                        </span>
+                        <div>
+                            <span class="d-block opacity-75 mb-0">Email</span>
+                            <a href="#" class="text-decoration-none fw-semibold">support@mail.com</a>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center gap-3 mb-4 mt-1">
+                        <span class="contact-icon d-inline-flex">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-telephone-fill" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M1.885.511a1.745 1.745 0 0 1 2.61.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511z"/>
+                            </svg>
+                        </span>
+                        <div>
+                            <span class="d-block opacity-75 mb-0">Phone</span>
+                            <a href="#" class="text-decoration-none fw-semibold">( +67 ) 123 456789</a>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center gap-3 mb-4 mt-1">
+                        <span class="contact-icon d-inline-flex">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-geo-alt-fill" viewBox="0 0 16 16">
+                                <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
+                              </svg>
+                        </span>
+                        <div>
+                            <span class="d-block opacity-75 mb-0">Location</span>
+                            <a href="#" class="text-decoration-none fw-semibold">70 Washington Square South, USA</a>
+                        </div>
+                    </div>
+                </div><!--.contact-wrapper-->
+                <ul class="social-listing d-flex align-items-center gap-3 list-unstyled mt-5">
+                    <li>
+                        <a class="d-flex align-items-center justify-content-center" href="#">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-google" viewBox="0 0 16 16">
+                                <path d="M15.545 6.558a9.42 9.42 0 0 1 .139 1.626c0 2.434-.87 4.492-2.384 5.885h.002C11.978 15.292 10.158 16 8 16A8 8 0 1 1 8 0a7.689 7.689 0 0 1 5.352 2.082l-2.284 2.284A4.347 4.347 0 0 0 8 3.166c-2.087 0-3.86 1.408-4.492 3.304a4.792 4.792 0 0 0 0 3.063h.003c.635 1.893 2.405 3.301 4.492 3.301 1.078 0 2.004-.276 2.722-.764h-.003a3.702 3.702 0 0 0 1.599-2.431H8v-3.08h7.545z"/>
+                            </svg>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="d-flex align-items-center justify-content-center" href="#">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-pinterest" viewBox="0 0 16 16">
+                                <path d="M8 0a8 8 0 0 0-2.915 15.452c-.07-.633-.134-1.606.027-2.297.146-.625.938-3.977.938-3.977s-.239-.479-.239-1.187c0-1.113.645-1.943 1.448-1.943.682 0 1.012.512 1.012 1.127 0 .686-.437 1.712-.663 2.663-.188.796.4 1.446 1.185 1.446 1.422 0 2.515-1.5 2.515-3.664 0-1.915-1.377-3.254-3.342-3.254-2.276 0-3.612 1.707-3.612 3.471 0 .688.265 1.425.595 1.826a.24.24 0 0 1 .056.23c-.061.252-.196.796-.222.907-.035.146-.116.177-.268.107-1-.465-1.624-1.926-1.624-3.1 0-2.523 1.834-4.84 5.286-4.84 2.775 0 4.932 1.977 4.932 4.62 0 2.757-1.739 4.976-4.151 4.976-.811 0-1.573-.421-1.834-.919l-.498 1.902c-.181.695-.669 1.566-.995 2.097A8 8 0 1 0 8 0z"/>
+                            </svg>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="d-flex align-items-center justify-content-center" href="#">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-slack" viewBox="0 0 16 16">
+                                <path d="M3.362 10.11c0 .926-.756 1.681-1.681 1.681S0 11.036 0 10.111C0 9.186.756 8.43 1.68 8.43h1.682v1.68zm.846 0c0-.924.756-1.68 1.681-1.68s1.681.756 1.681 1.68v4.21c0 .924-.756 1.68-1.68 1.68a1.685 1.685 0 0 1-1.682-1.68v-4.21zM5.89 3.362c-.926 0-1.682-.756-1.682-1.681S4.964 0 5.89 0s1.68.756 1.68 1.68v1.682H5.89zm0 .846c.924 0 1.68.756 1.68 1.681S6.814 7.57 5.89 7.57H1.68C.757 7.57 0 6.814 0 5.89c0-.926.756-1.682 1.68-1.682h4.21zm6.749 1.682c0-.926.755-1.682 1.68-1.682.925 0 1.681.756 1.681 1.681s-.756 1.681-1.68 1.681h-1.681V5.89zm-.848 0c0 .924-.755 1.68-1.68 1.68A1.685 1.685 0 0 1 8.43 5.89V1.68C8.43.757 9.186 0 10.11 0c.926 0 1.681.756 1.681 1.68v4.21zm-1.681 6.748c.926 0 1.682.756 1.682 1.681S11.036 16 10.11 16s-1.681-.756-1.681-1.68v-1.682h1.68zm0-.847c-.924 0-1.68-.755-1.68-1.68 0-.925.756-1.681 1.68-1.681h4.21c.924 0 1.68.756 1.68 1.68 0 .926-.756 1.681-1.68 1.681h-4.21z"/>
+                            </svg>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="d-flex align-items-center justify-content-center" href="#">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-twitter" viewBox="0 0 16 16">
+                                <path d="M5.026 15c6.038 0 9.341-5.003 9.341-9.334 0-.14 0-.282-.006-.422A6.685 6.685 0 0 0 16 3.542a6.658 6.658 0 0 1-1.889.518 3.301 3.301 0 0 0 1.447-1.817 6.533 6.533 0 0 1-2.087.793A3.286 3.286 0 0 0 7.875 6.03a9.325 9.325 0 0 1-6.767-3.429 3.289 3.289 0 0 0 1.018 4.382A3.323 3.323 0 0 1 .64 6.575v.045a3.288 3.288 0 0 0 2.632 3.218 3.203 3.203 0 0 1-.865.115 3.23 3.23 0 0 1-.614-.057 3.283 3.283 0 0 0 3.067 2.277A6.588 6.588 0 0 1 .78 13.58a6.32 6.32 0 0 1-.78-.045A9.344 9.344 0 0 0 5.026 15z"/>
+                            </svg>
+                        </a>
+                    </li>
+                </ul><!--.social-listing-->
+            </div>
+        </div><!--.offcanvas-body-->
+    </div><!--.offcanvas-desktop-->
+    <div class="offcanvas offcanvas-mobile offcanvas-end d-block d-lg-none" tabindex="-1" id="offcanvas-mobile" aria-labelledby="offcanvasLabel">
+            <div class="offcanvas-header justify-content-between px-4 px-md-5 py-0 mt-4 mb-5">
+                <img src="https://speedyui-static.s3.amazonaws.com/header/header-5/logo.png" alt="">
+                <button type="button" class="btn-close bg-light rounded-pill shadow-none p-2" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body p-0 pb-4">
+                <ul class="offcanvas-listing list-unstyled">
+                    <li>
+                        <a class="nav-link fw-semibold p-3 px-4" href="#">Home</a>
+                    </li>
+                    <li>
+                        <a class="nav-link fw-semibold p-3 px-4" href="#">Team</a>
+                    </li>
+                    <li>
+                        <a class="nav-link d-flex align-items-center justify-content-between fw-semibold collapsed p-3 px-4" href="#services" data-bs-toggle="collapse" aria-expanded="false" aria-controls="services">
+                            Services
+                            <span>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
+                                </svg>
+                            </span>
+                        </a>
+                        <ul class="collapse list-unstyled" id="services" data-bs-parent="#offcanvas">
+                            <li>
+                                <a class="nav-link fw-semibold ps-5 py-3" href="#">UI Designer</a>
+                            </li>
+                            <li>
+                                <a class="nav-link fw-semibold ps-5 py-3" href="#">Web Developer</a>
+                            </li>
+                            <li>
+                                <a class="nav-link fw-semibold ps-5 py-3" href="#">SEO Optimization</a>
+                            </li>
+                            <li>
+                                <a class="nav-link fw-semibold ps-5 py-3" href="#">Digital Marketing</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="nav-link fw-semibold p-3 px-4" href="#">News</a>
+                    </li>
+                    <li>
+                        <a class="nav-link fw-semibold p-3 px-4" href="#">FAQ's</a>
+                    </li>
+                    <li>
+                        <a class="nav-link fw-semibold p-3 px-4" href="#">Contact</a>
+                    </li>
+                </ul><!--.offcanvas-listing-->
+                <ul class="social-listing d-flex align-items-center gap-3 list-unstyled mt-5 px-4">
+                    <li>
+                        <a class="d-flex align-items-center justify-content-center" href="#">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-google" viewBox="0 0 16 16">
+                                <path d="M15.545 6.558a9.42 9.42 0 0 1 .139 1.626c0 2.434-.87 4.492-2.384 5.885h.002C11.978 15.292 10.158 16 8 16A8 8 0 1 1 8 0a7.689 7.689 0 0 1 5.352 2.082l-2.284 2.284A4.347 4.347 0 0 0 8 3.166c-2.087 0-3.86 1.408-4.492 3.304a4.792 4.792 0 0 0 0 3.063h.003c.635 1.893 2.405 3.301 4.492 3.301 1.078 0 2.004-.276 2.722-.764h-.003a3.702 3.702 0 0 0 1.599-2.431H8v-3.08h7.545z"/>
+                            </svg>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="d-flex align-items-center justify-content-center" href="#">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-pinterest" viewBox="0 0 16 16">
+                                <path d="M8 0a8 8 0 0 0-2.915 15.452c-.07-.633-.134-1.606.027-2.297.146-.625.938-3.977.938-3.977s-.239-.479-.239-1.187c0-1.113.645-1.943 1.448-1.943.682 0 1.012.512 1.012 1.127 0 .686-.437 1.712-.663 2.663-.188.796.4 1.446 1.185 1.446 1.422 0 2.515-1.5 2.515-3.664 0-1.915-1.377-3.254-3.342-3.254-2.276 0-3.612 1.707-3.612 3.471 0 .688.265 1.425.595 1.826a.24.24 0 0 1 .056.23c-.061.252-.196.796-.222.907-.035.146-.116.177-.268.107-1-.465-1.624-1.926-1.624-3.1 0-2.523 1.834-4.84 5.286-4.84 2.775 0 4.932 1.977 4.932 4.62 0 2.757-1.739 4.976-4.151 4.976-.811 0-1.573-.421-1.834-.919l-.498 1.902c-.181.695-.669 1.566-.995 2.097A8 8 0 1 0 8 0z"/>
+                            </svg>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="d-flex align-items-center justify-content-center" href="#">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-slack" viewBox="0 0 16 16">
+                                <path d="M3.362 10.11c0 .926-.756 1.681-1.681 1.681S0 11.036 0 10.111C0 9.186.756 8.43 1.68 8.43h1.682v1.68zm.846 0c0-.924.756-1.68 1.681-1.68s1.681.756 1.681 1.68v4.21c0 .924-.756 1.68-1.68 1.68a1.685 1.685 0 0 1-1.682-1.68v-4.21zM5.89 3.362c-.926 0-1.682-.756-1.682-1.681S4.964 0 5.89 0s1.68.756 1.68 1.68v1.682H5.89zm0 .846c.924 0 1.68.756 1.68 1.681S6.814 7.57 5.89 7.57H1.68C.757 7.57 0 6.814 0 5.89c0-.926.756-1.682 1.68-1.682h4.21zm6.749 1.682c0-.926.755-1.682 1.68-1.682.925 0 1.681.756 1.681 1.681s-.756 1.681-1.68 1.681h-1.681V5.89zm-.848 0c0 .924-.755 1.68-1.68 1.68A1.685 1.685 0 0 1 8.43 5.89V1.68C8.43.757 9.186 0 10.11 0c.926 0 1.681.756 1.681 1.68v4.21zm-1.681 6.748c.926 0 1.682.756 1.682 1.681S11.036 16 10.11 16s-1.681-.756-1.681-1.68v-1.682h1.68zm0-.847c-.924 0-1.68-.755-1.68-1.68 0-.925.756-1.681 1.68-1.681h4.21c.924 0 1.68.756 1.68 1.68 0 .926-.756 1.681-1.68 1.681h-4.21z"/>
+                            </svg>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="d-flex align-items-center justify-content-center" href="#">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-twitter" viewBox="0 0 16 16">
+                                <path d="M5.026 15c6.038 0 9.341-5.003 9.341-9.334 0-.14 0-.282-.006-.422A6.685 6.685 0 0 0 16 3.542a6.658 6.658 0 0 1-1.889.518 3.301 3.301 0 0 0 1.447-1.817 6.533 6.533 0 0 1-2.087.793A3.286 3.286 0 0 0 7.875 6.03a9.325 9.325 0 0 1-6.767-3.429 3.289 3.289 0 0 0 1.018 4.382A3.323 3.323 0 0 1 .64 6.575v.045a3.288 3.288 0 0 0 2.632 3.218 3.203 3.203 0 0 1-.865.115 3.23 3.23 0 0 1-.614-.057 3.283 3.283 0 0 0 3.067 2.277A6.588 6.588 0 0 1 .78 13.58a6.32 6.32 0 0 1-.78-.045A9.344 9.344 0 0 0 5.026 15z"/>
+                            </svg>
+                        </a>
+                    </li>
+                </ul><!--.social-listing-->
+            </div><!--.offcanvas-body-->
+    </div><!--.offcanvas-mobile-->
+</header>
+<!--=============== End Header Section  ===============-->
+<!--==================== Start Hero Section =====================-->
+<section class="speedyui speedyui-hero position-relative overflow-hidden">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6 my-2">
+                <div class="hero-content">
+                    <span class="hero-badge py-1 px-3 mb-3 bg-dark text-white d-inline-block shadow text-uppercase rounded-pill">high quality digital services</span>
+                    <h1 class="mb-3 fw-bolder display-4">Perfect Designing and <span class="primary-text">marketing servives</span></h1>
+                    <p class="text-secondary mb-4 fs-6 pe-md-5 me-md-5">
+                        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s
+                    </p>
+                    <a href="#" class="btn btn-md px-5 py-3 speedyui-btn rounded-pill shadow-lg">Get started</a>
+                    <a href="#" class="l-more ms-3 text-decoration-none fw-semibold my-3 d-inline-block ">Learn more <span class="icon">
+                        <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                        viewBox="0 0 330 330" style="enable-background:new 0 0 330 330;width:20px; fill:currentColor;" xml:space="preserve">
+                        <path id="XMLID_27_" d="M15,180h263.787l-49.394,49.394c-5.858,5.857-5.858,15.355,0,21.213C232.322,253.535,236.161,255,240,255
+                    s7.678-1.465,10.606-4.394l75-75c5.858-5.857,5.858-15.355,0-21.213l-75-75c-5.857-5.857-15.355-5.857-21.213,0
+                    c-5.858,5.857-5.858,15.355,0,21.213L278.787,150H15c-8.284,0-15,6.716-15,15S6.716,180,15,180z"/>
+                        </svg></span>
+                    </a>
+                    <ul class="logo-list list-inline d-flex align-items-center py-3 m-0">
+                        <li class="p-2"><img src="https://speedyui-static.s3.amazonaws.com/header/header-5/logo-1.png" class="img-fluid" width="120" alt="" /></li>
+                        <li class="p-2"><img src="https://speedyui-static.s3.amazonaws.com/header/header-5/logo-2.png" class="img-fluid" width="120" alt="" /></li>
+                        <li class="p-2"><img src="https://speedyui-static.s3.amazonaws.com/header/header-5/logo-3.png" class="img-fluid" width="120" alt="" /></li>
+                        <li class="p-2"><img src="https://speedyui-static.s3.amazonaws.com/header/header-5/logo-4.png" class="img-fluid" width="120" alt="" /></li>
+                    </ul>
+                </div><!-- .hero-content -->
+            </div><!-- .col-grid -->
+            <div class="col-lg-6 my-2">
+                <figure class="hero-img-wrap my-2">
+                    <img src="https://speedyui-static.s3.amazonaws.com/hero-section/hero-3/hero-img.png" class="img-fluid" alt="" />
+                </figure>
+            </div><!-- .col-grid -->
+        </div><!-- .row -->
+    </div><!--.container-->
+</section>
+<!--==================== End Hero Section =====================-->
+
+<a href="https://speedyui.com/" target="_blank" style="background-color:red;text-decoration: none;color: #fff;padding: 1rem;width: 120px;height: 120px;display: flex;border-radius: 50rem;align-items: center;justify-content: center;text-align: center;position: fixed;right: 48%;bottom: 5%;background-image: linear-gradient(to right bottom, #6a36fb, #913add);font-size: 14px;box-shadow: 0 0.5rem 0.75rem rgba(0, 0, 0, 0.05);">view more on Speedyui</a>
